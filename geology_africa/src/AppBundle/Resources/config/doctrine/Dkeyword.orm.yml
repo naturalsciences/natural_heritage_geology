@@ -1,0 +1,49 @@
+AppBundle\Entity\Dkeyword:
+    type: entity
+    table: dkeyword
+    indexes:
+        IDX_F67CDF6D31E47808BF396750:
+            columns:
+                - idcollection
+                - id
+    uniqueConstraints:
+        dkeyword_unique:
+            columns:
+                - id
+                - idcollection
+                - keyword
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        keyword:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        keywordlevel:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: false
+    manyToOne:
+        idcollection:
+            targetEntity: Ddocument
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                id:
+                    referencedColumnName: iddoc
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,48 @@
+AppBundle\Entity\Dsamheavymin:
+    type: entity
+    table: dsamheavymin
+    uniqueConstraints:
+        dsamheavymin_unique:
+            columns:
+                - idcollection
+                - idsample
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        weighthm:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        weightsample:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        observationhm:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    manyToOne:
+        idcollection:
+            targetEntity: Dsample
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                idsample:
+                    referencedColumnName: idsample
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

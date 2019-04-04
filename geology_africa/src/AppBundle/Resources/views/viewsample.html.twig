@@ -1,0 +1,666 @@
+{# src/AppBundle/Resources/views/viewsample.html.twig #}
+
+{% extends "@App/addlayout.html.twig" %}
+
+{% block title %}
+  {{ parent() }} 
+{% endblock %}
+
+{% block addgeology_body %}
+	<Table width="100%" class="table_view">
+		<TR>
+			<th class="title_table_edit" width="100%" colspan=12>
+				Sample
+			</th>
+		</TR>
+		<TR>
+			<TD width="120px" align="right">
+				<label class="labelsview">Sample number: </label>
+			</TD>
+			<TD>
+				{{ dsample.fieldnum}}
+			</TD>
+			<TD align="right">
+				<label class="labelsview">Sample ID: </label>
+			</TD>
+			<TD>
+				{{ dsample.idcollection}}
+				{{ dsample.idsample}}
+			</TD>
+			<TD  align="right">
+				<label class="labelsview">Museum number: </label>
+			</TD>
+			<TD colspan=7>
+				{{ dsample.museumnum}}
+			</TD>
+		</TR>
+		<TR>
+			<TD align="right">
+				<label class="labelsview">Box number: </label>
+			</TD>
+			<TD>
+				{{ dsample.boxnumber}}
+			</TD>
+			<TD align="right">
+				<label class="labelsview">Museum location: </label>
+			</TD>
+			<TD>
+				{{ dsample.museumlocation}}
+			</TD>
+			<TD align="right">
+				<label class="labelsview">Weight: </label>
+			</TD>
+			<TD>
+				{{ dsample.weight}}
+			</TD>
+			<TD align="right">
+				<label class="labelsview">Quantity: </label>
+			</TD>
+			<TD>
+				{{ dsample.quantity}}
+			</TD>
+			<TD align="right">
+				<label class="labelsview">Quality: </label>
+			</TD>
+			<TD>
+				{{ dsample.quality}}
+			</TD>
+			<TD align="right">
+				<label class="labelsview">Size: </label>
+			</TD>
+			<TD>
+				{{ dsample.size}}
+			</TD>
+		</TR>
+		<TR>
+			<TD align="right">
+				<label class="labelsview">Dimension code: </label>
+			</TD>
+			<TD>
+				{{ dsample.dimentioncode}}
+			</TD>
+			<TD align="right">
+				<label class="labelsview">Loan information: </label>
+			</TD>
+			<TD>
+				{{ dsample.loaninformation}}
+			</TD>
+			<TD align="right">
+				<label class="labelsview">Security level: </label>
+			</TD>
+			<TD>
+				{{ dsample.securitylevel}}
+			</TD>
+			<TD align="right">
+				<label class="labelsview">Holotype: </label>
+			</TD>
+			<TD>
+				{% if dsample.holotype %}Yes{% else %}No{% endif %}
+			</TD>
+			<TD align="right">
+				<label class="labelsview">Paratype: </label>
+			</TD>
+			<TD colspan=3>
+				{% if dsample.paratype %}Yes{% else %}No{% endif %}
+			</TD>
+		</TR>
+		<TR>
+			<TD align="right">
+				<label class="labelsview">Various sample info: </label>
+			</TD>
+			<TD colspan=5>
+				{{ dsample.varioussampleinfo}}
+			</TD>
+			<TD align="right">
+				<label class="labelsview">Radioactivity</label>
+			</TD>
+			<TD>	
+				{{dsample.radioactivity}}
+			</TD>
+			<TD align="right">
+				<label class="labelsview">Chemical analysis: </label>
+			</TD>
+			<TD>	
+				{% if dsample.chemicalanalysis %}Yes{% else %}No{% endif %}
+			</TD>
+			<TD align="right">	
+				<label class="labelsview">Slim plate: </label>
+			</TD>
+			<TD>	
+				{% if dsample.slimplate %}Yes{% else %}No{% endif %}
+			</TD>
+		</TR>
+		<TR>
+			<TD align="right">
+				<label class="labelsview">Sample description: </label>
+			</TD>
+			<TD colspan=11>
+				{{ dsample.sampledescription}}
+			</TD>
+		</TR>
+		<TR>
+			<TD colspan=12>
+				</br>
+				<div class=example>
+					<div class=tabs>
+						<div id=tab1> <a href="#tab1">Mineralogy</a>
+							<div>
+								<Table class="table_view">
+									<TR>
+										<TD width="50%" class="celltop" >		
+											{% if arraylminerals|length > 1 %}
+												<Table width="100%" class="table_view">
+													<TR class="titletable">
+														<TH>
+															<label class="labelsview">ID </label>
+														</TH>
+														<TH>
+															<label class="labelsview">Name </label>
+														</TH>
+														<TH>
+															<label class="labelsview">Grade </label>
+														</TH>
+
+														<TH>
+															<label class="labelsview">Rank </label>
+														</TH>
+														<TH>
+															<label class="labelsview">Formula </label>
+														</TH>
+														<TH>
+															<label class="labelsview">Parent </label>
+														</TH>
+													</TR>
+													{% set i=0 %}
+													{% for lminerals in arraylminerals %}
+														{% for lmineral in lminerals %}
+															<TR>
+																<TD>
+																	{{ lmineral.idmineral}}
+																</TD>
+																<TD>
+																	{% if lmineral.mname|length > 0 %}
+																		{{ lmineral.mname}}
+																	{% else %}
+																		{{ lmineral.fmname|lower }} (Fl.)
+																	{% endif %}
+																</TD>
+																<TD>
+																	{{ grades[i] }}
+																</TD>
+																<TD>
+																	{{ lmineral.rank}}
+																</TD>
+																
+																<TD>
+																	<label class="input_formula{{i}}" ></label>
+																</TD>
+																<TD>
+																	{% if lmineral.mname|length > 0 %}
+																		{{ lmineral.mparent}}
+																	{% else %}
+																		{{ lmineral.fmparent|lower }} (Fl.)
+																	{% endif %}
+																</TD>
+															</TR>
+															{% set i=i+1%}
+														{% endfor %}
+													{% endfor %}			
+												</Table>
+											{% else %}
+												No minerals
+											{% endif %}
+										</TD>
+										<TD width="50%" class="celltop" >	
+										{% if arraysamheavymin|length > 0 %}
+											<Table class="table_format1">
+												{% for arraysamheavymin_item in arraysamheavymin %}
+													<TR>
+														<TH  class="titletable" colspan = "6" >
+															<label class="labelsview">Heavy minerals </label>
+														</TH>
+													</TR>
+													<TR>
+														<TD>
+															<label class="labelsview">Weight sample </label>
+														</TD>
+														<TD>
+															{{arraysamheavymin_item.weightsample|number_format(2, '.', '')}}
+														</TD>
+														<TD>
+															<label class="labelsview">Weight HM </label>
+														</TD>
+														<TD>
+															{{arraysamheavymin_item.weighthm|number_format(2, '.', '')}}
+														</TD>
+														<TD>
+															<label class="labelsview">Perc. HM: </label>
+														</TD>
+														<TD>
+															<label class="percHM"></label>
+														</TD>
+													</TR>
+													<TR>
+														<TD>
+															<label class="labelsview">Observation HM </label>
+														</TD>
+														<TD colspan = "5">
+															{{arraysamheavymin_item.observationhm}}
+														</TD>
+													</TR>
+													<TR>
+														<TD colspan = "6">.</TD>
+													</TR>
+												{% endfor %}
+												{% if arraysamheavymin2|length > 1 %}
+													<TR>
+														<TD colspan = "6"  align="center">
+															<Table class="HM newLine2 table_results3">
+																<TR>
+																	<TH width="10%" class="titletable">
+																		<label class="labelsview">Mineral </label>
+																	</TH>
+																	<TH width="10%" class="titletable">
+																		<label class="labelsview">Grains</label>
+																	</TH>
+																	<TH width="50%" class="titletable">
+																		<label class="labelsview">Observation</label>
+																	</TH>
+																	<TH width="15%" class="titletable">
+																		<label class="labelsview">% opaque</label>
+																	</TH>
+																	<TH width="15%" class="titletable">
+																		<label class="labelsview">% Non opaque</label>
+																	</TH>
+																</TR>
+																<TR id="HmineralsTotal">
+																		<TH width="10%" class="border_top">
+																			Total:
+																		</TH>
+																		<TH width="10%" class="border_top" style="text-align: center; vertical-align: middle;">
+																			<label class="calcTotalGrains">	</label>
+																		</TH>
+																		<TH width="50%" class="border_top">	</TH>
+																		<TH width="15%" class="border_top" style="text-align: center; vertical-align: middle;">
+																			<label class="calcTotalopaques" >	</label>
+																		</TH>
+																		<TH width="15%" class="border_top" style="text-align: center; vertical-align: middle;">
+																			<label class="calcTotalNonopaques" >	</label>
+																		</TH>
+																</TR>	
+																{% set j=0 %}
+																{% for arraysamheavymin2_item in arraysamheavymin2 %}
+																	<TR>
+																		<TD>
+																			{{arraysamheavymin2_item.mineral}}
+																		</TD>
+																		<TD style="text-align: center; vertical-align: middle;">
+																			{{arraysamheavymin2_item.minnum}}
+																		</TD>
+																		<TD>
+																			{{arraysamheavymin2_item.observationhm}}
+																		</TD>
+																		<TD style="text-align: center; vertical-align: middle;">
+																			<label class="calcOpaques{{j}}" >	</label>
+																		</TD>
+																		<TD style="text-align: center; vertical-align: middle;">
+																			<label class="calcNonopaques{{j}}" >	</label>
+																		</TD>
+																	</TR>		
+																	{% set j=j+1%}
+																{% endfor %}	
+															</Table>
+														</TD>
+													</TR>
+												{% else %}
+													<div class="nohmin">
+														No heavy minerals
+													</div>	
+												{% endif %}		
+											</Table>
+										{% else %}
+											No Heavy minerals
+										{% endif %}
+										</TD>
+									</TR>														
+								</Table>				
+							</div>
+						 </div>
+
+						 <div id=tab2> <a href="#tab2">Granulometry</a>
+							<div>
+								{% if arraydsamgranulo|length > 0 %}
+									<Table width="100%" class="table_view">
+										<TR>
+											<TH width="5%" class="titletable">
+												<label class="labelsview">Weight tot.</label>
+											</TH>
+											<TH width="5%" class="titletable">
+												<label class="labelsview">Weight sand</label>
+											</TH>
+											<TH width="5%" class="titletable">
+												<label class="labelsview"> &gt;2000 </label>
+											</TH>
+											<TH width="5%" class="titletable">
+												<label class="labelsview"> &lt;2000 </label>
+											</TH>
+											<TH width="5%" class="titletable">
+												<label class="labelsview">&lt;1400</label>
+											</TH>
+											<TH width="5%" class="titletable">
+												<label class="labelsview">&lt;1000 </label>
+											</TH>
+											<TH  width="5%" class="titletable">
+												<label class="labelsview">&lt;710 </label>
+											</TH>
+											<TH  width="5%" class="titletable">
+												<label class="labelsview">&lt;500</label>
+											</TH>
+											<TH  width="5%" class="titletable">
+												<label class="labelsview">&lt;355 </label>
+											</TH>
+											<TH  width="5%" class="titletable">
+												<label class="labelsview">&lt;250 </label>
+											</TH>
+											<TH  width="5%" class="titletable">
+												<label class="labelsview">&lt;180 </label>
+											</TH>
+											<TH  width="5%" class="titletable">
+												<label class="labelsview">&lt;125 </label>
+											</TH>
+											<TH  width="5%" class="titletable">
+												<label class="labelsview">&lt;90 </label>
+											</TH>
+											<TH  width="5%" class="titletable">
+												<label class="labelsview">&lt;63 </label>
+											</TH>
+											<TH  width="15%" class="titletable">
+												<label class="labelsview">Description </label>
+											</TH>
+											<TH  width="5%"  class="titletable" colspan=2>
+												<label class="labelsview">Date </label>
+											</TH>
+										</TR>
+										{% for samgranulo_item in arraydsamgranulo %}
+											<TR>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{samgranulo_item.weighttot|number_format(2, '.', '')}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{samgranulo_item.weightsand|number_format(2, '.', '')}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{samgranulo_item.wAbove2000|number_format(2, '.', '')}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{samgranulo_item.w2000|number_format(2, '.', '')}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{samgranulo_item.w1400|number_format(2, '.', '')}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{samgranulo_item.w1000|number_format(2, '.', '')}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{samgranulo_item.w710|number_format(2, '.', '')}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{samgranulo_item.w500|number_format(2, '.', '')}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{samgranulo_item.w355|number_format(2, '.', '')}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{samgranulo_item.w250|number_format(2, '.', '')}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{samgranulo_item.w180|number_format(2, '.', '')}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{samgranulo_item.w125|number_format(2, '.', '')}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{samgranulo_item.w90|number_format(2, '.', '')}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{samgranulo_item.w63|number_format(2, '.', '')}}
+												</TD>
+												<TD>
+													{{samgranulo_item.description}}
+												</TD>
+												<TD>
+													{{samgranulo_item.date|date('d-m-Y')}}
+												</TD>
+											</TR>
+										{% endfor %}
+									</Table>
+								{% else %}
+									No data in granulometry
+								{% endif %}
+							</div>
+						 </div>
+
+						 <div id=tab3> <a href="#tab3">Petrography</a>
+						  <div>Petrography fields</div>
+						 </div>
+
+						 <div id=tab4> <a href="#tab4">Magnetic susceptibility</a>
+							<div>
+								{% if arraydsammagsusc|length > 0 %}
+									<Table width="100%" class="table_view">
+										<TR>
+											<TH width="10%" class="titletable">
+												<label  class="labelsview">Weight </label>
+											</TH>
+											<TH width="10%" class="titletable">
+												<label class="labelsview">&delta; e10 </label>
+											</TH>
+											<TH width="10%" class="titletable">
+												<label class="labelsview">Average </label>
+											</TH>
+											<TH width="10%" class="titletable">
+												<label class="labelsview">Mesure 1 </label>
+											</TH>
+											<TH width="10%" class="titletable">
+												<label class="labelsview">Mesure 2 </label>
+											</TH>
+											<TH width="10%" class="titletable">
+												<label class="labelsview">Mesure 3 </label>
+											</TH>
+											<TH  width="10%" class="titletable">
+												<label class="labelsview">Mesure 4 </label>
+											</TH>
+											<TH  width="10%" class="titletable">
+												<label class="labelsview">Mesure 5 </label>
+											</TH>
+											<TH  width="10%" class="titletable">
+												<label class="labelsview">Mesure 6 </label>
+											</TH>
+											<TH width="10%" class="titletable">
+												<label class="labelsview">Exponent </label>
+											</TH>
+										</TR>
+										{% for arraydsammagsusc2 in arraydsammagsusc %}
+											<TR>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{arraydsammagsusc2.weight}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													<label class="delta"> </label>
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													<label class="average"> </label>
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{arraydsammagsusc2.mesure1|number_format(2, '.', '')}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{arraydsammagsusc2.mesure2|number_format(2, '.', '')}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{arraydsammagsusc2.mesure3|number_format(2, '.', '')}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">				
+													{{arraydsammagsusc2.mesure4|number_format(2, '.', '')}}											
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{arraydsammagsusc2.mesure5|number_format(2, '.', '')}}
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">				
+													{{arraydsammagsusc2.mesure6|number_format(2, '.', '')}}							
+												</TD>
+												<TD style="text-align: center; vertical-align: middle;">
+													{{arraydsammagsusc2.exponent}}	
+												</TD>
+											</TR>
+										{% endfor %}
+									</Table>
+								{% else %}
+									No data in magnetic susceptibility
+								{% endif %}
+							</div>
+						 </div>
+						 
+						 
+						 <div id=tab5> <a href="#tab5">Documentation</a>
+						  <div>Documentation fields</div>
+						 </div>
+						</div>
+					</div>
+				</div>
+			</TD>
+		</TR>
+		<TR>
+			<TD colspan=12>
+				<input type="button" onclick="editsample()" value="Edit sample" onmouseover="" style="cursor: pointer;"> 
+			</TD>
+		</TR>
+	</Table>
+	
+	<script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			//to go on first tab mineralogy at form load
+			var url = '{{ path("app_view_sample", {'pk': 'article_id'}) }}'; 
+			url = url.replace("article_id", "{{dsample.pk}}");
+			window.location = url+"#tab1";
+		});
+		function editsample() {
+			var url = '{{ path("app_edit_sample", {'pk': 'article_id'}) }}'; 
+			url = url.replace("article_id", "{{dsample.pk}}");
+			window.location = url;
+		}
+		
+		function valtransform(val,dec){
+			if (val > -1){
+				return parseFloat(val).toFixed(dec);
+			}else{
+				return 0;
+			}
+		}
+														
+		{% if arraylminerals is defined %}
+			{% set i=0%}
+			var formulas_array = [];
+			{% for lminerals in arraylminerals %}
+				{% for lmineral in lminerals %}
+					formulas_array[{{i}}]=displayFormula("{{lmineral.mformula}}"); 
+					$(".input_formula{{i}}").html(formulas_array[{{i}}]);
+					{% set i=i+1%}
+				{% endfor %}
+			{% endfor %}	
+		{% endif %}
+		
+		function displayFormula(formula){	
+			var newformula = "";		
+			if(formula.indexOf("&lt;") != -1){
+				formula = formula.replace(/&gt;/g,">").replace(/&lt;/g,"<");		
+			}
+			newformula = formula.replace(/>/g,"ยง");
+			newformula = newformula.replace(/</g,"<sub>");
+			newformula = newformula.replace(/ยง/g,"</sub>");
+			newformulaarray = newformula.split("&#039;");
+			
+			if (newformulaarray.length >1){
+				newformula = "";
+				for (i=0;i<newformulaarray.length; i++){
+					if (i%2 == 0){
+						newformula = newformula + newformulaarray[i];
+					}else{
+						newformula = newformula + "<sup>" + newformulaarray[i] + "</sup>";
+					}
+				}
+			}
+			return newformula;
+		}
+	
+		{% if arraydsammagsusc|length > 0 %}
+			var aver = 0;
+			{% for arraydsammagsusc2 in arraydsammagsusc %}
+				{% if arraydsammagsusc2.mesure3 < 1  %}
+					aver = 0;
+				{% elseif  arraydsammagsusc2.mesure4 < 1  %}
+					aver =({{arraydsammagsusc2.mesure1}}+{{arraydsammagsusc2.mesure2}}+{{arraydsammagsusc2.mesure3}})/3;
+				{% elseif  arraydsammagsusc2.mesure5 < 1  %}
+					aver =({{arraydsammagsusc2.mesure1}}+{{arraydsammagsusc2.mesure2}}+{{arraydsammagsusc2.mesure3}}+{{arraydsammagsusc2.mesure4}})/4;
+				{% elseif  arraydsammagsusc2.mesure6 < 1  %}
+					aver =({{arraydsammagsusc2.mesure1}}+{{arraydsammagsusc2.mesure2}}+{{arraydsammagsusc2.mesure3}}+{{arraydsammagsusc2.mesure4}}+{{arraydsammagsusc2.mesure5}})/5;
+				{% else %} 
+					aver = {{arraydsammagsusc2.mesure1}}+{{arraydsammagsusc2.mesure2}}+{{arraydsammagsusc2.mesure3}}+{{arraydsammagsusc2.mesure4}}+{{arraydsammagsusc2.mesure5}}+{{arraydsammagsusc2.mesure6}})/6;
+				{% endif %}
+				$(".average").html(parseFloat(aver).toFixed(2));
+			 
+				var delta = 0;
+				{% if arraydsammagsusc2.mesure3 < 1  %}
+					delta = 0;
+				{% else %} 
+					delta = ({{arraydsammagsusc2.mesure1}}+{{arraydsammagsusc2.mesure2}}+{{arraydsammagsusc2.mesure3}})/3*100/{{arraydsammagsusc2.weight}}; ///3*0.00000001
+				{% endif %}
+			{% endfor %}
+			$(".delta").html(parseFloat(delta).toFixed(2));
+		{% endif %}
+		
+		{% if arraysamheavymin is defined %}
+			{% for arraysamheavymin_item in arraysamheavymin %}
+				{% if arraysamheavymin_item.weightsample > 0  %}
+					$perc = ({{arraysamheavymin_item.weighthm}}/{{arraysamheavymin_item.weightsample}}) *100;
+					$('.percHM').html(valtransform($perc,3)+" %");
+				{% endif %}
+			{% endfor %}
+		
+			{% if arraysamheavymin2|length > 1 %}
+				$sumopaque = 0;
+				$sumNonopaque = 0;
+				$sumTotgrains = 0;
+				m=0;
+				{% for arraysamheavymin2_item in arraysamheavymin2 %}	
+					if ("{{arraysamheavymin2_item.mineral}}" == "opaque"){
+						$sumopaque = {{arraysamheavymin2_item.minnum}};
+					}else{
+						$sumNonopaque = $sumNonopaque + {{arraysamheavymin2_item.minnum}};
+					}
+					$sumTotgrains = $sumTotgrains + {{arraysamheavymin2_item.minnum}};
+					m++;
+				{% endfor %}	
+
+				n=0;
+				{% for arraysamheavymin2_item in arraysamheavymin2 %}
+					if ("{{arraysamheavymin2_item.mineral}}" == "opaque"){
+						$('.calcOpaques'+n).html("100%");
+					}else{
+						$percnonopaque = ({{arraysamheavymin2_item.minnum}}/$sumNonopaque)*100;
+						$('.calcNonopaques'+n).html(parseFloat($percnonopaque).toFixed(2)+"%");
+					}
+					n++;
+				{% endfor %}	
+				
+				$('.calcTotalGrains').html($sumTotgrains);
+				$percTotOpaque = ($sumopaque/$sumTotgrains)*100;
+				$percTotNonOpaque = ($sumNonopaque/$sumTotgrains)*100;
+				$('.calcTotalopaques').html(parseFloat($percTotOpaque).toFixed(2)+"%");
+				$('.calcTotalNonopaques').html(parseFloat($percTotNonOpaque).toFixed(2)+"%");
+			{% endif %}	
+		{% endif %}
+	</script>	
+{% endblock %}
+

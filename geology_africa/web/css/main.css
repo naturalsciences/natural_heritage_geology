@@ -1,0 +1,267 @@
+body
+{
+	min-width: 900px;
+	font-size: 12pt;
+	font-family:sans-serif;
+}
+
+#footer {
+    max-width: 980px;
+    text-align: center;
+    margin: auto;
+}
+
+h3 {
+	font-family: 'Source Sans Pro', sans-serif;
+	text-transform:uppercase;
+	font-weight : 300;
+	font-size : 14px;
+	color : #000;
+}
+
+.labelsview {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: bold;
+	font-size : 14px;
+	color : #000;
+}
+
+input, label {
+	display: inline;
+}
+
+textarea {
+	width:90%;
+}
+
+.copyright {
+    text-align: right;
+}
+
+#loginform{
+	margin: 0 auto; 
+	width:250px;
+}
+
+input[type="integer"] {
+   width:50px;
+}
+
+/* Tabs */
+div.tabs {
+  min-height: 21em;					/* No height: can grow if :target doesn't work */
+  position: relative;				/* Establish a containing block */
+  line-height: 1;					/* Easier to calculate with */
+  z-index: 0}						/* So that we can put other things behind */
+div.tabs > div {
+  display: inline}					/* We want the buttons all on one line */
+div.tabs > div > a {
+  color: black;						/* Looks more like a button than a link */
+  background: #f5d4b7;					/* Active tabs are light gray */
+  padding: 0.2em;					/* Some breathing space */
+  border: 0.1em outset #BBB;		/* Make it look like a button */
+  border-bottom: 0.1em solid #f5d4b7} 	/* Visually connect tab and tab body */
+div.tabs > div:not(:target) > a {
+  color: white;						/* text colour of not selected */
+  border-bottom: none;				/* Make the bottom border disappear */
+  background: #826142}					/* Inactive tabs are dark gray */
+div.tabs > div:target > a,			/* Apply to the targeted item or... */
+:target #default2 > a {				/* ... to the default item */
+  border-bottom: 0.1em solid #f5d4b7; 	/* Visually connect tab and tab body */
+  background: #f5d4b7}					/* Active tab is light gray */
+div.tabs > div > div {
+  background: #f5d4b7;					/* Light gray */
+  z-index: -2;						/* Behind, because the borders overlap */
+  left: 0; top: 1.3em;				/* The top needs some calculation... */
+  bottom: 0; right: 0;				/* Other sides flush with containing block */
+  overflow: auto;					/* Scroll bar if needed */
+  padding: 0.3em;					/* Looks better */
+  border: 0.1em outset #BBB}		/* 3D look */
+div.tabs > div:not(:target) > div { /* Protect CSS1 & CSS2 browsers */
+  position: absolute }				/* All these DIVs overlap */
+div.tabs > div:target > div, :target #default2 > div {
+  position: absolute;				/* All these DIVs overlap */
+  z-index: -1}						/* Raise it above the others */
+div.tabs :target {
+  outline: none}
+  
+  .mineralsTitle{
+  background-color: #f6d8b9;
+}
+
+.newLine_mineral_div{
+  height:160px;
+  overflow-y: scroll;
+}
+
+.newLine tr:nth-child(even){
+  background-color: #f6d8b9;
+}
+
+.ui-autocomplete { 
+	height: 200px; 
+	overflow-y: scroll; 
+	overflow-x: hidden;
+}
+
+.top_of_home{
+	background-color: #fff;
+}
+
+.top_of_search{
+	background-color: #daf3ee;
+}
+
+.title_table_search{
+	text-align: left;
+	background-color: #819c9e;
+	color : #FFF;
+	font-size : 16px;
+}
+
+.title_table_view{
+	text-align: left;
+	border-right: 1px solid black;
+	background-color: #FFE4C4;
+	color : #FFF;
+	font-size : 16px;
+}
+
+.table_search{
+	border: 2px solid black;
+	width : 100%;
+	height : 100px;
+	background-color: #b8e1cc;
+	font-size : 13px;
+}
+
+.title_table_edit{
+	text-align: left;
+	background-color: #826142;
+	color : #FFF;
+	font-size : 16px;
+	height: 20px;
+}
+
+.table_edit{
+	border: 2px solid black;
+	width : 100%;
+	height : 100px;
+	background-color: #f8eadd;
+	font-size : 13px;
+}
+
+.table_view{
+	border: 2px solid black;
+	width : 100%;
+	height : 100px;
+	background-color: #f8eadd;
+	font-size : 13px;
+	padding : 5px;
+}
+
+table.table_search td,th{
+	padding: 3px;
+    text-align: left;
+}
+
+.table_nbr_results{
+		width : 100%;
+}
+
+table.table_nbr_results .td1{
+	padding: 3px;
+    text-align: right;
+	width:130px;
+}
+
+.table_results{
+		border-bottom: 2px solid #000;
+		width : 100%;
+		font-size : 13px;
+}
+
+table.table_results th{
+	background-color: #819c9e;
+	border-bottom: 2px solid #000;
+	font-family: 'Source Sans Pro', sans-serif;
+    font-size : 13px;
+    color : #FFF;
+	max-width: 10px;
+	word-wrap:break-word;
+} 
+
+table.table_results td{
+	font-family: 'Source Sans Pro', sans-serif;
+    font-size : 13px;
+	max-width: 100px;
+	word-wrap:break-word;
+} 
+
+table.table_results tr:nth-child(odd) {
+	background-color: #f2f2f2;
+} 
+
+table.table_results2{
+	border: 2px solid #000;
+	width : 97%;
+} 
+
+table.table_results2 tr:nth-child(even) {
+	background-color: #f2f2f2;
+} 
+
+table.table_results3{
+	width : 97%;
+} 
+
+table.table_results3 tr:nth-child(even) {
+	background-color: #f2f2f2;
+} 
+
+th.border_bottom {
+  border-bottom:1pt solid black;
+}
+
+table.table_format1{
+	border: 2px solid #000;
+	width : 97%;
+} 
+
+td.celltop{
+	vertical-align: top;
+} 
+
+.titletable{
+	text-align: center;
+	background-color: #f5d4b7;
+	border-bottom:1pt solid black;
+}
+
+input[type="text"].vshortlength {
+    width: 50px;
+}
+
+input[type="text"].shortlength {
+    width: 100px;
+}
+input[type="text"].middlelength {
+    width: 250px;
+}
+input[type="text"].fulllength {
+    width: 100%;
+}
+
+.up-arrow, .down-arrow {
+font-size: .8em;
+}
+
+.up-arrow:hover,  .down-arrow:hover {
+	color: blue !important;
+}
+
+.alert_message{
+	font-size: 2em;
+	color: red;
+	text-align: center;
+}

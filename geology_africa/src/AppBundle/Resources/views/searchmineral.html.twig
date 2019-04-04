@@ -1,0 +1,226 @@
+{# src/AppBundle/Resources/views/searchmineral.html.twig #}
+
+{% extends "@App/searchlayout.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - Minerals
+{% endblock %}
+		
+{% block body_top %}
+	<table width = "100%">
+		<tr>
+			<td width = "100%">
+				<table class="ui-front table_search only_minerals">
+					<tr>
+						<th class="title_table_search" width="100%" colspan = "6">
+							Minerals
+						</th>
+					</tr>
+					<tr>
+						<th width = "20%">
+							ID mineral:
+						</th>
+						<td colspan = "5">
+							<input type="integer" class="inp_searchidmineral">
+						</td>
+					</tr>
+					<tr>
+						<th width = "20%">
+							Class:
+						</th>
+						<td  width = "30%">
+							<select id="inp_searchminclass" class="inp_searchminclass" style="max-width:150px;">
+								<option value="all">All</option>
+							</select>
+						</td>
+						<th >
+							Group:
+						</th>
+						<td >
+							<select id="inp_searchmingroup" class="inp_searchmingroup">
+								<option value="all">All</option>
+							</select>
+						</td>
+						<th >
+							Parent:
+						</th>
+						<td >
+							<select id="inp_searchminparent" class="inp_searchminparent">
+								<option value="all">All</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th >
+							Mineral:
+						</th>
+						<td>
+							<select id="inp_searchmineral" class="inp_searchmineral">
+								<option value="all">All</option>
+							</select>
+						</td>
+						<th>
+							Mineral formula:
+						</th>
+						<td colspan="3">
+							<input type="text" class="inp_searchmineralFormula middlelength" style="max-width:70%;" data-toggle="tooltip" data-placement="top" title="Enter one or more component as written in the formula">
+						</td>
+					</tr>
+				</table>
+				<!--</div>-->
+			</td>
+		</tr>
+	</table>
+	<BR/>
+	<input type="button" class="but_searchnum" value="Search">
+	
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    
+	<script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
+	<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="{{ asset('js/core.js') }}"></script>
+	
+	<script type="text/javascript">
+		
+		var minclassSelect = $(".inp_searchminclass");
+		var mingroupSelect = $(".inp_searchmingroup");
+		var mineralSelect = $(".inp_searchmineral");
+		var parentSelect = $(".inp_searchminparent");
+		
+		var coderesults = [];
+		var sortDirection = "";
+		
+		//ajax to fill the comboboxes------
+
+		
+		function naturalCompare(a, b) {
+			var ax = [], bx = [];
+
+			a.replace(/(\d+)|(\D+)/g, function(_, $1, $2) { ax.push([$1 || Infinity, $2 || ""]) });
+			b.replace(/(\d+)|(\D+)/g, function(_, $1, $2) { bx.push([$1 || Infinity, $2 || ""]) });
+			
+			while(ax.length && bx.length) {
+				var an = ax.shift();
+				var bn = bx.shift();
+				var nn = (an[0] - bn[0]) || an[1].localeCompare(bn[1]);
+				if(nn) return nn;
+			}
+
+			return ax.length - bx.length;
+		}
+
+		
+		//combo of minerals
+		function fill_combos(path,combofield){
+			var namesarray = [];
+			var fnamesarray = [];
+			
+			$.ajax({
+				url: path,
+				type: "GET",
+				dataType: "JSON",
+				success: function (data) {
+					var i = 0;
+					var l = 0;
+					namesarray = [];
+					fnamesarray = [];
+					$.each(data, function (key, data1) {
+						if ((data1.mname != null) & (data1.mname != "" )){
+							namesarray[i] = data1.mname;
+							i++;
+						}
+						if ((data1.fmname != null)  & (data1.fmname != "")){
+							fnamesarray[l] = data1.fmname;
+							l++;
+						}
+					});
+					
+					if(combofield == mineralSelect){
+						var newArray = namesarray;
+						var found=false;
+						var newindex = i;
+						for(var m =0;m<l;m++){
+							found=false;
+							for(var n =0;n<i;n++){
+								if (newArray[n].toLowerCase() == fnamesarray[m].toLowerCase()){
+									found=true;
+								}
+							}
+							if (found==false){
+								newindex++;
+								newArray[newindex] = fnamesarray[m];
+							}
+						}
+
+						newArray.sort(naturalCompare);
+
+						for (var j=0;j < newindex;j++){
+							if(newArray[j] != null){
+								combofield.append('<option value="' + newArray[j] + '">' + newArray[j].toLowerCase() + '</option>');
+							}
+						};
+					}else{
+						for (var k=0;k<fnamesarray.length;k++){
+							combofield.append('<option value="' + fnamesarray[k] + '">' + fnamesarray[k].toLowerCase() + '</option>');
+						};
+					}
+				},
+				error: function (err) {
+					alert("An error ocurred while loading data ...");
+				}
+			});
+		};
+		fill_combos("{{ path('app_minerals_list', {'querygroup': 'class' })  }}",minclassSelect);
+		fill_combos("{{ path('app_minerals_list', {'querygroup': 'group' })  }}",mingroupSelect);
+		fill_combos("{{ path('app_minerals_list', {'querygroup': 'mineral' })  }}",mineralSelect)
+		
+		//combo of parents
+		$.ajax({
+			url: "{{ path('app_mineralparents_list') }}",
+			type: "GET",
+			dataType: "JSON",
+			success: function (data) {
+				$.each(data, function (key, data1) {
+					parentSelect.append('<option value="' +data1.mparent + '">' + data1.mparent.toLowerCase() + '</option>');
+				});
+			},
+			error: function (err) {
+				alert("An error ocurred while loading data ...");
+			}
+		});
+		
+		function searchclic(){
+			var queryvals = "idmineral:"+$(".inp_searchidmineral").val()
+			+",,classmineral:"+$(".inp_searchminclass").val()
+			+",,groupmineral:"+$(".inp_searchmingroup").val()
+			+",,mineral:"+$(".inp_searchmineral").val()
+			+",,formulamineral:"+$(".inp_searchmineralFormula").val()
+			+",,parentmineral:"+$(".inp_searchminparent").val()
+			;
+
+			if ( $( ".inp_searchNbrResByPage" ).length ) {
+				queryvals = queryvals + ",,NbrResByPage:"+$(".inp_searchNbrResByPage").val();
+			}else{
+				queryvals = queryvals + ",,NbrResByPage:20";
+			}
+		
+			if ( sortDirection.length ) {
+				queryvals = queryvals + ",,sortDirection:"+sortDirection;
+			}else{
+				queryvals = queryvals + ",,sortDirection:mname ASC";
+			}
+
+			var url = '{{ path("app_result_mineral", {'queryvals': 'article_id'}) }}';
+			url = url.replace("article_id", queryvals);
+
+			window.location = url;
+		}
+			
+		$(document).ready(function() {
+			
+			$(".but_searchnum").click(searchclic);
+
+		});
+	</script>
+
+{% endblock %}

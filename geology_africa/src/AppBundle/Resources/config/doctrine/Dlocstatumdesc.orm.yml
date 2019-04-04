@@ -1,0 +1,48 @@
+AppBundle\Entity\Dlocstatumdesc:
+    type: entity
+    table: dlocstatumdesc
+    indexes:
+        IDX_E798BD8931E4780850E3C8BA3D607B62:
+            columns:
+                - idcollection
+                - idpt
+                - idstratum
+    uniqueConstraints:
+        dlocstatumdesc_unique:
+            columns:
+                - idcollection
+                - idpt
+                - idstratum
+                - descript
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        descript:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+    manyToOne:
+        idcollection:
+            targetEntity: Dloclitho
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                idpt:
+                    referencedColumnName: idpt
+                idstratum:
+                    referencedColumnName: idstratum
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,78 @@
+AppBundle\Entity\Dlocstructure:
+    type: entity
+    table: dlocstructure
+    uniqueConstraints:
+        dlocstructure_unique:
+            columns:
+                - idcollection
+                - idpt
+                - idstratum
+                - nummesure
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        idcollection:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        idpt:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        idstratum:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        nummesure:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        objectmesure:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        dip:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        dipdirection:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        orientation:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        striation:
+            type: boolean
+            nullable: true
+        sens:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        structureinfo:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,68 @@
+AppBundle\Entity\Dloclitho:
+    type: entity
+    table: dloclitho
+    indexes:
+        IDX_AA614F2531E4780850E3C8BA:
+            columns:
+                - idcollection
+                - idpt
+    uniqueConstraints:
+        dloclitho_unique:
+            columns:
+                - idcollection
+                - idpt
+                - idstratum
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        idstratum:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        lithostratum:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        topstratum:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        bottomstratum:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        alternance:
+            type: boolean
+            nullable: true
+        descriptionstratum:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    manyToOne:
+        idcollection:
+            targetEntity: Dloccenter
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                idpt:
+                    referencedColumnName: idpt
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

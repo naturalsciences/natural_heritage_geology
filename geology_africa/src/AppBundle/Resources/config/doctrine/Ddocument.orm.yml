@@ -1,0 +1,111 @@
+AppBundle\Entity\Ddocument:
+    type: entity
+    table: ddocument
+    indexes:
+        IDX_5ACD9119C67345B7:
+            columns:
+                - medium
+    uniqueConstraints:
+        ddocument_unique:
+            columns:
+                - idcollection
+                - iddoc
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        idcollection:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        iddoc:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        idpt:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                default: '0'
+        numarchive:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        caption:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        centralnum:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        location:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        numericallocation:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        filename:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        docinfo:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        edition:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        pubplace:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        doccartotype:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    manyToOne:
+        medium:
+            targetEntity: Lmedium
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                medium:
+                    referencedColumnName: medium
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

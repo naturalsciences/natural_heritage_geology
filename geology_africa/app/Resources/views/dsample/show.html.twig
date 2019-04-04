@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Dsample</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Pk</th>
+                <td>{{ dsample.pk }}</td>
+            </tr>
+            <tr>
+                <th>Idcollection</th>
+                <td>{{ dsample.idcollection }}</td>
+            </tr>
+            <tr>
+                <th>Idsample</th>
+                <td>{{ dsample.idsample }}</td>
+            </tr>
+            <tr>
+                <th>Fieldnum</th>
+                <td>{{ dsample.fieldnum }}</td>
+            </tr>
+            <tr>
+                <th>Museumnum</th>
+                <td>{{ dsample.museumnum }}</td>
+            </tr>
+            <tr>
+                <th>Museumlocation</th>
+                <td>{{ dsample.museumlocation }}</td>
+            </tr>
+            <tr>
+                <th>Boxnumber</th>
+                <td>{{ dsample.boxnumber }}</td>
+            </tr>
+            <tr>
+                <th>Sampledescription</th>
+                <td>{{ dsample.sampledescription }}</td>
+            </tr>
+            <tr>
+                <th>Weight</th>
+                <td>{{ dsample.weight }}</td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td>{{ dsample.quantity }}</td>
+            </tr>
+            <tr>
+                <th>Size</th>
+                <td>{{ dsample.size }}</td>
+            </tr>
+            <tr>
+                <th>Dimentioncode</th>
+                <td>{{ dsample.dimentioncode }}</td>
+            </tr>
+            <tr>
+                <th>Quality</th>
+                <td>{{ dsample.quality }}</td>
+            </tr>
+            <tr>
+                <th>Slimplate</th>
+                <td>{% if dsample.slimplate %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Chemicalanalysis</th>
+                <td>{% if dsample.chemicalanalysis %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Holotype</th>
+                <td>{% if dsample.holotype %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Paratype</th>
+                <td>{% if dsample.paratype %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Radioactivity</th>
+                <td>{{ dsample.radioactivity }}</td>
+            </tr>
+            <tr>
+                <th>Loaninformation</th>
+                <td>{{ dsample.loaninformation }}</td>
+            </tr>
+            <tr>
+                <th>Securitylevel</th>
+                <td>{{ dsample.securitylevel }}</td>
+            </tr>
+            <tr>
+                <th>Varioussampleinfo</th>
+                <td>{{ dsample.varioussampleinfo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('sample_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('sample_edit', { 'pk': dsample.pk }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

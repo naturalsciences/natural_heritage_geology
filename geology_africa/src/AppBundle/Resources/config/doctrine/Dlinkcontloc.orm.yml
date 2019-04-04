@@ -1,0 +1,44 @@
+AppBundle\Entity\Dlinkcontloc:
+    type: entity
+    table: dlinkcontloc
+    indexes:
+        IDX_C82D3C5831E47808BF396750:
+            columns:
+                - idcollection
+                - id
+    uniqueConstraints:
+        dlinkcontloc_unique:
+            columns:
+                - idcontribution
+                - idcollection
+                - id
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        idcontribution:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+    manyToOne:
+        idcollection:
+            targetEntity: Dloccenter
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                id:
+                    referencedColumnName: idpt
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

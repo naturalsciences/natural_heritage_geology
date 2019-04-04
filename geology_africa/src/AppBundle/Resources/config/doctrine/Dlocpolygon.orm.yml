@@ -1,0 +1,71 @@
+AppBundle\Entity\Dlocpolygon:
+    type: entity
+    table: dlocpolygon
+    indexes:
+        IDX_C727A7E931E4780850E3C8BA:
+            columns:
+                - idcollection
+                - idpt
+        IDX_C727A7E9C9A8DD1E:
+            columns:
+                - polyarea
+    uniqueConstraints:
+        dlocpolygon_unique:
+            columns:
+                - idcollection
+                - idpt
+                - polyarea
+                - polyname
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        polyname:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+                default: '0'
+        polydescription:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        idpoly:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                default: '0'
+    manyToOne:
+        idcollection:
+            targetEntity: Dloccenter
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                idpt:
+                    referencedColumnName: idpt
+            orphanRemoval: false
+        polyarea:
+            targetEntity: Larea
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                polyarea:
+                    referencedColumnName: polyarea
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

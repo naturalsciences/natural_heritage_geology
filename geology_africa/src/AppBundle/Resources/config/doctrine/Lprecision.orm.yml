@@ -1,0 +1,29 @@
+AppBundle\Entity\Lprecision:
+    type: entity
+    table: lprecision
+    uniqueConstraints:
+        lprecision_unique:
+            columns:
+                - idprecision
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        precision:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        idprecision:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: false
+    lifecycleCallbacks: {  }

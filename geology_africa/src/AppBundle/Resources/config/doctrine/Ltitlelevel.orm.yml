@@ -1,0 +1,30 @@
+AppBundle\Entity\Ltitlelevel:
+    type: entity
+    table: ltitlelevel
+    uniqueConstraints:
+        ltitlelevel_unique:
+            columns:
+                - titlelevel
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        titlelevel:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: false
+                default: '1'
+        titlecaption:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

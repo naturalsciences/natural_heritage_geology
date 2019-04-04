@@ -1,0 +1,31 @@
+AppBundle\Entity\Lkeywords:
+    type: entity
+    table: lkeywords
+    uniqueConstraints:
+        unique_keywords:
+            columns:
+                - wordson
+                - wordfather
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        wordson:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        wordfather:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

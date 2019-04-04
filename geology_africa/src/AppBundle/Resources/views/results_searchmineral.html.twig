@@ -1,0 +1,228 @@
+{# src/AppBundle/Resources/views/results_searchmineral.html.twig #}
+		
+{% set arrayqueryvals = queryvals|split(',,') %}
+{% set elem = {} %}
+{% for e in arrayqueryvals %}
+{% 		set elem1 = e|split(':') %}
+{%  	set elem = elem|merge({(elem1[0]):(elem1[1])}) %}
+{% endfor %}
+	
+{% block body_top %}
+	{{ include("@App/searchmineral.html.twig") }}
+	
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			onElementModified('body', '#inp_searchmineral', function(element){
+				$(".inp_searchmingroup option[value='{{elem['groupmineral']}}']").prop("selected","selected");
+				$(".inp_searchminclass option[value='{{elem['classmineral']}}']").prop("selected","selected");
+				$(".inp_searchmineral option[value='{{elem['mineral']}}']").prop("selected","selected");
+				$(".inp_searchminparent option[value='{{elem['parentmineral']}}']").prop("selected","selected");
+			});	
+			
+			$(".inp_searchidmineral").val("{{elem['idmineral']}}");
+			$(".inp_searchmineralFormula").val("{{elem['formulamineral']}}");
+			
+			sortDirection = "{{elem['sortDirection']}}";
+			$namef = "{{elem['sortDirection']}}".replace(" DESC", "_down").replace(" ASC", "_up");
+			$("."+ $namef).css('color', 'black');		
+		});
+	</script>
+
+{% endblock %}
+
+{% block body %}
+	{% block results_search_body %}
+		<table class="table_nbr_results">
+			<tr>
+				<th class="td1">
+					Results :
+				</th>
+				<td class="td1">
+					<label class="lab_number_results">
+				</td>
+				<td align="right">
+					Nbr of results by page:
+				</td>
+				<td width="50px">
+					<select class="inp_searchNbrResByPage">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="25">25</option>
+						<option value="50">50</option>
+						<option value="75">75</option>
+						<option value="100">100</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		
+		<TABLE class="table_results">
+			<TR>
+				<TH width="4%">
+					ID
+					<span style="float:right;">
+						<div class="idsample_up up-arrow" onclick="sortTable('idmineral',1)">&#9650</div>
+						<div class="idsample_down down-arrow" onclick="sortTable('idmineral',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="5%">
+					Rank
+					<span style="float:right;">
+						<div class="mineral_up up-arrow" onclick="sortTable('rank',1)">&#9650</div>
+						<div class="mineral_down down-arrow" onclick="sortTable('rank',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="10%">
+					Name
+					<span style="float:right;">
+						<div class="mineral_up up-arrow" onclick="sortTable('mname',1)">&#9650</div>
+						<div class="mineral_down down-arrow" onclick="sortTable('mname',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="10%">
+					Name (Florias)
+					<span style="float:right;">
+						<div class="mineral_up up-arrow" onclick="sortTable('fmname',1)">&#9650</div>
+						<div class="mineral_down down-arrow" onclick="sortTable('fmname',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="13%">
+					Parent
+					<span style="float:right;">
+						<div class="mineral_up up-arrow" onclick="sortTable('mparent',1)">&#9650</div>
+						<div class="mineral_down down-arrow" onclick="sortTable('mparent',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="13%">
+				¨Parent (Florias)
+					<span style="float:right;">
+						<div class="mineral_up up-arrow" onclick="sortTable('fmparent',1)">&#9650</div>
+						<div class="mineral_down down-arrow" onclick="sortTable('fmparent',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="30%">
+					Formula
+					<span style="float:right;">
+						<div class="mformula_up up-arrow" onclick="sortTable('mformula',1)">&#9650</div>
+						<div class="mformula_down down-arrow" onclick="sortTable('mformula',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="1%">
+				</TH>
+			</TR>
+			{% set i=0 %}
+			{% for item in results %}
+				<TR> 
+					<TD class="but_showmineral_{{item.pk}}" onclick="viewmineral({{item.pk}})" alt="home" height="11" width="13" onmouseover="" style="cursor: pointer;">
+						{{item.idmineral}}
+					</TD>
+					<TD>
+						{{item.rank}}
+					</TD>
+					<TD>
+						{% if (item.mname|length > 0) %} 
+							{{item.mname|lower}}
+						{% endif %}
+					</TD>
+					<TD>
+						{% if (item.fmname|length > 0) %} 
+							{{ item.fmname|lower}} 
+						{% endif %}
+					</TD>
+					<TD>
+						{% if (item.mparent|length > 0) %} 
+							{{item.mparent|lower}}
+						{% endif %}
+					</TD>
+					<TD>
+						{% if (item.fmparent|length > 0) %} 
+							{{ item.fmparent|lower}} 
+						{% endif %}
+					</TD>
+					<TD>
+						<label class="input_formula{{i}}" >	</label>
+					</TD>
+					<TD>
+						<img src="{{ asset('pics/edit.png') }}" class="but_editmineral_{{item.pk}}" onclick="editmineral({{item.pk}})" alt="home" height="11" width="13" onmouseover="" style="cursor: pointer;"> 
+					</TD>
+				</TR>
+				{% set i=i+1%}
+			{% endfor %}
+		</TABLE>
+		<div class="navigation text-center">
+			{{ knp_pagination_render(results) }}
+		</div>
+		
+		<script type="text/javascript">
+		
+			{% set i=0%}
+			var formulas_array = [];
+			{% for item in results %}
+				formulas_array[{{i}}]=displayFormula("{{item.mformula}}");
+				$(".input_formula{{i}}").html(formulas_array[{{i}}]);
+				{% set i=i+1%}
+			{% endfor %}	
+			
+			function displayFormula(formula){	
+				var newformula = "";		
+				if(formula.indexOf("&lt;") != -1){
+					formula = formula.replace(/&gt;/g,">").replace(/&lt;/g,"<");		
+				}
+				newformula = formula.replace(/>/g,"§");
+				newformula = newformula.replace(/</g,"<sub>");
+				newformula = newformula.replace(/§/g,"</sub>");
+				newformulaarray = newformula.split("&#039;");
+				
+				if (newformulaarray.length >1){
+					newformula = "";
+					for (i=0;i<newformulaarray.length; i++){
+						if (i%2 == 0){
+							newformula = newformula + newformulaarray[i];
+						}else{
+							newformula = newformula + "<sup>" + newformulaarray[i] + "</sup>";
+						}
+					}
+				}
+				return newformula;
+			}
+			
+			function sortTable(n,dir) {
+				if (dir==1){
+					sortDirection = n+" "+"ASC";
+				}
+				if (dir==2){
+					sortDirection = n+" "+"DESC";
+				}
+				searchclic();
+			}
+			
+			function editmineral(pk) {
+				var url = '{{ path("app_edit_mineral", {'pk': 'article_id'}) }}'; 
+				url = url.replace("article_id", pk);
+				window.location = url;
+			}
+			
+			function viewmineral(pk) {
+				var url = '{{ path("app_view_mineral", {'pk': 'article_id'}) }}'; 
+				url = url.replace("article_id", pk);
+				window.location = url;
+			}
+			
+			$(document).ready(function() {
+				$(".lab_number_results").html("{{elem['nbrres']}} records");
+				$(".inp_searchNbrResByPage").val("{{elem['NbrResByPage']}}");
+
+				$('.inp_searchNbrResByPage').on('change', function() {
+					nbrval = $('.inp_searchNbrResByPage option:selected').val();
+					searchclic();
+				});
+				
+			});
+		</script>
+	{% endblock %}
+{% endblock %}
+

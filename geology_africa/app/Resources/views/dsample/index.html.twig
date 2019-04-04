@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Dsamples list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Pk</th>
+                <th>Idcollection</th>
+                <th>Idsample</th>
+                <th>Fieldnum</th>
+                <th>Museumnum</th>
+                <th>Museumlocation</th>
+                <th>Boxnumber</th>
+                <th>Sampledescription</th>
+                <th>Weight</th>
+                <th>Quantity</th>
+                <th>Size</th>
+                <th>Dimentioncode</th>
+                <th>Quality</th>
+                <th>Slimplate</th>
+                <th>Chemicalanalysis</th>
+                <th>Holotype</th>
+                <th>Paratype</th>
+                <th>Radioactivity</th>
+                <th>Loaninformation</th>
+                <th>Securitylevel</th>
+                <th>Varioussampleinfo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dsample in dsamples %}
+            <tr>
+                <td><a href="{{ path('sample_show', { 'pk': dsample.pk }) }}">{{ dsample.pk }}</a></td>
+                <td>{{ dsample.idcollection }}</td>
+                <td>{{ dsample.idsample }}</td>
+                <td>{{ dsample.fieldnum }}</td>
+                <td>{{ dsample.museumnum }}</td>
+                <td>{{ dsample.museumlocation }}</td>
+                <td>{{ dsample.boxnumber }}</td>
+                <td>{{ dsample.sampledescription }}</td>
+                <td>{{ dsample.weight }}</td>
+                <td>{{ dsample.quantity }}</td>
+                <td>{{ dsample.size }}</td>
+                <td>{{ dsample.dimentioncode }}</td>
+                <td>{{ dsample.quality }}</td>
+                <td>{% if dsample.slimplate %}Yes{% else %}No{% endif %}</td>
+                <td>{% if dsample.chemicalanalysis %}Yes{% else %}No{% endif %}</td>
+                <td>{% if dsample.holotype %}Yes{% else %}No{% endif %}</td>
+                <td>{% if dsample.paratype %}Yes{% else %}No{% endif %}</td>
+                <td>{{ dsample.radioactivity }}</td>
+                <td>{{ dsample.loaninformation }}</td>
+                <td>{{ dsample.securitylevel }}</td>
+                <td>{{ dsample.varioussampleinfo }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('sample_show', { 'pk': dsample.pk }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('sample_edit', { 'pk': dsample.pk }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('sample_new') }}">Create a new dsample</a>
+        </li>
+    </ul>
+{% endblock %}

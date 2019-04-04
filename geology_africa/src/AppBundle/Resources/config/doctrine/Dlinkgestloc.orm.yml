@@ -1,0 +1,43 @@
+AppBundle\Entity\Dlinkgestloc:
+    type: entity
+    table: dlinkgestloc
+    indexes:
+        IDX_589681E31E4780850E3C8BA:
+            columns:
+                - idcollection
+                - idpt
+    uniqueConstraints:
+        dlinkgestloc_unique:
+            columns:
+                - idgestion
+                - idcollection
+                - idpt
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        idgestion:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+    manyToOne:
+        idcollection:
+            targetEntity: Dloccenter
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                idpt:
+                    referencedColumnName: idpt
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

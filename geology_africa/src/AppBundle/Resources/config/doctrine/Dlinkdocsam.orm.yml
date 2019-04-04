@@ -1,0 +1,54 @@
+AppBundle\Entity\Dlinkdocsam:
+    type: entity
+    table: dlinkdocsam
+    indexes:
+        IDX_448749F6C8D379729F44A603:
+            columns:
+                - idcollectiondoc
+                - iddoc
+        IDX_448749F6A84E066895B6DB6F:
+            columns:
+                - idcollectionsample
+                - idsample
+    uniqueConstraints:
+        dlinkdocsam_unique:
+            columns:
+                - iddoc
+                - idcollectiondoc
+                - idsample
+                - idcollectionsample
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    manyToOne:
+        idcollectiondoc:
+            targetEntity: Ddocument
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollectiondoc:
+                    referencedColumnName: idcollection
+                iddoc:
+                    referencedColumnName: iddoc
+            orphanRemoval: false
+        idcollectionsample:
+            targetEntity: Dsample
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollectionsample:
+                    referencedColumnName: idcollection
+                idsample:
+                    referencedColumnName: idsample
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

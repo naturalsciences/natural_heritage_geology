@@ -1,0 +1,12 @@
+{# src/AppBundle/Resources/views/adminlayout.html.twig #}
+
+{% extends "menulayout.html.twig" %}
+
+{% block title %}
+  {{ parent() }} - Admin
+{% endblock %}
+
+{% block body %}
+  {% block admingeology_body %}
+  {% endblock %}
+{% endblock %}

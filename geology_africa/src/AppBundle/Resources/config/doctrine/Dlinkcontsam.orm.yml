@@ -1,0 +1,50 @@
+AppBundle\Entity\Dlinkcontsam:
+    type: entity
+    table: dlinkcontsam
+    indexes:
+        IDX_A66CD89C31E47808BF396750:
+            columns:
+                - idcollection
+                - id
+        IDX_A66CD89CAC9A611C:
+            columns:
+                - idcontribution
+    uniqueConstraints:
+        dlinkcontsam_unique:
+            columns:
+                - idcontribution
+                - idcollection
+                - id
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    manyToOne:
+        idcollection:
+            targetEntity: Dsample
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                id:
+                    referencedColumnName: idsample
+            orphanRemoval: false
+        idcontribution:
+            targetEntity: Dcontribution
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcontribution:
+                    referencedColumnName: idcontribution
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

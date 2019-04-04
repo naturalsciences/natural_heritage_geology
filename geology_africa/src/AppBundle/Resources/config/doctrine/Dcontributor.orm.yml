@@ -1,0 +1,54 @@
+AppBundle\Entity\Dcontributor:
+    type: entity
+    table: dcontributor
+    uniqueConstraints:
+        dcontributor_unique:
+            columns:
+                - idcontributor
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        idcontributor:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+        people:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        peoplefonction:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        peopletitre:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        peoplestatut:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        institut:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,59 @@
+AppBundle\Entity\Dlinkcontribute:
+    type: entity
+    table: dlinkcontribute
+    indexes:
+        IDX_8153F1E8AC9A611C:
+            columns:
+                - idcontribution
+        IDX_8153F1E81CAEE73C:
+            columns:
+                - idcontributor
+    uniqueConstraints:
+        dlinkcontribute_unique:
+            columns:
+                - idcontribution
+                - idcontributor
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        contributorrole:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        contributororder:
+            type: smallint
+            nullable: true
+            options:
+                unsigned: false
+                default: '0'
+    manyToOne:
+        idcontribution:
+            targetEntity: Dcontribution
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcontribution:
+                    referencedColumnName: idcontribution
+            orphanRemoval: false
+        idcontributor:
+            targetEntity: Dcontributor
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcontributor:
+                    referencedColumnName: idcontributor
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,135 @@
+AppBundle\Entity\Dsamgranulo:
+    type: entity
+    table: dsamgranulo
+    uniqueConstraints:
+        dsamgranulo_unique:
+            columns:
+                - idcollection
+                - idsample
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        weighttot:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        weightsand:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                default: '0'
+        wAbove2000:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: w_above_2000
+        w2000:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: w_2000
+        w1400:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: w_1400
+        w1000:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: w_1000
+        w710:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: w_710
+        w500:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: w_500
+        w355:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: w_355
+        w250:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: w_250
+        w180:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: w_180
+        w125:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: w_125
+        w90:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: w_90
+        w63:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: w_63
+        description:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        pc:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        pccum:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        date:
+            type: datetime
+            nullable: true
+    manyToOne:
+        idcollection:
+            targetEntity: Dsample
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                idsample:
+                    referencedColumnName: idsample
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

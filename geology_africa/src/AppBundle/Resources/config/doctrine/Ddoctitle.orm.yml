@@ -1,0 +1,50 @@
+AppBundle\Entity\Ddoctitle:
+    type: entity
+    table: ddoctitle
+    indexes:
+        IDX_ADADA4C931E478089F44A603:
+            columns:
+                - idcollection
+                - iddoc
+    uniqueConstraints:
+        ddoctitle_unique:
+            columns:
+                - idcollection
+                - iddoc
+                - titlelevel
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        titlelevel:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: false
+                default: '1'
+        title:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    manyToOne:
+        idcollection:
+            targetEntity: Ddocument
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                iddoc:
+                    referencedColumnName: iddoc
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

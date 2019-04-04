@@ -1,0 +1,346 @@
+{# src/AppBundle/Resources/views/results_searchsample.html.twig #}
+		
+{% set arrayqueryvals = queryvals|split(',,') %}
+{% set elem = {} %}
+{% for e in arrayqueryvals %}
+{% 		set elem1 = e|split(':') %}
+{%  	set elem = elem|merge({(elem1[0]):(elem1[1])}) %}
+{% endfor %}
+	
+{% block body_top %}
+	{{ include("@App/searchsample.html.twig") }}
+	
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			onElementModified('body', '#inp_searchcoll', function(element){
+				$("#inp_searchcoll option[value='{{elem['collection']}}']").prop("selected","selected");
+				collval = '{{elem['collection']}}';
+				//if (collval == "M"){
+					//$(".divminerals").show();
+					$(".inp_searchmingroup option[value='{{elem['groupmineral']}}']").prop("selected","selected");
+					$(".inp_searchminclass option[value='{{elem['classmineral']}}']").prop("selected","selected");
+					
+					$(".inp_searchmineral option[value='{{elem['mineral']}}']").prop("selected","selected");
+				//}
+
+				$(".inp_searchLithomineral option[value='{{elem['lithomineral']}}']").prop("selected","selected");
+				$(".inp_searchLithomagnet option[value='{{elem['lithomagnet']}}']").prop("selected","selected");
+			});	
+
+			$(".inp_searchnum").val("{{elem['searchnum']}}");
+			$(".inp_searchcode").val("{{elem['code']}}");
+			$(".inp_searchmuseumnr").val("{{elem['museumnr']}}");
+			$(".inp_searchmuseumloc").val("{{elem['museumloc']}}");			
+			$(".inp_searchboxnbr").val("{{elem['boxnbr']}}");			
+			$(".inp_searchdescr").val("{{elem['descr']}}");	
+			$(".inp_searchweight").val("{{elem['weight']}}");	
+			$(".inp_searchsize").val("{{elem['size']}}");	
+			$(".inp_searchdimension").val("{{elem['dimension']}}");	
+			$(".inp_searchquality").val("{{elem['quality']}}");	
+			$(".inp_searchloaninfo").val("{{elem['loaninfo']}}")
+			$(".inp_searchsecuritylevel").val("{{elem['securitylevel']}}")
+			$(".inp_searchvariousinfo").val("{{elem['variousinfo']}}");
+			
+			/*if ({{elem['radioactivity']}} == 1){
+				$( ".inp_searchradioact").attr('checked',true);
+			}else{
+				$( ".inp_searchradioact").attr('checked',false);
+			}*/
+			if ({{elem['slimplate']}} == 1){
+				$( ".inp_searchslimplate").attr('checked',true);
+			}else{
+				$( ".inp_searchslimplate").attr('checked',false);
+			}
+			if ({{elem['chemanalysis']}} == 1){
+				$( ".inp_searchchemanalysis").attr('checked',true);
+			}else{
+				$( ".inp_searchchemanalysis").attr('checked',false);
+			}
+			if ({{elem['holotype']}} == 1){
+				$( ".inp_searchholotype").attr('checked',true);
+			}else{
+				$( ".inp_searchholotype").attr('checked',false);
+			}
+			if ({{elem['paratype']}} == 1){
+				$( ".inp_searchparatype").attr('checked',true);
+			}else{
+				$( ".inp_searchparatype").attr('checked',false);
+			}
+			
+			$(".inp_searchidmineral").val("{{elem['idmineral']}}");
+			$(".inp_searchmingrade").val("{{elem['grademineral']}}");
+			$(".inp_searchmineralFormula").val("{{elem['formulamineral']}}");
+			
+			$(".inp_searchLithoMinnum_from").val("{{elem['lithominnum_from']}}");
+			$(".inp_searchLithoMinnum_to").val("{{elem['lithominnum_to']}}");
+			$(".inp_searchLithoWeight_from").val("{{elem['lithoweight_from']}}");
+			$(".inp_searchLithoWeight_to").val("{{elem['lithoweight_to']}}");
+			$(".inp_searchLithoObserv").val("{{elem['lithoobserv']}}");
+			if ({{elem['lithogranulo']}} == 1){
+				$( ".inp_searchgranulo").attr('checked',true);
+			}else{
+				$( ".inp_searchgranulo").attr('checked',false);
+			}
+			
+			sortDirection = "{{elem['sortDirection']}}";
+			$namef = "{{elem['sortDirection']}}".replace(" DESC", "_down").replace(" ASC", "_up");
+			$("."+ $namef).css('color', 'black');		
+		});
+	</script>
+
+{% endblock %}
+
+{% block body %}
+	{% block results_search_body %}
+		<table class="table_nbr_results">
+			<tr>
+				<th class="td1">
+					Results :
+				</th>
+				<td class="td1">
+					<label class="lab_number_results">
+				</td>
+				<td align="right">
+					Nbr of results by page:
+				</td>
+				<td width="50px">
+					<select class="inp_searchNbrResByPage">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="25">25</option>
+						<option value="50">50</option>
+						<option value="75">75</option>
+						<option value="100">100</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		
+		<TABLE class="table_results">
+			<TR>
+				<TH width="4%">
+					Coll.
+					<span style="float:right;">
+						<div class="idcollection_up up-arrow" onclick="sortTable('idcollection',1)">&#9650</div>
+						<div class="idcollection_down down-arrow" onclick="sortTable('idcollection',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="4%">
+					ID
+					<span style="float:right;">
+						<div class="idsample_up up-arrow" onclick="sortTable('idsample',1)">&#9650</div>
+						<div class="idsample_down down-arrow" onclick="sortTable('idsample',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="13%">
+					Code
+					<span style="float:right;">
+						<div class="fieldnum_up up-arrow" onclick="sortTable('fieldnum',1)">&#9650</div>
+						<div class="fieldnum_down down-arrow" onclick="sortTable('fieldnum',2)">&#9660</div>
+					</span>
+				</th>
+				<TH width="13%">
+					Mineral
+					<span style="float:right;">
+						<div class="mineral_up up-arrow" onclick="sortTable('mineral',1)">&#9650</div>
+						<div class="mineral_down down-arrow" onclick="sortTable('mineral',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="5%">
+					Heavy mineral
+					<span style="float:right;">
+						<div class="mineral2_up up-arrow" onclick="sortTable('mineral2',1)">&#9650</div>
+						<div class="mineral2_down down-arrow" onclick="sortTable('mineral2',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="10%">
+					Formula
+					<span style="float:right;">
+						<div class="mformula_up up-arrow" onclick="sortTable('mformula',1)">&#9650</div>
+						<div class="mformula_down down-arrow" onclick="sortTable('mformula',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="9%">
+					Sample description
+					<span style="float:right;">
+						<div class="sampledescription_up up-arrow" onclick="sortTable('sampledescription',1)">&#9650</div>
+						<div class="sampledescription_down down-arrow" onclick="sortTable('sampledescription',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="5%">
+					HM Observation
+					<span style="float:right;">
+						<div class="observationhm_up up-arrow" onclick="sortTable('observationhm',1)">&#9650</div>
+						<div class="observationhm_down down-arrow" onclick="sortTable('observationhm',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="4%">
+					Type
+					<span style="float:right;">
+						<div class="type_up up-arrow" onclick="sortTable('type',1)">&#9650</div>
+						<div class="type_down down-arrow" onclick="sortTable('type',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="4%">
+					<img src="{{ asset('pics/radioactivity.jpg') }}" alt="home" height="23" width="27">
+					<span style="float:right;">
+						<div class="radioactivity_up up-arrow" onclick="sortTable('radioactivity',1)">&#9650</div>
+						<div class="radioactivity_down down-arrow" onclick="sortTable('radioactivity',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="5%">
+					Magnet.
+					<span style="float:right;">
+						<div class="mesure1_up up-arrow" onclick="sortTable('mesure1',1)">&#9650</div>
+						<div class="mesure1_down down-arrow" onclick="sortTable('mesure1',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="5%">
+					Granul.
+					<span style="float:right;">
+						<div class="weighttot_up up-arrow" onclick="sortTable('weighttot',1)">&#9650</div>
+						<div class="weighttot_down down-arrow" onclick="sortTable('weighttot',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="7,5%">
+					Loan info
+					<span style="float:right;">
+						<div class="loaninformation_up up-arrow" onclick="sortTable('loaninformation',1)">&#9650</div>
+						<div class="loaninformation_down down-arrow" onclick="sortTable('loaninformation',2)">&#9660</div>
+					</span>
+				</TH>
+				<TH width="1%">
+				</TH>
+			</TR>
+			{% set i=0 %}
+			{% for item in results %}
+				<TR> 
+					<TD class="but_showsample_{{item.pk}}" onclick="viewsample({{item.pk}})" alt="home" height="11" width="13" onmouseover="" style="cursor: pointer;">
+						{{item.idcollection}}
+					</TD>
+					<TD class="but_showsample_{{item.pk}}" onclick="viewsample({{item.pk}})" alt="home" height="11" width="13" onmouseover="" style="cursor: pointer;">
+						{{item.idsample}}
+					</TD>
+					<TD class="but_showsample_{{item.pk}}" onclick="viewsample({{item.pk}})" alt="home" height="11" width="13" onmouseover="" style="cursor: pointer;">
+						{{item.fieldnum}}
+					</TD>
+					<TD>
+						{{item.mname|lower}}
+						{% if (item.fmname|length > 0) and (item.fmname|lower != item.mname|lower) %} - {{ item.fmname|lower}}(Fl.) {% endif %}
+					</TD>
+					<TD>
+						{{item.mineral2|lower}}
+					</TD>
+					<TD>
+						<label class="input_formula{{i}}" >	</label>
+						<!--{ {item.mformula}}-->
+					</TD>
+					<TD>
+						{{item.sampledescription}}
+					</TD>
+					<TD>
+						{{item.observationhm}}
+					</TD>
+					<TD>
+						{{item.type}}
+					</TD>
+					<TD>
+						{% if item.radioactivity != 0 %}
+							X
+						{% endif %}
+					</TD>
+					<TD>
+						{{item.mesure1}}
+					</TD>
+					<TD>
+						{% if item.weighttot != 0 %}
+							X
+						{% endif %}
+					</TD>
+					<TD>
+						{{item.loaninformation}}
+					</TD>
+					<TD>
+						<img src="{{ asset('pics/edit.png') }}" class="but_editsample_{{item.pk}}" onclick="editsample({{item.pk}})" alt="home" height="11" width="13" onmouseover="" style="cursor: pointer;"> 
+					</TD>
+				</TR>
+				{% set i=i+1%}
+			{% endfor %}
+		</TABLE>
+		<div class="navigation text-center">
+			{{ knp_pagination_render(results) }}
+		</div>
+		
+		<script type="text/javascript">
+		
+			{% set i=0%}
+			var formulas_array = [];
+			{% for item in results %}
+				formulas_array[{{i}}]=displayFormula("{{item.mformula}}");
+				$(".input_formula{{i}}").html(formulas_array[{{i}}]);
+				{% set i=i+1%}
+			{% endfor %}	
+			
+			function displayFormula(formula){	
+				var newformula = "";		
+				if(formula.indexOf("&lt;") != -1){
+					formula = formula.replace(/&gt;/g,">").replace(/&lt;/g,"<");		
+				}
+				newformula = formula.replace(/>/g,"§");
+				newformula = newformula.replace(/</g,"<sub>");
+				newformula = newformula.replace(/§/g,"</sub>");
+				newformulaarray = newformula.split("&#039;");
+				
+				if (newformulaarray.length >1){
+					newformula = "";
+					for (i=0;i<newformulaarray.length; i++){
+						if (i%2 == 0){
+							newformula = newformula + newformulaarray[i];
+						}else{
+							newformula = newformula + "<sup>" + newformulaarray[i] + "</sup>";
+						}
+					}
+				}
+				return newformula;
+			}
+			
+			function sortTable(n,dir) {
+				if (dir==1){
+					sortDirection = n+" "+"ASC";
+				}
+				if (dir==2){
+					sortDirection = n+" "+"DESC";
+				}
+				searchclic();
+			}
+			
+			function editsample(pk) {
+				var url = '{{ path("app_edit_sample", {'pk': 'article_id'}) }}'; 
+				url = url.replace("article_id", pk);
+				window.location = url;
+			}
+			
+			function viewsample(pk) {
+				var url = '{{ path("app_view_sample", {'pk': 'article_id'}) }}'; 
+				url = url.replace("article_id", pk);
+				window.location = url;
+			}
+			
+			$(document).ready(function() {
+				$(".lab_number_results").html("{{elem['nbrres']}} records");
+				$(".inp_searchNbrResByPage").val("{{elem['NbrResByPage']}}");
+
+				$('.inp_searchNbrResByPage').on('change', function() {
+					nbrval = $('.inp_searchNbrResByPage option:selected').val();
+					searchclic();
+				});
+				
+			});
+		</script>
+	{% endblock %}
+{% endblock %}
+

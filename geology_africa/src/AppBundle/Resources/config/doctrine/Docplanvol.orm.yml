@@ -1,0 +1,48 @@
+AppBundle\Entity\Docplanvol:
+    type: entity
+    table: docplanvol
+    uniqueConstraints:
+        docplanvol_unique:
+            columns:
+                - fid
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        fid:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        nombloc:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        bid:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        bande:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        comment:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

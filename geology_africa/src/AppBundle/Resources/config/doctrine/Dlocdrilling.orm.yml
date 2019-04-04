@@ -1,0 +1,79 @@
+AppBundle\Entity\Dlocdrilling:
+    type: entity
+    table: dlocdrilling
+    uniqueConstraints:
+        dlocdrilling_unique:
+            columns:
+                - idcollection
+                - idpt
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        drilling:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+                default: '0'
+        diameter:
+            type: decimal
+            nullable: true
+            precision: 18
+            scale: 2
+        unitdiameter:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        waterflow:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                default: '0'
+        restingwater:
+            type: boolean
+            nullable: true
+        depthwatertable:
+            type: decimal
+            nullable: true
+            precision: 18
+            scale: 2
+            options:
+                default: '0'
+        infowater:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        infodrilling:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    manyToOne:
+        idcollection:
+            targetEntity: Dloccenter
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                idpt:
+                    referencedColumnName: idpt
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,101 @@
+AppBundle\Entity\Dloccenter:
+    type: entity
+    table: dloccenter
+    indexes:
+        IDX_C376102433EB2703:
+            columns:
+                - idprecision
+    uniqueConstraints:
+        dloccenter_unique:
+            columns:
+                - idcollection
+                - idpt
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        idcollection:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        idpt:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+        lat:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        long:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        altitude:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                default: '0'
+        date:
+            type: datetime
+            nullable: true
+        fieldnum:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        place:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        geodescription:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        positiondescription:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        variousinfo:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        docref:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    manyToOne:
+        idprecision:
+            targetEntity: Lprecision
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idprecision:
+                    referencedColumnName: idprecision
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

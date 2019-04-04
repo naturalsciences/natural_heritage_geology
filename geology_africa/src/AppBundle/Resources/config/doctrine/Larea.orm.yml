@@ -1,0 +1,30 @@
+AppBundle\Entity\Larea:
+    type: entity
+    table: larea
+    uniqueConstraints:
+        larea_unique:
+            columns:
+                - polyarea
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        polyarea:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        parent:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

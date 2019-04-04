@@ -1,0 +1,38 @@
+AppBundle\Entity\Dcontribution:
+    type: entity
+    table: dcontribution
+    uniqueConstraints:
+        dcontribution_unique:
+            columns:
+                - idcontribution
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        idcontribution:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        datetype:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        date:
+            type: datetime
+            nullable: true
+        year:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                default: '0'
+    lifecycleCallbacks: {  }

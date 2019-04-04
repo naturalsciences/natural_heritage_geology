@@ -1,0 +1,88 @@
+{# src/AppBundle/Resources/views/viewmineral.html.twig #}
+
+{% extends "@App/addlayout.html.twig" %}
+
+{% block title %}
+  {{ parent() }} 
+{% endblock %}
+
+{% block addgeology_body %}
+	<Table width="100%" class="table_edit" >
+			<tr>
+				<th class="title_table_edit" width="100%" colspan=4>
+					Minerals
+				</th>
+			</tr>
+			<TR>
+				<TD width="40%">
+					<B><label for="inp_MineralID">ID: </label></B>
+					{{ lminerals.idmineral}}
+				</TD>
+				<TD width="20%">
+					<B><label for="inp_MineralRank">Rank: </label></B>
+					{{ lminerals.rank}}
+				</TD>
+				<TD width="20%">
+					<B><label for="inp_MineralName">Name: </label></B>
+					{{ lminerals.mname}}
+				</TD>
+				<TD width="20%">
+					<B><label for="inp_MineralParent">Parent: </label></B>
+					{{ lminerals.mparent}}
+				</TD>
+			</TR>
+			<TR>
+				<TD colspan = "2">
+					<B><label for="inp_MineralFormula">Formula: </label></B>
+					<label class="input_formula" >	</label>
+				</TD>
+				<TD>
+					<B><label for="inp_MineralFName">Florias's name: </label></B>
+					{{ lminerals.fmname|lower}}
+				</TD>
+				<TD>
+					<B><label for="inp_MineralFParent">Florias's parent: </label></B>
+					{{ lminerals.fmparent|lower}}
+				</TD>
+				<TD></TD>
+			</TR>
+		</Table>
+		<BR/>
+	<p>
+		<input type="button" onclick="editmineral()" value="Edit mineral" onmouseover="" style="cursor: pointer;"> 
+	</p>
+	
+	<script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
+	<script type="text/javascript">
+		function editmineral() {
+			var url = '{{ path("app_edit_mineral", {'pk': 'article_id'}) }}'; 
+			url = url.replace("article_id", "{{lminerals.pk}}");
+			window.location = url;
+		}
+		
+		$(".input_formula").html(displayFormula("{{lminerals.mformula}}"));
+
+		function displayFormula(formula){	
+			var newformula = "";		
+			if(formula.indexOf("&lt;") != -1){
+				formula = formula.replace(/&gt;/g,">").replace(/&lt;/g,"<");		
+			}
+			newformula = formula.replace(/>/g,"§");
+			newformula = newformula.replace(/</g,"<sub>");
+			newformula = newformula.replace(/§/g,"</sub>");
+			newformulaarray = newformula.split("&#039;");
+			
+			if (newformulaarray.length >1){
+				newformula = "";
+				for (i=0;i<newformulaarray.length; i++){
+					if (i%2 == 0){
+						newformula = newformula + newformulaarray[i];
+					}else{
+						newformula = newformula + "<sup>" + newformulaarray[i] + "</sup>";
+					}
+				}
+			}
+			return newformula;
+		}
+	</script>
+{% endblock %}

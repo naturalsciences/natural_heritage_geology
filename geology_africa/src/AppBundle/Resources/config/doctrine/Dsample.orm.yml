@@ -1,0 +1,123 @@
+AppBundle\Entity\Dsample:
+    type: entity
+    repositoryClass : AppBundle\Repository\DsampleRepository
+    table: dsample
+    uniqueConstraints:
+        dsample_unique:
+            columns:
+                - idcollection
+                - idsample
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        idcollection:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        idsample:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        fieldnum:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        museumnum:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        museumlocation:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        boxnumber:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        sampledescription:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        weight:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        quantity:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        size:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        dimentioncode:
+            type: smallint
+            nullable: true
+            options:
+                unsigned: false
+        quality:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        slimplate:
+            type: boolean
+            nullable: true
+        chemicalanalysis:
+            type: boolean
+            nullable: true
+        holotype:
+            type: boolean
+            nullable: true
+        paratype:
+            type: boolean
+            nullable: true
+        radioactivity:
+            type: smallint
+            nullable: true
+            options:
+                unsigned: false
+        loaninformation:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        securitylevel:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        varioussampleinfo:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,34 @@
+{# src/AppBundle/Resources/views/forms/SearchsampleForm.html.twig #}
+
+
+
+<div class="well">
+	{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}   {# same as <form> #}
+		
+		{{ form_errors(form) }}  
+
+		<table>
+			<tr>
+				<td>
+					{{ form_label(form.searchnum, "Sample numbeer:", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+					{{ form_errors(form.searchnum) }}
+				</td>
+				<td>
+					{{ form_widget(form.searchnum, {'attr': {'class': 'form-control'}}) }}
+				</td>
+				<td>
+					{{ form_widget(form.codecollection, {'attr': {'class': 'form-control'}}) }}
+				</td>
+			</tr>
+		</table>
+
+		{{ form_rest(form) }} 
+	{{ form_end(form) }}
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+	  
+	});
+</script>

@@ -1,0 +1,24 @@
+AppBundle\Entity\Lmapreftype:
+    type: entity
+    table: lmapreftype
+    uniqueConstraints:
+        lmapreftype_unique:
+            columns:
+                - reftype
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        reftype:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

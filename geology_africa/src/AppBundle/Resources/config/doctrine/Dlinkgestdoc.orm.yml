@@ -1,0 +1,50 @@
+AppBundle\Entity\Dlinkgestdoc:
+    type: entity
+    table: dlinkgestdoc
+    indexes:
+        IDX_B9A39A6C656DF3B9F44A603:
+            columns:
+                - idcollecdoc
+                - iddoc
+        IDX_B9A39A610607DE:
+            columns:
+                - idgestion
+    uniqueConstraints:
+        dlinkgestdoc_unique:
+            columns:
+                - idgestion
+                - idcollecdoc
+                - iddoc
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    manyToOne:
+        idcollecdoc:
+            targetEntity: Ddocument
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollecdoc:
+                    referencedColumnName: idcollection
+                iddoc:
+                    referencedColumnName: iddoc
+            orphanRemoval: false
+        idgestion:
+            targetEntity: Dgestion
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idgestion:
+                    referencedColumnName: idgestion
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,54 @@
+AppBundle\Entity\Dlinkdocloc:
+    type: entity
+    table: dlinkdocloc
+    indexes:
+        IDX_2AC6AD32C656DF3B9F44A603:
+            columns:
+                - idcollecdoc
+                - iddoc
+        IDX_2AC6AD32C8458E8350E3C8BA:
+            columns:
+                - idcollecloc
+                - idpt
+    uniqueConstraints:
+        dlinkdocloc_unique:
+            columns:
+                - idcollecloc
+                - idpt
+                - idcollecdoc
+                - iddoc
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    manyToOne:
+        idcollecdoc:
+            targetEntity: Ddocument
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollecdoc:
+                    referencedColumnName: idcollection
+                iddoc:
+                    referencedColumnName: iddoc
+            orphanRemoval: false
+        idcollecloc:
+            targetEntity: Dloccenter
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollecloc:
+                    referencedColumnName: idcollection
+                idpt:
+                    referencedColumnName: idpt
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

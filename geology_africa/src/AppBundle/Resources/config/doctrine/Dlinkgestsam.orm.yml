@@ -1,0 +1,50 @@
+AppBundle\Entity\Dlinkgestsam:
+    type: entity
+    table: dlinkgestsam
+    indexes:
+        IDX_6BC88CDA31E47808FF16137F:
+            columns:
+                - idcollection
+                - idsam
+        IDX_6BC88CDA10607DE:
+            columns:
+                - idgestion
+    uniqueConstraints:
+        dlinkgestsam_unique:
+            columns:
+                - idgestion
+                - idcollection
+                - idsam
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    manyToOne:
+        idcollection:
+            targetEntity: Dsample
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                idsam:
+                    referencedColumnName: idsample
+            orphanRemoval: false
+        idgestion:
+            targetEntity: Dgestion
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idgestion:
+                    referencedColumnName: idgestion
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

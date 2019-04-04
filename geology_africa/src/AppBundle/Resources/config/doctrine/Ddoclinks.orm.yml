@@ -1,0 +1,56 @@
+AppBundle\Entity\Ddoclinks:
+    type: entity
+    table: ddoclinks
+    indexes:
+        IDX_57197DBA31E478089F44A603:
+            columns:
+                - idcollection
+                - iddoc
+    uniqueConstraints:
+        ddoclinks_unique:
+            columns:
+                - idcollection
+                - iddoc
+                - idcollection2
+                - iddoc2
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        idcollection2:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        iddoc2:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        noticeid:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    manyToOne:
+        idcollection:
+            targetEntity: Ddocument
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                iddoc:
+                    referencedColumnName: iddoc
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,211 @@
+{# src/AppBundle/Resources/views/mineralform.html.twig #}
+
+{{ form_start(Mineral_form, {'attr': {'class': 'form-horizontal'}}) }}
+	<Table width="100%" class="table_edit" >
+		<tr>
+			<th class="title_table_edit" width="100%" colspan=8>
+				Minerals
+			</th>
+		</tr>
+		<TR>
+			<TH>
+				{{ form_errors(Mineral_form) }}
+				<label for="inp_MineralID">ID: </label>
+			</TH>
+			<TD>
+				{% if lminerals.pk != 0%}
+					{{lminerals.idmineral}}
+				{% else %}
+					{{ form_widget(Mineral_form.idmineral, {'attr': {'class': 'form-control inp_MineralID'}}) }}
+				{% endif %}
+			</TD>
+			<TH>
+				<label for="inp_MineralRank">Rank: </label>
+			</TH>
+			<TD>
+				{{ form_widget(Mineral_form.rank, {'attr': {'class': 'form-control inp_MineralRank'}}) }}
+			</TD>
+			<TH>
+				<label for="inp_MineralName">Name: </label>
+			</TH>
+			<TD>
+				{{ form_widget(Mineral_form.mname, {'attr': {'class': 'form-control inp_MineralName'}}) }}
+			</TD>
+			<TH>
+				<label for="inp_MineralParent">Parent: </label>
+			</TH>
+			<TD>
+				{{ form_widget(Mineral_form.mparent, {'attr': {'class': 'form-control inp_MineralParent'}}) }}
+			</TD>
+		</TR>
+		<TR>
+			<TH>
+				<label for="inp_MineralFormula">Formula: </label>
+			</TH>
+			<TD colspan=3>
+				{{ form_widget(Mineral_form.mformula, {'attr': {'class': 'form-control inp_MineralFormula middlelength'}}) }}
+			</TD>
+			<TH>
+				<label for="inp_MineralName">Florias's name: </label>
+			</TH>
+			<TD>
+				{{ form_widget(Mineral_form.fmname, {'attr': {'class': 'form-control inp_MineralFName'}}) }}
+			</TD>
+			<TH>
+				<label for="inp_MineralFParent">Florias's parent: </label>
+			</TH>
+			<TD colspan=3>
+				{{ form_widget(Mineral_form.fmparent, {'attr': {'class': 'form-control inp_MineralFParent'}}) }}
+			</TD>
+		</TR>
+	</Table>
+	<BR/>
+	<input type="submit" value="Save" class="btn btn-default pull-right" />
+	<div class="alert_message"></div>
+{{ form_end(Mineral_form) }}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{{ asset('js/core.js') }}"></script>
+
+<script type="text/javascript">
+	var parentresults = [];
+	var nameresults = [];
+	var fnameresults = [];
+	var formularesults = [];
+	var formchanged = false;
+	
+	$(document).ready(function() {
+		//show message saying that data is in DB, during 4 sec. Msg comes from controller
+		setTimeout(function() { 
+			{% for msg in app.flashes('success') %}
+			$(".alert_message").html("{{ msg }}");
+			$(".alert_message").fadeOut(2000); 
+			{% endfor %}
+		},1000); 
+	});
+	
+	//test if for changed-----------
+	$(window).blur(function() {
+		if (formchanged == true){
+			resp = confirm("Don't forget to save your work !");
+		}
+	});
+	$('form :input').change(function() {
+		formchanged = true;
+	});
+	
+	function fill_lastid(){
+		path = "{{path('app_last_Mineralid') }}";  
+		lastid = 0;
+		$.ajax({
+			url:  path,
+			type: "GET",
+			dataType: "JSON",
+			success: function (ids) {
+				$.each(ids, function (key, id) {
+					lastid = id.idmineral;
+				});
+
+				$(".inp_MineralID").attr("data-toggle", "tooltip");
+				$(".inp_MineralID").attr("data-placement", "top");
+				$(".inp_MineralID").attr("title", "Last value is "+lastid);
+			},
+			error: function (err) {
+				alert("An error ocurred while loading data ...");
+			}
+		});
+	};
+	fill_lastid();
+	
+	{% if lminerals.mparent == ""%}
+		$('.inp_MineralParent option[value="unidentified parent"]').attr('selected','selected');
+	{% endif %}
+	{% if lminerals.fmparent == ""%}
+		$('.inp_MineralFParent option[value="unidentified parent"]').attr('selected','selected');
+	{% endif %}
+	
+	/*$(".inp_MineralParent").autocomplete({
+		source: function(request, response) {
+			$.ajax({
+				url: "{{ path('app_parent_autocomplete')  }}",  
+				data : {code:$(".inp_MineralParent").val()}, 
+				type: "GET",
+				dataType: "JSON",
+				success: function (donnees) {
+					var i = 0;
+					parentresults = [];
+					$.each(donnees, function (key, donnee) {
+						parentresults[i] = donnee.mparent;
+						i++;
+					});
+					response(parentresults);
+				}
+			})
+		},
+		minLength: 1
+	});*/
+	
+	$(".inp_MineralName").autocomplete({
+		source: function(request, response) {
+			$.ajax({
+				url: "{{ path('app_MinName_autocomplete')  }}",  
+				data : {code:$(".inp_MineralName").val()}, 
+				type: "GET",
+				dataType: "JSON",
+				success: function (donnees) {
+					var i = 0;
+					nameresults = []
+					$.each(donnees, function (key, donnee) {
+						nameresults[i] = donnee.mname;
+						i++;
+					});
+					response(nameresults);
+				}
+			})
+		},
+		minLength: 1
+	});
+	
+	$(".inp_MineralFName").autocomplete({
+		source: function(request, response) {
+			$.ajax({
+				url: "{{ path('app_MinFName_autocomplete')  }}",  
+				data : {code:$(".inp_MineralFName").val()}, 
+				type: "GET",
+				dataType: "JSON",
+				success: function (donnees) {
+					var i = 0;
+					fnameresults = []
+					$.each(donnees, function (key, donnee) {
+						fnameresults[i] = donnee.fmname;
+						i++;
+					});
+					response(fnameresults);
+				}
+			})
+		},
+		minLength: 1
+	});
+	
+	$(".inp_MineralFormula").autocomplete({
+		source: function(request, response) {
+			$.ajax({
+				url: "{{ path('app_Minformula_autocomplete')  }}",  
+				data : {code:$(".inp_MineralFormula").val()}, 
+				type: "GET",
+				dataType: "JSON",
+				success: function (donnees) {
+					var i = 0;
+					formularesults = []
+					$.each(donnees, function (key, donnee) {
+						formularesults[i] = donnee.mformula;
+						i++;
+					});
+					response(formularesults);
+				}
+			})
+		},
+		minLength: 1
+	});
+</script>

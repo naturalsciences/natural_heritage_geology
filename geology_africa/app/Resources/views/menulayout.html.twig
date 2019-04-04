@@ -1,0 +1,91 @@
+{# app/Resources/views/menulayout.html.twig #}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>{% block title %}MRAC Geology{% endblock %}</title>
+		{% block stylesheets %}
+			<link rel="stylesheet" href="{{ asset('css/main.css') }}" type="text/css"/>
+			<link rel="stylesheet" href="{{ asset('css/menu.css') }}" type="text/css"/>
+		{% endblock %}
+	</head>
+
+	<body>
+		<table id="tr_menu">
+			<tr >
+				<td>
+					<img src="{{ asset('pics/logo.jpg') }}" alt="logo" height="40" width="150">
+				</td>
+				<td>
+					<header>
+						<nav id='cssmenu' class="above">
+							
+							<div id="head-mobile"></div>
+							<div class="button"></div>
+							<ul>
+								<li>
+									<a href="{{ path('app_home') }}">
+										<img src="{{ asset('pics/home.jpg') }}" alt="home" height="20" width="20">
+									</a>
+								</li>
+								<li><a href="">Add</a>
+									<ul>
+										<li><a href="{{ path('app_add_contribution') }}">Contribution</a></li>
+										<li><a href="{{ path('app_add_document') }}">Document/Image</a></li>
+										<li><a href="{{ path('app_add_drilling') }}">Drilling</a></li>
+										<li><a href="{{ path('app_add_points') }}">Observation points</a></li>
+										<li><a href="{{ path('app_add_outcrop') }}">Outcrop</a></li>
+										<li><a href="{{ path('app_add_sample') }}">Sample</a></li>
+									</ul>
+								</li>
+								<li><a href="">Search</a>
+									<ul>
+										<li><a href="{{ path('app_search_contribution') }}">Contribution</a></li>
+										<li><a href="{{ path('app_search_document') }}">Document/Image</a></li>
+										<li><a href="{{ path('app_search_drilling') }}">Drilling</a></li>
+										<li><a href="{{ path('app_search_points') }}">Observation points</a></li>
+										<li><a href="{{ path('app_search_outcrop') }}">Outcrop</a></li>
+										<li><a href="{{ path('app_search_sample') }}">Sample</a></li>
+									</ul>
+								</li>
+								<li><a href="">Admin</a>
+									<ul>
+										<li><a href="{{ path('app_add_user') }}">Add user</a></li>	
+										<li><a href="{{ path('app_search_user') }}">Search user</a></li>	
+										<li><a href="{{ path('app_add_mineral') }}">Add mineral</a></li>
+										<li><a href="{{ path('app_search_mineral') }}">Search mineral</a></li>										
+									</ul>
+								</li>
+								<li><a href="{{ path('app_home') }}login">Login</a></li>
+							</ul>
+						</nav>
+					</header>
+				</td>
+				<td>
+					<img src="{{ asset('pics/site_pic_fond_gris2.jpg') }}" alt="Geology Africa" height="60" width="75">
+				</td>
+			</tr>
+		</table>
+		
+	    <div class="container">
+			<table class="top_of_search" width="100%">
+				<tr >
+					<td>
+						{% block body_top %}
+						{% endblock %}
+					</td>
+				</tr>
+			</table>
+			{% block body %}
+			{% endblock %}
+	    </div>
+		  
+		{% block javascripts %}
+			<script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
+			<script src="{{ asset('js/menu.js') }}"></script>
+		{% endblock %}
+	</body>
+</html>

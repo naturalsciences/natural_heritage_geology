@@ -1,0 +1,11 @@
+{# src/AppBundle/Resources/views/addsample.html.twig #}
+
+{% extends "@App/addlayout.html.twig" %}
+
+{% block title %}
+  {{ parent() }} 
+{% endblock %}
+
+{% block addgeology_body %}
+	{{ include("@App/sampleform.html.twig") }}
+{% endblock %}

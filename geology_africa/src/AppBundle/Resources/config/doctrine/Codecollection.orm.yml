@@ -1,0 +1,49 @@
+AppBundle\Entity\Codecollection:
+    type: entity
+    repositoryClass : AppBundle\Repository\codecollectionRepository
+    table: codecollection
+    uniqueConstraints:
+        codecollection_unique:
+            columns:
+                - codecollection
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        codecollection:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        collection:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        typeobjets:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        zoneutilisation:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        idresponsable:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                default: '0'
+    lifecycleCallbacks: {  }

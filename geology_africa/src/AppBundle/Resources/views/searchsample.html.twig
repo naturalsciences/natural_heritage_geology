@@ -1,0 +1,601 @@
+{# src/AppBundle/Resources/views/searchsample.html.twig #}
+
+{% extends "@App/searchlayout.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - Samples
+{% endblock %}
+		
+{% block body_top %}
+	{#{{ include("@App/SearchsampleUI.html.twig") }}#}
+	<table width = "100%">
+		<tr>
+			<th class="title_table_search" width="100%" colspan = "2">
+				General
+			</th>
+		</tr>
+		<tr>
+			<td width = "50%">
+				<table class="ui-front table_search">
+					<tr>
+						<th width = "20%">
+							Collection:
+						</th>
+						<td width = "30%">
+							<select id="inp_searchcoll" class="inp_searchcoll">
+								<option value="all">All</option>
+							</select>
+						</td>
+						<th  width = "20%">
+							Museum number:
+						</th>
+						<td width = "30%">
+							<input type="integer" class="inp_searchmuseumnr">
+						</td>
+					</tr>
+					<tr>
+						<th >
+							Sample ID:
+						</th>
+						<td>
+							<input type="integer" class="inp_searchnum">
+						</td>
+						<th >
+							Museum location:
+						</th>
+						<td>
+							<input type="text" class="inp_searchmuseumloc">
+						</td>
+					</tr>
+					<tr>
+						<th >
+							Sample code:
+						</th>
+						<td>
+							<div>
+								<input type="text" class="inp_searchcode" data-toggle="tooltip" data-placement="top" title="Field number">
+							</div>
+						</td>
+						<th >
+							Box number:
+						</th>
+						<td>
+							<input type="text" class="inp_searchboxnbr">
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td width = "50%">
+				<table class="ui-front table_search">
+					<tr>
+						<th width = "20%">
+							Radioactivity:
+						</th>
+						<td width = "30%">
+							<!--<input type="checkbox" name="inp_searchradioact" class="inp_searchradioact" value="1" data-toggle="tooltip" data-placement="top" title="Check to see records with values in radioactivity">-->
+							<select id="inp_searchradioact" class="inp_searchradioact" data-toggle="tooltip" data-placement="top" title="Enter a radioactivity level">
+								<option value="all">All</option>
+								<option value=0>0</option>
+								<option value=1>1</option>
+								<option value=2>2</option>
+								<option value=3>3</option>
+								<option value=4>4</option>
+								<option value=5>5</option>
+							</select>
+						</td>
+						<th  width = "20%">
+							Holotype:
+						</th>
+						<td width = "30%">
+							<input type="checkbox" name="inp_searchholotype" class="inp_searchholotype" value="1" data-toggle="tooltip" data-placement="top" title="Check to see only holotypes">
+						</td>
+					</tr>
+					<tr>
+						<th >
+							Slimplate:
+						</th>
+						<td>
+							<div>
+								<input type="checkbox" name="inp_searchslimplate" class="inp_searchslimplate" value="1" data-toggle="tooltip" data-placement="top" title="Check to see records with slimplates">
+							</div>
+						</td>
+						<th >
+							Paratype:
+						</th>
+						<td>
+							<input type="checkbox" name="inp_searchparatype" class="inp_searchparatype" value="1" data-toggle="tooltip" data-placement="top" title="Check to see only paratypes">
+						</td>
+					</tr>
+					<tr>
+						<th >
+							Chemical analysis:
+						</th>
+						<td>
+							<input type="checkbox" name="inp_searchchemanalysis" class="inp_searchchemanalysis" value="1" data-toggle="tooltip" data-placement="top" title="Check to see records with values in chemical analysis">
+						</td>
+						<td width="75%" colspan="2">
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td width = "50%">
+				<table class="ui-front table_search">
+					<tr>
+						<th>
+							Description:
+						</th>
+						<td colspan="3">
+							<input type="text" class="inp_searchdescr fulllength" data-toggle="tooltip" data-placement="top" title="Description of the sample">
+						</td>
+					</tr>
+					<tr>
+						<th width = "20%">
+							Weight:
+						</th>
+						<td width = "30%">
+							<input type="integer" class="inp_searchweight" data-toggle="tooltip" data-placement="top" title="Weight of the sample (integer)">
+						</td>
+						<th  width = "20%">
+							Size:
+						</th>
+						<td width = "30%">
+							<input type="text" class="inp_searchsize" data-toggle="tooltip" data-placement="top" title="Size of the sample : integer or '15 x 10 cm',...">
+						</td>
+					</tr>
+					<tr>
+						<th >
+							Dimension code:
+						</th>
+						<td>
+							<select id="inp_searchdimension" class="inp_searchdimension" data-toggle="tooltip" data-placement="top" title="Code for the sample dimension">
+								<option value="all">All</option>
+								<option value=0>0</option>
+								<option value=1>1</option>
+								<option value=2>2</option>
+								<option value=3>3</option>
+								<option value=4>4</option>
+								<option value=5>5</option>
+							</select>
+						</td>
+						<th >
+							Quality:
+						</th>
+						<td>
+							<select id="inp_searchquality" class="inp_searchquality" data-toggle="tooltip" data-placement="top" title="'Quality' of the sample(integer)">
+								<option value="all">All</option>
+								<option value=0>0</option>
+								<option value=1>1</option>
+								<option value=2>2</option>
+								<option value=3>3</option>
+								<option value=4>4</option>
+								<option value=5>5</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td width = "50%">
+				<table class="ui-front table_search">
+					<tr>
+						<th width = "20%">
+							Various info:
+						</th>
+						<td colspan="3">
+							<input type="text" class="inp_searchvariousinfo fulllength">
+						</td>
+					</tr>
+					<tr>
+						<th>
+							Security level:
+						</th>
+						<td width = "30%">
+							<select id="inp_searchsecuritylevel" class="inp_searchsecuritylevel" data-toggle="tooltip" data-placement="top" title="Protection level of the sample(integer)">
+								<option value="all">All</option>
+								<option value=0>0</option>
+								<option value=1>1</option>
+								<option value=2>2</option>
+								<option value=3>3</option>
+								<option value=4>4</option>
+								<option value=5>5</option>
+							</select>
+						</td>
+						<th>
+							Loan info:
+						</th>
+						<td>
+							<input type="text" class="inp_searchloaninfo">
+						</td>
+					</tr>
+					<tr>
+						<td colspanning="4">
+						</td>
+					</tr>							
+				</table>
+			</td>
+		</tr>
+	</table>
+	<BR/>
+	<table width = "100%">
+		<tr>
+			<td width = "50%">
+				<!--<div class="divminerals" style="display:none">-->
+				<table class="ui-front table_search only_minerals">
+					<tr>
+						<th class="title_table_search" width="100%" colspan = "4">
+							Minerals
+						</th>
+					</tr>
+					<tr>
+						<th width = "20%">
+							ID mineral:
+						</th>
+						<td width = "30%">
+							<input type="integer" class="inp_searchidmineral">
+						</td>
+						<th width = "20%">
+							Grade:
+						</th>
+						<td width = "30%">
+							<select id="inp_searchmingrade" class="inp_searchmingrade" data-toggle="tooltip" data-placement="top" title="Estimation of the gemological quality">
+								<option value="all">All</option>
+								<option value=0>0</option>
+								<option value=1>1</option>
+								<option value=2>2</option>
+								<option value=3>3</option>
+								<option value=4>4</option>
+								<option value=5>5</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th width = "20%">
+							Class:
+						</th>
+						<td  width = "30%">
+							<select class="inp_searchminclass" style="max-width:150px;">
+								<option value="all">All</option>
+							</select>
+						</td>
+						<th >
+							Group:
+						</th>
+						<td >
+							<select class="inp_searchmingroup">
+								<option value="all">All</option>
+							</select>
+						</td>
+						
+					</tr>
+					<tr>
+						<th >
+							Mineral:
+						</th>
+						<td>
+							<select class="inp_searchmineral">
+								<option value="all">All</option>
+							</select>
+						</td>
+						<th>
+							Mineral formula:
+						</th>
+						<td>
+							<input type="text" class="inp_searchmineralFormula" style="max-width:70%;" data-toggle="tooltip" data-placement="top" title="Enter one or more component as written in the formula">
+						</td>
+					</tr>
+				</table>
+				<!--</div>-->
+			</td>
+			<td width = "50%">
+				<!--<div class="divlitho" style="display:none">-->
+				<table class="ui-front table_search only_litho">
+					<tr>
+						<th class="title_table_search" width="100%" colspan = "4">
+							Litho
+						</th>
+					</tr>
+					<tr>
+						<th>
+							Heavy mineral:
+						</th>
+						<td>
+							<select class="inp_searchLithomineral">
+								<option value="all">All</option>
+							</select>
+						</td>
+						<th>
+							Nbr of min. grains:
+						</th>
+						<td>
+							From <input type="integer" min="0" max="100" class="inp_searchLithoMinnum_from" data-toggle="tooltip" data-placement="top" title="Min. number of grains of one of the heavy minerals">
+							to <input type="integer" min="0" max="100" class="inp_searchLithoMinnum_to" data-toggle="tooltip" data-placement="top" title="Max.number of grains of one of the heavy minerals">
+						</td>
+					</tr>
+					<tr>
+						<th>
+							HM Weight:
+						</th>
+						<td>
+							From <input type="integer" min="0" max="100" class="inp_searchLithoWeight_from" data-toggle="tooltip" data-placement="top" title="Min. weight of subsample used to count heavy minerals">
+							to <input type="integer" min="0" max="100" class="inp_searchLithoWeight_to" data-toggle="tooltip" data-placement="top" title="Max. weight of subsample used to count heavy minerals">
+						</td>
+						<th>
+							Granulom. data:
+						</th>
+						<td>
+							<input type="checkbox" name="inp_searchgranulo" class="inp_searchgranulo" value="1" data-toggle="tooltip" data-placement="top" title="Check to see records with granulom. data">
+						</td>
+					</tr>
+					<tr>
+						<th>
+							Magnetic susceptib.:
+						</th>
+						<td>
+							<!--<select class="inp_searchLithomagnet">
+								<option value="All">All</option>
+								<option value="3">+ + +</option>
+								<option value="2">+ +</option>
+								<option value="1">+</option>
+								<option value="-1">-</option>
+								<option value="-2">- -</option>
+								<option value="-3">- - -</option>
+							</select>-->
+							<select class="inp_searchLithomagnet" data-toggle="tooltip" data-placement="top" title="Value of mesure 1">
+								<option value="all">All</option>
+								<option value="4">> 250</option>
+								<option value="3">100.001 -> 250</option>
+								<option value="2">50.001 -> 100</option>
+								<option value="1">0 -> 50</option>
+								<option value="-1">-0.001 -> -5</option>
+								<option value="-2">-5.001 -> -10</option>
+								<option value="-3"><-10</option>
+							</select>
+						</td>
+						<th>
+							Observation:
+						</th>
+						<td>
+							<input type="text" class="inp_searchLithoObserv">
+						</td>
+					</tr>
+				</table>
+				<!--</div>-->
+			</td>
+		</tr>
+	</table>
+	<BR/>
+	<input type="button" class="but_searchnum" value="Search">
+	
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    
+	<script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
+	<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="{{ asset('js/core.js') }}"></script>
+	
+	<script type="text/javascript">
+		var collSelect = $(".inp_searchcoll");
+		var minclassSelect = $(".inp_searchminclass");
+		var mingroupSelect = $(".inp_searchmingroup");
+		var mineralSelect = $(".inp_searchmineral");
+		var lithomineralSelect = $(".inp_searchLithomineral");
+		var coderesults = [];
+		var sortDirection = "";
+		
+		//ajax to fill the comboboxes------
+		//collections
+		path = "{{ path('app_collection_list', {'querygroup': 'sample%' })  }}";
+
+		$.ajax({
+			url: path,
+			type: "GET",
+			dataType: "JSON",
+			success: function (collections) {
+				$.each(collections, function (key, collection) {
+					collSelect.append('<option value="' + collection.codecollection + '">' + collection.collection + '</option>');
+				});
+				//$('.inp_searchcoll option[value="L"]').attr('selected','selected');
+				collval = $('.inp_searchcoll option:selected').val();
+			},
+			error: function (err) {
+				alert("An error ocurred while loading data ...");
+			}
+		});
+		
+		function naturalCompare(a, b) {
+			var ax = [], bx = [];
+
+			a.replace(/(\d+)|(\D+)/g, function(_, $1, $2) { ax.push([$1 || Infinity, $2 || ""]) });
+			b.replace(/(\d+)|(\D+)/g, function(_, $1, $2) { bx.push([$1 || Infinity, $2 || ""]) });
+			
+			while(ax.length && bx.length) {
+				var an = ax.shift();
+				var bn = bx.shift();
+				var nn = (an[0] - bn[0]) || an[1].localeCompare(bn[1]);
+				if(nn) return nn;
+			}
+
+			return ax.length - bx.length;
+		}
+
+		//combo of minerals
+		function fill_combos(path,combofield){
+			var namesarray = [];
+			var fnamesarray = [];
+			var uniqueArray = [];
+			$.ajax({
+				url: path,
+				type: "GET",
+				dataType: "JSON",
+				success: function (data) {
+					var i = 0;
+					var l = 0;
+					namesarray = [];
+					fnamesarray = [];
+					$.each(data, function (key, data1) {
+						if ((data1.mname != null) & (data1.mname != "" )){
+							namesarray[i] = data1.mname;
+							i++;
+						}
+						if ((data1.fmname != null)  & (data1.fmname != "")){
+							fnamesarray[l] = data1.fmname;
+							l++;
+						}
+					});
+					
+					if(combofield == mineralSelect){
+						var newArray = namesarray;
+						var found=false;
+						var newindex = i;
+						for(var m =0;m<l;m++){
+							found=false;
+							for(var n =0;n<i;n++){
+								if (newArray[n].toLowerCase() == fnamesarray[m].toLowerCase()){
+									found=true;
+								}
+							}
+							if (found==false){
+								newindex++;
+								newArray[newindex] = fnamesarray[m];
+							}
+						}
+
+						newArray.sort(naturalCompare);
+
+						for (var j=0;j < newindex;j++){
+							if(newArray[j] != null){
+								combofield.append('<option value="' + newArray[j] + '">' + newArray[j].toLowerCase() + '</option>');
+							}
+						};
+					}else{
+						for (var k=0;k<fnamesarray.length;k++){
+							combofield.append('<option value="' + fnamesarray[k] + '">' + fnamesarray[k].toLowerCase() + '</option>');
+						};
+					}
+				},
+				error: function (err) {
+					alert("An error ocurred while loading data ...");
+				}
+			});
+		};
+		fill_combos("{{ path('app_minerals_list', {'querygroup': 'class' })  }}",minclassSelect);
+		fill_combos("{{ path('app_minerals_list', {'querygroup': 'group' })  }}",mingroupSelect);
+		fill_combos("{{ path('app_minerals_list', {'querygroup': 'mineral' })  }}",mineralSelect);
+		
+		//combo of litho
+		$.ajax({
+			url: "{{ path('app_lithominerals_list')  }}",
+			type: "GET",
+			dataType: "JSON",
+			success: function (lithominerals) {
+				$.each(lithominerals, function (key, lithomineral) {
+					lithomineralSelect.append('<option value="' + lithomineral.mineral + '">' + lithomineral.mineral + '</option>');
+				});
+			},
+			error: function (err) {
+				alert("An error ocurred while loading data ...");
+			}
+		});
+		
+		//code if coll changed------	
+		$('.inp_searchcoll').on('change', function() {
+			collval = $('.inp_searchcoll option:selected').val();
+			/*if (collval == "M"){
+				$(".divminerals").show();
+			}
+			if (collval == "F"){
+				$(".divfossils").show();
+			}
+			if (collval == "L"){
+				$(".divlitho").show();
+			}*/
+			coderesults = [];
+		});
+
+		$(".inp_searchcode").autocomplete({
+			source: function(request, response) {
+				$.ajax({
+					url: "{{ path('app_code_autocomplete')  }}",  
+					data : {coll:collval,code:$(".inp_searchcode").val()}, 
+					type: "GET",
+					dataType: "JSON",
+					success: function (donnees) {
+						var i = 0;
+						coderesults = [];
+						$.each(donnees, function (key, donnee) {
+							coderesults[i] = donnee.fieldnum;
+							i++;
+						});
+						response(coderesults);
+					}
+				})
+			},
+			minLength: 2
+		});
+		
+		function searchclic(){
+			var queryvals = "collection:"+$(".inp_searchcoll").val()
+			+",,searchnum:"+$(".inp_searchnum").val()
+			+",,code:"+$(".inp_searchcode").val()
+			+",,museumnr:"+$(".inp_searchmuseumnr").val()
+			+",,museumloc:"+$(".inp_searchmuseumloc").val()
+			+",,boxnbr:"+$(".inp_searchboxnbr").val()
+			+",,descr:"+$(".inp_searchdescr").val()
+			+",,weight:"+$(".inp_searchweight").val()
+			+",,size:"+$(".inp_searchsize").val()
+			+",,dimension:"+$(".inp_searchdimension").val()
+			+",,quality:"+$(".inp_searchquality").val()
+			//+",,radioactivity:"+$("input[name='inp_searchradioact']:checked").val()
+			+",,radioactivity:"+$(".inp_searchradioact").val()
+			+",,slimplate:"+$("input[name='inp_searchslimplate']:checked").val()
+			+",,chemanalysis:"+$("input[name='inp_searchchemanalysis']:checked").val()
+			+",,holotype:"+$("input[name='inp_searchholotype']:checked").val()
+			+",,paratype:"+$("input[name='inp_searchparatype']:checked").val()
+			+",,loaninfo:"+$(".inp_searchloaninfo").val()
+			+",,securitylevel:"+$(".inp_searchsecuritylevel").val()
+			+",,variousinfo:"+$(".inp_searchvariousinfo").val()
+			
+			+",,idmineral:"+$(".inp_searchidmineral").val()
+			+",,grademineral:"+$(".inp_searchmingrade").val()
+			+",,classmineral:"+$(".inp_searchminclass").val()
+			+",,groupmineral:"+$(".inp_searchmingroup").val()
+			+",,mineral:"+$(".inp_searchmineral").val()
+			+",,formulamineral:"+$(".inp_searchmineralFormula").val()
+			
+			+",,lithomineral:"+$(".inp_searchLithomineral").val()
+			+",,lithominnum_from:"+$(".inp_searchLithoMinnum_from").val()
+			+",,lithominnum_to:"+$(".inp_searchLithoMinnum_to").val()
+			+",,lithoweight_from:"+$(".inp_searchLithoWeight_from").val()
+			+",,lithoweight_to:"+$(".inp_searchLithoWeight_to").val()
+			+",,lithoobserv:"+$(".inp_searchLithoObserv").val()
+			
+			+",,lithogranulo:"+$("input[name='inp_searchgranulo']:checked").val()
+			+",,lithomagnet:"+$(".inp_searchLithomagnet").val()
+			;
+
+			if ( $( ".inp_searchNbrResByPage" ).length ) {
+				queryvals = queryvals + ",,NbrResByPage:"+$(".inp_searchNbrResByPage").val();
+			}else{
+				queryvals = queryvals + ",,NbrResByPage:20";
+			}
+		
+			if ( sortDirection.length ) {
+				queryvals = queryvals + ",,sortDirection:"+sortDirection;
+			}else{
+				queryvals = queryvals + ",,sortDirection:idsample ASC";
+			}
+
+			var url = '{{ path("app_result_sample", {'queryvals': 'article_id'}) }}'; 
+			url = url.replace("article_id", queryvals);
+
+			window.location = url;
+		}
+			
+		$(document).ready(function() {
+			
+			$(".but_searchnum").click(searchclic);
+
+		});
+	</script>
+
+{% endblock %}

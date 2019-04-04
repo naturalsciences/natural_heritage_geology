@@ -1,0 +1,67 @@
+AppBundle\Entity\Dsamarays:
+    type: entity
+    table: dsamarays
+    indexes:
+        IDX_47727C6431E4780895B6DB6F:
+            columns:
+                - idcollection
+                - idsample
+    uniqueConstraints:
+        dsamarays_idcollection_unique:
+            columns:
+                - idcollection
+        DSamARays_IDCollection_key:
+            columns:
+                - idcollection
+        dsamarays_unique:
+            columns:
+                - idsample
+                - idcollection
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        alpharay:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        betaray:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        gammaray:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        xray:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    manyToOne:
+        idcollection:
+            targetEntity: Dsample
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                idsample:
+                    referencedColumnName: idsample
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

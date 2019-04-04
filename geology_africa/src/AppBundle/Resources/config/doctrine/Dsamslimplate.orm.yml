@@ -1,0 +1,56 @@
+AppBundle\Entity\Dsamslimplate:
+    type: entity
+    table: dsamslimplate
+    indexes:
+        IDX_743B1C6631E4780895B6DB6F:
+            columns:
+                - idcollection
+                - idsample
+    uniqueConstraints:
+        dsamslimplate_unique:
+            columns:
+                - idcollection
+                - idsample
+                - numplate
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        numplate:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        platedescription:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        platevariousinfo:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    manyToOne:
+        idcollection:
+            targetEntity: Dsample
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                idsample:
+                    referencedColumnName: idsample
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

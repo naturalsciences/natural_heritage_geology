@@ -1,0 +1,58 @@
+AppBundle\Entity\Ddocaerphoto:
+    type: entity
+    table: ddocaerphoto
+    indexes:
+        IDX_A43E8A964DFB1B2F:
+            columns:
+                - fid
+    uniqueConstraints:
+        DDocAerPhoto_PID_key:
+            columns:
+                - pid
+        ddocaerphoto_unique:
+            columns:
+                - idcollection
+                - iddoc
+        ddocaerphoto_pid_unique:
+            columns:
+                - pid
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        pid:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    manyToOne:
+        fid:
+            targetEntity: Docplanvol
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                fid:
+                    referencedColumnName: fid
+            orphanRemoval: false
+        idcollection:
+            targetEntity: Ddocument
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                iddoc:
+                    referencedColumnName: iddoc
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

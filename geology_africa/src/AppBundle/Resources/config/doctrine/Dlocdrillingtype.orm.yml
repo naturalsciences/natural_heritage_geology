@@ -1,0 +1,44 @@
+AppBundle\Entity\Dlocdrillingtype:
+    type: entity
+    table: dlocdrillingtype
+    indexes:
+        IDX_58D3FBD231E4780850E3C8BA:
+            columns:
+                - idcollection
+                - idpt
+    uniqueConstraints:
+        dlocdrillingtype_unique:
+            columns:
+                - idcollection
+                - idpt
+                - drillingtype
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        drillingtype:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+    manyToOne:
+        idcollection:
+            targetEntity: Dloccenter
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                idpt:
+                    referencedColumnName: idpt
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

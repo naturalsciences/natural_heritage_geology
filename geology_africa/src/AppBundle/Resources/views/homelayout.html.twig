@@ -1,0 +1,27 @@
+{# src/AppBundle/Resources/views/homelayout.html.twig #}
+
+{% extends "menulayout.html.twig" %}
+
+{% block title %}
+  {{ parent() }} - Home
+{% endblock %}
+
+{% block body_top %}
+	<table class="top_of_home">
+		<tr>
+			<td>
+				<img src="{{ asset('pics/site_pic_fond_blanc.jpg') }}" alt="Geology Africa" height="260" width="300">
+			</td>
+			<td>
+				<h4>
+					Welcome on the website of the Royal Museum for Central Africa !
+					This intranet site is in construction and will soon offer you access to data in geology and paleontology samples, obeservation points, outcrops, drillings, maps, photography and documents!
+				</h4>
+			</td>
+		</tr>
+	<table>
+{% endblock %}
+{% block body %}
+  {% block homegeology_body %}
+  {% endblock %}
+{% endblock %}

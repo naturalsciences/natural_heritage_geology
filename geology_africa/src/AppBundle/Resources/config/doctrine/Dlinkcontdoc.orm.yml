@@ -1,0 +1,50 @@
+AppBundle\Entity\Dlinkcontdoc:
+    type: entity
+    table: dlinkcontdoc
+    indexes:
+        IDX_C63E6DE031E47808BF396750:
+            columns:
+                - idcollection
+                - id
+        IDX_C63E6DE0AC9A611C:
+            columns:
+                - idcontribution
+    uniqueConstraints:
+        dlinkcontdoc_unique:
+            columns:
+                - idcontribution
+                - idcollection
+                - id
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    manyToOne:
+        idcollection:
+            targetEntity: Ddocument
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                id:
+                    referencedColumnName: iddoc
+            orphanRemoval: false
+        idcontribution:
+            targetEntity: Dcontribution
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcontribution:
+                    referencedColumnName: idcontribution
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

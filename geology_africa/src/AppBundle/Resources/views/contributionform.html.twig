@@ -1,0 +1,448 @@
+{# src/AppBundle/Resources/views/contributionform.html.twig #}
+{{ form_start(form2, {'attr': {'class': 'form-horizontal','id': 'form_contribution'}}) }}
+	<Table width="100%" class="table_edit" >
+		<TR>
+			<th class="title_table_edit" width="100%" colspan=4>
+				Contributions
+			</th>
+		</TR>
+		<TR>
+			<TD>
+				<label for="inp_ContributionID">Contribution: </label>
+					{% if dcontribution.pk is defined %}
+						{{dcontribution.idcontribution}}
+					{% else %}
+						{{ form_widget(form2.idcontribution, {'attr': {'class': 'form-control inp_ContributionID vshortlength'}}) }}
+						{{ form_errors(form2.idcontribution) }}
+					{% endif %}
+			</TD>
+			<TD>
+				<label for="inp_ContributionType">Type: </label>
+				{{ form_widget(form2.datetype, {'attr': {'class': 'form-control inp_ContributionType'}}) }}
+			</TD>
+			<TD>
+				<label for="inp_ContributionDate">Date: </label>
+				{{ form_widget(form2.date, {'attr': {'class': 'form-control inp_ContributionDate'}}) }}
+			</TD>
+			<TD>
+				<label for="inp_ContributionYear">Year: </label>
+				{{ form_widget(form2.year, {'attr': {'class': 'form-control inp_ContributionYear vshortlength'}}) }}
+			</TD>
+		</TR>
+		<TR>
+			<TD colspan=4>
+				{% set i=0 %}
+				<!--{ % if  originaction  == 'edit' or originaction == 'add_aftercommit' %}-->
+				<BR/>
+					<Table class="contributorTitle newLine table_results2" style="display:none">
+						<TR>
+							<TH width="5%" class="border_bottom title_table_view">
+								<label for="inp_contribID" class="labelsview">ID </label>
+							</TH>
+							<TH width="20%" class="border_bottom title_table_view">
+								<label for="inp_ContribName" class="labelsview">Name </label>
+							</TH>
+							<TH width="10%" class="border_bottom title_table_view">
+								<label for="inp_ContribRole" class="labelsview">Role </label>
+							</TH>
+							<TH width="5%" class="border_bottom title_table_view">
+								<label for="inp_ContribOrder" class="labelsview">Order</label>
+							</TH>
+							<TH width="20%" class="border_bottom title_table_view">
+								<label for="inp_ContribName" class="labelsview">Function </label>
+							</TH>
+							<TH width="5%" class="border_bottom title_table_view">
+								<label for="inp_ContribName" class="labelsview">Title </label>
+							</TH>
+							<TH width="5%" class="border_bottom title_table_view">
+								<label for="inp_ContribName" class="labelsview">Statut </label>
+							</TH>
+							<TH width="20%" class="border_bottom title_table_view" colspan="2">
+								<label for="inp_ContribInstitute" class="labelsview">Institute </label>
+							</TH>
+						</TR>
+						{% if arraycontributors is defined  %}
+							{% if arraycontributors|length >= 1 %}
+								{% for arraycontributor in arraycontributors %}
+									<TR id="Contributor{{i}}">
+										<TD>
+											{% if arraycontributor.pk is defined %}
+												<label class="labelsview idcontrib{{i}}">{{arraycontributor.idcontributor}} </label>
+												<input type="text"  id="inp_addnewcontributorID{{i}}" name="inp_addnewcontributorID{{i}}" class="inp_addnewcontributorID{{i}}" value="{{arraycontributor.idcontributor}}" style="display:none" >
+											{% else %}
+												<input type="text"  id="inp_addnewcontributorID{{i}}" name="inp_addnewcontributorID{{i}}" class="inp_addnewcontributorID{{i}} vshortlength" >
+											{% endif %}
+										</TD>
+										<TD>
+											<input type="text"  id="inp_addnewcontributorName{{i}}" name="inp_addnewcontributorName{{i}}" class="inp_addnewcontributorName{{i}} fulllength" >
+										</TD>
+										<TD>
+											<input type="text"  id="inp_addnewcontributorRole{{i}}" name="inp_addnewcontributorRole{{i}}" class="inp_addnewcontributorRole{{i}} shortlength" >
+										</TD>
+										<TD>
+											<input type="text"  id="inp_addnewcontributorOrder{{i}}" name="inp_addnewcontributorOrder{{i}}" class="inp_addnewcontributorOrder{{i}} vshortlength" >
+										</TD>
+										<TD>
+											<input type="text"  id="inp_addnewcontributorFunction{{i}}" name="inp_addnewcontributorFunction{{i}}" class="inp_addnewcontributorFunction{{i}} fulllength" >
+										</TD>
+										<TD>
+											<input type="text"  id="inp_addnewcontributorTitle{{i}}" name="inp_addnewcontributorTitle{{i}}" class="inp_addnewcontributorTitle{{i}} vshortlength" >
+										</TD>
+										<TD>
+											<input type="text"  id="inp_addnewcontributorStatus{{i}}" name="inp_addnewcontributorStatus{{i}}" class="inp_addnewcontributorStatus{{i}} shortlength" >
+										</TD>
+										<TD>
+											<input type="text"  id="inp_addnewcontributorInstitut{{i}}" name="inp_addnewcontributorInstitut{{i}}" class="inp_addnewcontributorInstitut{{i}} mediumlength" >
+										</TD>
+										<TD>
+											<img src="{{ asset('pics/delete.jpg') }}" class="but_deletecontributor_{{arraycontributor.idcontributor}}" onclick="deleteContributor('{{i}}-{{arraycontributor.idcontributor}}')" alt="home" height="12" width="13" onmouseover="" style="cursor: pointer;"> 
+										</TD>
+									</TR>
+									{% set i=i+1%}
+								{% endfor %}
+							{% endif %}								
+						{% else %}
+							<div class="nocontrib">
+								No contributor
+							</div>
+						{% endif %}	
+						<TR>
+							<TD>
+										
+							</TD>
+						</TR>
+					</Table>
+					<Table width="100%">
+						<TR>
+							<TD class="newcontributor">
+								<BR/>
+								<input type="button" id="but_showaddcontributor" value="Add a contributor"/>	
+							</TD>
+							<TD class="newcontributor" style="display:none" width="5%">
+								<label class="labelsview">Name: </label>
+							</TD>
+							<TD class="newcontributor" style="display:none" width="30%">
+								<input type="text"  id="inp_addnewcontributorName" name="inp_addnewcontributorName" class="inp_addnewcontributorName fulllength" >
+							</TD>
+							<TD class="newcontributor" style="display:none" width="5%" >
+							</TD>
+							<TD class="newcontributor" style="display:none" width="5%">
+								<label class="labelsview">Role: </label>
+							</TD>
+							<TD class="newcontributor" style="display:none" width="10%">
+								<input type="text"  id="inp_addnewcontributorRole" name="inp_addnewcontributorRole" class="inp_addnewcontributorRole shortlength" >
+							</TD>
+							<TD class="newcontributor" style="display:none" width="5%" >
+							</TD>
+							<TD class="newcontributor" style="display:none" width="5%">
+								<label class="labelsview">Order: </label>
+							</TD>
+							<TD class="newcontributor" style="display:none" width="5%">
+								<input type="text"  id="inp_addnewcontributorOrder" name="inp_addnewcontributorOrder" class="inp_addnewcontributorOrder vshortlength" >
+							</TD>
+							<TD class="newcontributor" style="display:none" width="40%" >
+							</TD>
+						</TR>
+						<TR>
+							<TD class="newcontributor" colspan="10" style="display:none">
+								<label class="labelsview">or create a new one by leaving fields empty </label>
+							</TD>
+						</TR>	
+						<TR>
+							<TD class="newcontributor" colspan="10" style="display:none">
+								<input type="button" id="but_addcontributor" value="Add"  />	
+							</TD>
+						</TR>							
+					</Table>
+					<input type="hidden" id="newcontributors" name="newcontributors" class="newcontributors" >						
+				<!--{ % endif %}-->
+			</TD>
+		</TR>		
+		<TR>
+			<TD>
+				<BR/>
+				<input type="submit" class="btn btn-default pull-right submitbutton" />
+				<div class="alert_message"></div>
+			</TD>
+		</TR>	
+	</Table>
+{{ form_end(form2) }}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{{ asset('js/core.js') }}"></script>
+
+<script type="text/javascript">
+	var lastindex = "{{i}}";
+	$newcontributorsvals = "";
+	var arraycontributor = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
+ //[ {id: 0},{role: ""},{order: 0},{name: ""},{fonction: ""},{title: ""},{statut: ""},{institute: ""}];
+			
+	$(document).ready(function() {
+	//alert("{{originaction}}");
+		//show message saying that data is in DB, during 4 sec. Msg comes from controller
+		setTimeout(function() { 
+			{% for msg in app.flashes('success') %}
+			$(".alert_message").html("{{ msg }}");
+			$(".alert_message").fadeOut(2000); 
+			{% endfor %}
+		},1000); 
+		
+		{% if originaction is defined  %}
+			//alert("{{originaction}}");
+			{% if originaction == 'add_beforecommit' %}
+				$(".submitbutton").prop('value', 'Create');
+			{% endif %}
+			{% if (originaction == 'edit') or (originaction == 'add_aftercommit') %}
+				$(".submitbutton").prop('value', 'Save');
+				{% if arraycontributors is defined %}
+					{% if arraycontributors|length >= 1 %}
+						$(".contributorTitle").css("display", ""); 
+						{% set l=0 %}
+						{% for arraycontributor in arraycontributors %}
+							arraycontributor[{{l}}].push(
+							{	id: "{{arraycontributor.idcontributor}}",
+								name: "{{arraycontributor.people}}",
+								fonction: "{{arraycontributor.peoplefonction}}",
+								title: "{{arraycontributor.peopletitre}}",
+								statut: "{{arraycontributor.peoplestatut}}",
+								institute: "{{arraycontributor.institut}}"}
+							);
+							{% set l=l+1%}
+						{% endfor %}
+						{% set l=0 %}
+						{% for arraylinkcontrib in arraylinkcontribs %}
+							arraycontributor[{{l}}].push(
+								{role: "{{arraylinkcontrib.contributorrole}}",
+								order: "{{arraylinkcontrib.contributororder}}"}
+							);
+							{% set l=l+1%}
+						{% endfor %}
+
+						for (i=0;i<{{l}};i++){
+							$(".inp_addnewcontributorID"+i).val(arraycontributor[i][0].id);
+							$(".inp_addnewcontributorRole"+i).val(arraycontributor[i][1].role);
+							$(".inp_addnewcontributorOrder"+i).val(arraycontributor[i][1].order);
+							$(".inp_addnewcontributorName"+i).val(arraycontributor[i][0].name);
+							$(".inp_addnewcontributorFunction"+i).val(arraycontributor[i][0].fonction);
+							$(".inp_addnewcontributorTitle"+i).val(arraycontributor[i][0].title);
+							$(".inp_addnewcontributorStatus"+i).val(arraycontributor[i][0].statut);
+							$(".inp_addnewcontributorInstitut"+i).val(arraycontributor[i][0].institute); 
+						}
+					{% endif %}
+				{% endif %}
+			{% endif %}
+		{% endif %}
+		
+		function fill_lastContributionid(){
+			path = "{{path('app_last_Contributionid') }}";  
+			lastid = 0;
+			$.ajax({
+				url:  path,
+				type: "GET",
+				dataType: "JSON",
+				success: function (ids) {
+					$.each(ids, function (key, id) {
+						lastid = id.idcontribution;
+					});
+
+					$(".inp_ContributionID").attr("data-toggle", "tooltip");
+					$(".inp_ContributionID").attr("data-placement", "top");
+					$(".inp_ContributionID").attr("title", "Last value is "+lastid);
+				},
+				error: function (err) {
+					alert("An error ocurred while loading data ...");
+				}
+			});
+		};
+		fill_lastContributionid();
+	});
+	
+	function fill_lastContributorid(){
+		path = "{{path('app_last_Contributorid') }}";  
+		lastid = 0;
+		$.ajax({
+			url:  path,
+			type: "GET",
+			dataType: "JSON",
+			success: function (ids) {
+				$.each(ids, function (key, id) {
+					lastid = id.idcontributor;
+				});
+				for (i=0;i<=lastindex;i++){
+					$(".inp_addnewcontributorID"+i).attr("data-toggle", "tooltip");
+					$(".inp_addnewcontributorID"+i).attr("data-placement", "top");
+					$(".inp_addnewcontributorID"+i).attr("title", "Last value is "+lastid);
+				}
+			},
+			error: function (err) {
+				alert("An error ocurred while loading data ...");
+			}
+		});
+	};
+	fill_lastContributorid();
+		
+	var typeresults = [];
+    $(".inp_ContributionType").autocomplete({
+		source: function(request, response) {
+			$.ajax({
+				url: "{{ path('app_contribtype_autocomplete')  }}",  
+				data : {code:$(".inp_ContributionType").val()}, 
+				type: "GET",
+				dataType: "JSON",
+				success: function (donnees) {
+					var i = 0;
+					typeresults = [];
+					$.each(donnees, function (key, donnee) {
+						typeresults[i] = donnee.datetype;
+						i++;
+					});
+					response(typeresults);
+				}
+			})
+		},
+		minLength: 0,
+	});
+	
+	var namesresults = [];
+	namesresults['people'] = [];
+	namesresults['id'] = [];
+	namesresults['function'] = [];
+	namesresults['title'] = [];
+	namesresults['status'] = [];
+	namesresults['institute'] = [];
+	
+	$(".inp_addnewcontributorName").autocomplete({
+		source: function(request, response) {
+			var $val = $(".inp_addnewcontributorName").val();
+			$.ajax({
+				url: "{{ path('app_contribnames_autocomplete')  }}",  
+				data : {code:$val},  
+				type: "GET",
+				dataType: "JSON",
+				success: function (donnees) {
+					var i = 0;
+
+					$.each(donnees, function (key, donnee) {
+						namesresults['people'][i] = donnee.people;
+						namesresults['id'][i] = donnee.idcontributor;
+						namesresults['function'][i] = donnee.peoplefonction;
+						namesresults['title'][i] = donnee.peopletitre;
+						namesresults['status'][i] = donnee.peoplestatut;
+						namesresults['institute'][i] = donnee.institut;
+						i++;
+					});
+					response(namesresults['people']);
+				}
+			})
+		},
+		minLength: 0,
+	});
+	
+	function completeOtherPeopleData(k){
+		for (i=0;i<=namesresults['people'].length;i++){
+			//for (j=0;j<lastindex;j++){
+				var ind = k;
+				if (namesresults['people'][i] == $(".inp_addnewcontributorName"+ind).val()){
+					$(".inp_addnewcontributorID"+ind).val(namesresults['id'][i]);
+					$(".inp_addnewcontributorID"+ind).hide();
+					$(".idcontrib"+ind).html(namesresults['id'][i]);
+					$(".inp_addnewcontributorFunction"+ind).val(namesresults['function'][i]);
+					$(".inp_addnewcontributorTitle"+ind).val(namesresults['title'][i]);
+					$(".inp_addnewcontributorStatus"+ind).val(namesresults['status'][i]);
+					$(".inp_addnewcontributorInstitut"+ind).val(namesresults['institute'][i]); 
+				}
+			//}
+		}
+	}
+	
+	function changecontrib(){
+		var listfields = ["ID","Role","Order","Name","Function","Title","Status","Institut"];
+		for (j=0;j<listfields.length;j++){
+			for (i=0;i<=lastindex;i++){
+			//alert(".inp_addnewcontributor"+listfields[j]+i
+				$(document).on('change',".inp_addnewcontributor"+listfields[j]+i,function(){
+					k=$(this).attr('id').substring($(this).attr('id').length-1,$(this).attr('id').length) ;
+					completeOtherPeopleData(k);
+					if ($newcontributorsvals.indexOf($('.inp_addnewcontributorID'+k).val() +"-U") < 0){
+						$newcontributorsvals = $newcontributorsvals + "," + k +"-" + $('.inp_addnewcontributorID'+k).val() +"-U"; 
+						$(".newcontributors").val($newcontributorsvals.substring(1,$newcontributorsvals.length));
+					}
+				});
+			}
+		};
+	};
+	changecontrib();
+	
+	$('#but_showaddcontributor').click(function(e){
+		$(".newcontributor").toggle();
+		$(".inp_addnewcontributorName").val("");
+	});
+	
+	$('#but_addcontributor').click(function(e){
+		if ($(".inp_ContributionID").val() != ""){
+			$(".contributorTitle").css("display", "");  
+			$(".nocontrib").hide();
+			
+			$content = '<TR id="Contributor'+lastindex+'">';
+			$content = $content + '<TD>';
+			$content = $content + '<input type="text"  id="inp_addnewcontributorID'+lastindex+'" name="inp_addnewcontributorID'+lastindex+'" class="inp_addnewcontributorID'+lastindex+' vshortlength"><label class="labelsview idcontrib'+lastindex+'"></label>';
+			$content = $content + '</TD>';
+			$content = $content + '<TD>';
+			$content = $content + '<input type="text"  id="inp_addnewcontributorName'+lastindex+'" name="inp_addnewcontributorName'+lastindex+'" value="'+$(".inp_addnewcontributorName").val()+'"  class="inp_addnewcontributorName'+lastindex+' fulllength">';
+			$content = $content + '</TD>';
+			$content = $content + '<TD>';
+			$content = $content + '<input type="text"  id="inp_addnewcontributorRole'+lastindex+'" name="inp_addnewcontributorRole'+lastindex+'" value="'+$(".inp_addnewcontributorRole").val()+'"  class="inp_addnewcontributorRole'+lastindex+' shortlength">';
+			$content = $content + '</TD>';
+			$content = $content + '<TD>';
+			$content = $content + '<input type="text"  id="inp_addnewcontributorOrder'+lastindex+'" name="inp_addnewcontributorOrder'+lastindex+'" value="'+$(".inp_addnewcontributorOrder").val()+'"  class="inp_addnewcontributorOrder'+lastindex+' vshortlength">';
+			$content = $content + '</TD>';
+			$content = $content + '<TD>';
+			$content = $content + '<input type="text"  id="inp_addnewcontributorFunction'+lastindex+'" name="inp_addnewcontributorFunction'+lastindex+'" class="inp_addnewcontributorFunction'+lastindex+' fulllength">';
+			$content = $content + '</TD>';
+			$content = $content + '<TD>';
+			$content = $content + '<input type="text"  id="inp_addnewcontributorTitle'+lastindex+'" name="inp_addnewcontributorTitle'+lastindex+'" class="inp_addnewcontributorTitle'+lastindex+' vshortlength" >';
+			$content = $content + '</TD>';
+			$content = $content + '<TD>';
+			$content = $content + '<input type="text"  id="inp_addnewcontributorStatus'+lastindex+'" name="inp_addnewcontributorStatus'+lastindex+'" class="inp_addnewcontributorStatus'+lastindex+' shortlength">';
+			$content = $content + '</TD>';
+			$content = $content + '<TD>';
+			$content = $content + '<input type="text"  id="inp_addnewcontributorInstitut'+lastindex+'" name="inp_addnewcontributorInstitut'+lastindex+'" class="inp_addnewcontributorInstitut'+lastindex+' mediumlength">';
+			$content = $content + '</TD>';
+			$content = $content + '</TR>';
+										
+			$(".contributorTitle").append($content);
+			$(".inp_addnewcontributorName").val("");
+			$(".inp_addnewcontributorRole").val("");
+			$(".inp_addnewcontributorOrder").val("");
+			completeOtherPeopleData(lastindex);
+			changecontrib();
+			if ($newcontributorsvals.indexOf($('.inp_addnewcontributorID'+lastindex).val() +"-U") < 0){
+				$newcontributorsvals = $newcontributorsvals + "," + lastindex +"-" + $('.inp_addnewcontributorID'+lastindex).val() +"-U"; 
+				$(".newcontributors").val($newcontributorsvals.substring(1,$newcontributorsvals.length));
+			}
+			lastindex++;
+		
+			
+			fill_lastContributorid();
+		}else{
+			alert("Please enter a contribution ID before adding contributors !");
+		}
+	});
+	
+	function deleteContributor(idcontr) {
+		var r = confirm("Are you sure to delete that contributor?");
+		if (r == true) {
+			var idx = idcontr.indexOf("-"); 
+			var i = idcontr.substring(0,idx);
+			var id = idcontr.substring(idx+1);
+
+			$newcontributorsvals = $newcontributorsvals + "," + i +"-" + $('.inp_addnewcontributorID'+i).val() +"-D"; 
+			$(".newcontributors").val($newcontributorsvals.substring(1,$newcontributorsvals.length));
+			$fieldname = "#Contributor"+i;
+			$($fieldname).html("<TD></TD colspan=9>"); 
+		} 
+	}
+</script>
+		

@@ -1,0 +1,109 @@
+AppBundle\Entity\Ddocarchive:
+    type: entity
+    table: ddocarchive
+    uniqueConstraints:
+        pk_ddoc_archives:
+            columns:
+                - idcollection
+                - iddoc
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        idcollection:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        iddoc:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        extend:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                default: '0'
+        geology:
+            type: boolean
+            nullable: true
+        geochemistry:
+            type: boolean
+            nullable: true
+        geophysics:
+            type: boolean
+            nullable: true
+        exploration:
+            type: boolean
+            nullable: true
+        production:
+            type: boolean
+            nullable: true
+        reserves:
+            type: boolean
+            nullable: true
+        exploitation:
+            type: boolean
+            nullable: true
+        processing:
+            type: boolean
+            nullable: true
+        management:
+            type: boolean
+            nullable: true
+        report:
+            type: boolean
+            nullable: true
+        drillingcores:
+            type: boolean
+            nullable: true
+        maps:
+            type: boolean
+            nullable: true
+        paleontology:
+            type: boolean
+            nullable: true
+        sedimentology:
+            type: boolean
+            nullable: true
+        economy:
+            type: boolean
+            nullable: true
+        sample:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        sgeology:
+            type: boolean
+            nullable: true
+        smineralogy:
+            type: boolean
+            nullable: true
+        spaleontology:
+            type: boolean
+            nullable: true
+        sconcentre:
+            type: boolean
+            nullable: true
+        yearlow:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        yearhigh:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+    lifecycleCallbacks: {  }

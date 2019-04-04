@@ -1,0 +1,36 @@
+AppBundle\Entity\Lmedium:
+    type: entity
+    table: lmedium
+    uniqueConstraints:
+        lmedium_unique:
+            columns:
+                - medium
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        medium:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        domaincode:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        definition:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,72 @@
+AppBundle\Entity\Dlocquadril:
+    type: entity
+    table: dlocquadril
+    uniqueConstraints:
+        dlocquadril_unique:
+            columns:
+                - idcollection
+                - idpt
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        x1:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        y1:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        x2:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        y2:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        x3:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        y3:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        x4:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        y4:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+    manyToOne:
+        idcollection:
+            targetEntity: Dloccenter
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                idpt:
+                    referencedColumnName: idpt
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

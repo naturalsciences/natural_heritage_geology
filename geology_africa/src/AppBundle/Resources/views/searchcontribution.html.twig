@@ -1,0 +1,227 @@
+{# src/AppBundle/Resources/views/searchcontribution.html.twig #}
+
+{% extends "@App/searchlayout.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - Contributions
+{% endblock %}
+		
+{% block body_top %}
+	<table width = "100%">
+		<tr>
+			<td width = "100%">
+				<table class="ui-front table_search only_minerals">
+					<tr>
+						<th class="title_table_search" width="100%" colspan = "8">
+							Contribution
+						</th>
+					</tr>
+					<tr>
+						<th width = "5%">
+							ID :
+						</th>
+						<td  width = "5%">
+							<input type="text" class="inp_searchidcontribution vshortlength">
+						</td>
+						<th width = "10%">
+							Type:
+						</th>
+						<td  width = "20%">
+							<select id="inp_searchconttype" class="inp_searchconttype" style="max-width:150px;">
+								<option value="all">All</option>
+							</select>
+						</td>
+						<th width = "10%">
+							Year:
+						</th>
+						<td >
+							<select id="inp_searchcontyear" class="inp_searchcontyear">
+								<option value="all">All</option>
+							</select>
+						</td>
+						<th width = "10%">
+							Date:
+						</th>
+						<td >
+							from <input type="text" id="inp_searchcontfromdate" class="inp_searchcontfromdate js-datepicker"> 
+							to <input type="text" id="inp_searchconttodate" class="inp_searchconttodate js-datepicker">
+						</td>
+					</tr>
+					<tr>
+						<th class="title_table_search" width="100%" colspan = "8">
+							Contributor
+						</th>
+					</tr>
+					<tr>
+						<th >
+							ID:
+						</th>
+						<td>
+							<input type="text" class="inp_searchidcontributor vshortlength">
+						</td>
+						<th>
+							Name:
+						</th>
+						<td colspan="5">
+							<select id="inp_searchcontname" class="inp_searchcontname">
+								<option value="all">All</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th >
+							Role:
+						</th>
+						<td>
+							<select id="inp_searchcontrole" class="inp_searchcontrole">
+								<option value="all">All</option>
+							</select>
+						</td>
+						<th >
+							Order:
+						</th>
+						<td colspan="5">
+							<input type="text" class="inp_searchcontorder vshortlength">
+						</td>
+					</tr>
+					<tr>
+						<th >
+							Function:
+						</th>
+						<td>
+							<select id="inp_searchcontfunction" class="inp_searchcontfunction">
+								<option value="all">All</option>
+							</select>
+						</td>
+						<th >
+							Title:
+						</th>
+						<td>
+							<select id="inp_searchconttitle" class="inp_searchconttitle">
+								<option value="all">All</option>
+							</select>
+						</td>
+						<th >
+							Status:
+						</th>
+						<td>
+							<select id="inp_searchcontstatus" class="inp_searchcontstatus">
+								<option value="all">All</option>
+							</select>
+						</td>
+						<th >
+							Institute:
+						</th>
+						<td>
+							<select id="inp_searchcontinstitute" class="inp_searchcontinstitute">
+								<option value="all">All</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+				<!--</div>-->
+			</td>
+		</tr>
+	</table>
+	<BR/>
+	<input type="button" class="but_searchcontri" value="Search">
+	
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css"> 
+    
+	<script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
+	<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="{{ asset('js/core.js') }}"></script>
+	
+	<script type="text/javascript">
+		var sortDirection = "";
+		$('.js-datepicker').datepicker();
+		var yearSelect = $(".inp_searchcontyear");
+		
+		$thisyear = new Date().getFullYear();
+		for (var j=$thisyear;j > 1700;j--){
+			yearSelect.append('<option value="' + j + '">' + j + '</option>');
+		};
+		
+		//$('.inp_searchcoll option[value="L"]').attr('selected','selected');
+		//collval = $('.inp_searchcoll option:selected').val();
+			
+		function isNumeric(n) {
+		  return !isNaN(parseFloat(n)) && isFinite(n);
+		}			
+		$(document).on('change',".inp_searchcontorder",function(){
+			if(!isNumeric($('.inp_searchcontorder').val()) ){
+				alert("Please enter a numeric value in field Order");
+			}
+		});
+				
+		//ajax to fill the comboboxes------
+		function fill_comboboxes(entry_field,codeval){
+			$.ajax({
+				url: "{{ path('app_contribdata_combobox')  }}",  
+				data : {code:codeval}, 
+				type: "GET",
+				dataType: "JSON",
+				success: function (donnees) {
+					$.each(donnees, function (key, donnee) {
+						entry_field.append('<option value="' + donnee.valdata + '">' + donnee.valdata + '</option>');
+					});
+					//collval = $('.inp_searchcoll option:selected').val();
+				},
+				error: function (err) {
+					alert("An error ocurred while loading data ...");
+				}
+			});
+		}
+		fill_comboboxes($(".inp_searchconttype"),1);
+		fill_comboboxes($(".inp_searchcontname"),2);
+		fill_comboboxes($(".inp_searchcontrole"),3);
+		fill_comboboxes($(".inp_searchcontfunction"),4);
+		fill_comboboxes($(".inp_searchconttitle"),5);
+		fill_comboboxes($(".inp_searchcontstatus"),6);
+		fill_comboboxes($(".inp_searchcontinstitute"),7);
+
+		function searchclic(){			
+			datrfr = $(".inp_searchcontfromdate").val().replace("/","-").replace("/","-");
+			dateto = $(".inp_searchconttodate").val().replace("/","-").replace("/","-");
+			var queryvals = "idcontribution:"+$(".inp_searchidcontribution").val()
+			+",,type:"+$(".inp_searchconttype").val()
+			+",,year:"+$(".inp_searchcontyear").val()
+			+",,date_from:"+datrfr
+			+",,date_to:"+dateto
+			+",,idcontributor:"+$(".inp_searchidcontributor").val()
+			+",,people:"+$(".inp_searchcontname").val()
+			+",,function:"+$(".inp_searchcontfunction").val()
+			+",,title:"+$(".inp_searchconttitle").val()
+			+",,status:"+$(".inp_searchcontstatus").val()
+			+",,institute:"+$(".inp_searchcontinstitute").val()
+			+",,role:"+$(".inp_searchcontrole").val()
+			+",,order:"+$(".inp_searchcontorder").val()
+			;
+
+			if ( $( ".inp_searchNbrResByPage" ).length ) {
+				queryvals = queryvals + ",,NbrResByPage:"+$(".inp_searchNbrResByPage").val();
+			}else{
+				queryvals = queryvals + ",,NbrResByPage:20";
+			}
+		
+			if ( sortDirection.length ) {
+				queryvals = queryvals + ",,sortDirection:"+sortDirection;
+			}else{
+				queryvals = queryvals + ",,sortDirection:idcontribution ASC";
+			}
+
+			var url = '{{ path("app_result_contribution", {'queryvals': 'article_id'}) }}';
+			url = url.replace("article_id", queryvals);
+
+			window.location = url;
+		}
+			
+		$(document).ready(function() {
+			
+			$(".but_searchcontri").click(searchclic);
+
+		});
+	</script>
+
+{% endblock %}

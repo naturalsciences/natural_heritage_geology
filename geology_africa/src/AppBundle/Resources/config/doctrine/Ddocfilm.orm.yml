@@ -1,0 +1,44 @@
+AppBundle\Entity\Ddocfilm:
+    type: entity
+    table: ddocfilm
+    indexes:
+        IDX_CA4AC8F231E478089F44A603:
+            columns:
+                - idcollection
+                - iddoc
+    uniqueConstraints:
+        ddocfilm_unique:
+            columns:
+                - idcollection
+                - iddoc
+                - film
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        film:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+    manyToOne:
+        idcollection:
+            targetEntity: Ddocument
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                iddoc:
+                    referencedColumnName: iddoc
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

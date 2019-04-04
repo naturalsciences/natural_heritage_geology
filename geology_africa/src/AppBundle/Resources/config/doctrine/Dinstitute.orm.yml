@@ -1,0 +1,54 @@
+AppBundle\Entity\Dinstitute:
+    type: entity
+    table: dinstitute
+    uniqueConstraints:
+        dinstitute_unique:
+            columns:
+                - idinstitution
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        idinstitution:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+        acronyme:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        fullname:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        adresse:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        ville:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        contact:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

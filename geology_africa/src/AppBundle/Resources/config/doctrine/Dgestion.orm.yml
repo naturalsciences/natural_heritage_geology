@@ -1,0 +1,50 @@
+AppBundle\Entity\Dgestion:
+    type: entity
+    table: dgestion
+    indexes:
+        IDX_72EDFBE6F6C6757:
+            columns:
+                - idencodeur
+    uniqueConstraints:
+        dgestion_unique:
+            columns:
+                - idgestion
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        idgestion:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+        date:
+            type: datetime
+            nullable: true
+            options:
+                default: now()
+        action:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    manyToOne:
+        idencodeur:
+            targetEntity: Dgestionnaire
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idencodeur:
+                    referencedColumnName: idencodeur
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

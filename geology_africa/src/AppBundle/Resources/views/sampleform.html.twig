@@ -1,0 +1,1430 @@
+{# src/AppBundle/Resources/views/sampleform.html.twig #}
+
+<Table width="100%" class="table_edit" >
+	<TR>
+		<th class="title_table_edit" width="100%" colspan=4>
+			Samples
+		</th>
+	</TR>
+	{{ form_start(form, {'attr': {'class': 'form-horizontal','id': 'form_sample'}}) }}
+	<TR>
+		<TD>
+			<Table width="100%">
+				<TR>
+					<TD colspan=4>
+						<label for="inp_SampleID">Sample ID: </label>
+							{% if dsample.pk is defined %}
+								{{dsample.idcollection}}
+								{{dsample.idsample}}
+							{% else %}
+								{{ form_widget(form.idcollection, {'attr': {'class': 'form-control In_SampleColl'}}) }}
+								{{ form_errors(form.idsample) }} {{ form_widget(form.idsample, {'attr': {'class': 'form-control inp_SampleID vshortlength'}}) }}
+							{% endif %}
+					</TD>
+				</TR>
+				<TR>
+					<TD>
+						<label for="inp_SampleCode">Sample number: </label>
+					</TD>
+					<TD colspan=3>
+						{{ form_widget(form.fieldnum, {'attr': {'class': 'form-control inp_SampleCode'}}) }}
+						<label for="inp_SampleMuseumnum">Museum number: </label>
+						{{ form_widget(form.museumnum, {'attr': {'class': 'form-control inp_SampleMuseumnum'}}) }}
+					</TD>
+				</TR>
+				<TR>
+					<TD>
+						<label for="inp_SampleBoxnr">Box number: </label>
+					</TD>
+					<TD colspan=2>
+						{{ form_widget(form.boxnumber, {'attr': {'class': 'form-control inp_SampleBoxnr'}}) }}
+						<label for="inp_SampleMuseumloc">Museum location: </label>
+						{{ form_widget(form.museumlocation, {'attr': {'class': 'form-control inp_SampleMuseumloc'}}) }}
+						<label for="inp_SampleWeight">Weight: </label>
+						{{ form_widget(form.weight, {'attr': {'class': 'form-control inp_SampleWeight vshortlength'}}) }}
+						<label for="inp_SampleQuantity">Quantity: </label>
+						{{ form_widget(form.quantity, {'attr': {'class': 'form-control inp_SampleQuantity vshortlength'}}) }}
+						<label for="inp_SampleSize">Size: </label>
+						{{ form_widget(form.size, {'attr': {'class': 'form-control inp_SampleSize vshortlength'}}) }}
+					</TD>
+					<TD>
+					<label for="inp_SampleRadioactivity">Radioactivity: </label>
+						{{ form_widget(form.radioactivity, {'attr': {'class': 'form-control inp_SampleRadioactivity'}}) }}
+					</TD>
+				</TR>
+				<TR>
+					<TD>
+						<label for="inp_SampleDescription">Sample description: </label>
+					</TD>
+					<TD colspan=2>
+						{{ form_widget(form.sampledescription, {'attr': {'class': 'form-control inp_SampleDescription '}}) }}
+					</TD>
+					<TD>
+						{{ form_widget(form.holotype, {'attr': {'class': 'form-control inp_SampleHolotype'}}) }}
+						{{ form_widget(form.paratype, {'attr': {'class': 'form-control inp_SampleParatype'}}) }}
+					</TD>
+				</TR>
+				<TR>
+					<TD>
+						<label for="inp_SampleVariousInfo">Various sample info: </label>
+					</TD>
+					<TD colspan=2>
+						{{ form_widget(form.varioussampleinfo, {'attr': {'class': 'form-control inp_SampleVariousInfo'}}) }}
+					</TD>
+					<TD>
+						{{ form_widget(form.chemicalanalysis, {'attr': {'class': 'form-control inp_SampleChemicalanal'}}) }}
+						{{ form_widget(form.slimplate, {'attr': {'class': 'form-control inp_SampleSlimplate'}}) }}
+					</TD>
+				</TR>
+				<TR>
+					<TD>
+						<label for="inp_SampleDimensioncode">Dimension code: </label>
+					</TD>
+					<TD colspan=2>
+						{{ form_widget(form.dimentioncode, {'attr': {'class': 'form-control inp_SampleDimensioncode'}}) }}
+						<label for="inp_SampleLoanInfo">Loan information: </label>
+						{{ form_widget(form.loaninformation, {'attr': {'class': 'form-control inp_SampleLoanInfo'}}) }}
+						<label for="inp_SampleSecurityLevel">Security level: </label>
+						{{ form_widget(form.securitylevel, {'attr': {'class': 'form-control inp_SampleSecurityLevel'}}) }}
+					</TD>
+					<TD>
+						<label for="inp_SampleQuality">Quality: </label>
+						{{ form_widget(form.quality, {'attr': {'class': 'form-control inp_SampleQuality vshortlength'}}) }}
+					</TD>
+				</TR>
+			</Table>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<Table width="100%">
+				<TR>
+					<TD class="sections" width="100%">
+						{% set i=0 %}
+						{% set j=0 %}
+						{% if  originaction  == 'edit' or originaction == 'add_aftercommit' %}
+							</br>
+							<div class=example>
+								<div class=tabs>
+									<div id=tab1> <a href="#tab1">Mineralogy</a>
+										<div>
+											<Table class="table_view">
+												<TR>
+													<TD width="50%"  class="celltop">	
+														<Table class="mineralsTitle newLine table_results2" style="display:none">
+															<TR>
+																<TH width="5%" class="border_bottom">
+																	<label for="inp_mineralID" class="labelsview">ID </label>
+																</TH>
+																<TH width="10%" class="border_bottom">
+																	<label for="inp_mineralname" class="labelsview">Name </label>
+																</TH>
+																<TH width="10%" class="border_bottom">
+																	<label for="inp_mineralgrade" class="labelsview">Grade </label>
+																</TH>
+																<TH width="10%" class="border_bottom">
+																	<label for="inp_mineralrank" class="labelsview">Rank </label>
+																</TH>
+																<TH width="40%" class="border_bottom">
+																	<label for="inp_mineralformula" class="labelsview">Formula </label>
+																</TH>
+																<TH width="25%" colspan="2" class="border_bottom">
+																	<label for="inp_mineralparent" class="labelsview">Parent </label>
+																</TH>
+															</TR>
+												
+															{% if arraylminerals|length > 1 %}
+																{% for lminerals in arraylminerals %}
+																	{% for lmineral in lminerals %}
+																		<TR id="minerals{{i}}">
+																			<TD>
+																				<label class="lbl_idmineral{{i}}">{{lmineral.idmineral}}</label>
+																			</TD>
+																			<TD>
+																				{{lmineral.mname}} {% if (lmineral.fmname|length > 0) and (lmineral.fmname|lower != lmineral.mname|lower) %} ,{{ lmineral.fmname|lower}}(Fl.) {% endif %}
+																			</TD>
+																			<TD>
+																				<input type="integer" class="inp_mineralgrade{{i}}" value="{{grades[i+1]}}">
+																			</TD>
+																			<TD>
+																				{{ lmineral.rank}}
+																			</TD>
+																			<TD>
+																				<label class="input_formula{{i}}" >
+																				</label>
+																			</TD>
+																			<TD>						
+																				{{lmineral.mparent}} {% if lmineral.fmparent|length > 2 %} ,{{ lmineral.fmparent|lower}}(Fl.) {% endif %}
+																			</TD>
+																			<TD>
+																				<img src="{{ asset('pics/delete.jpg') }}" class="but_deletemineral_{{lmineral.idmineral}}" onclick="deletesammineral('{{i}}-{{lmineral.idmineral}}')" alt="home" height="12" width="13" onmouseover="" style="cursor: pointer;">  
+																			</TD>
+																		</TR>
+																		{% set i=i+1%}
+																	{% endfor %}
+																{% endfor %}	
+															{% else %}
+																<div class="nomin">
+																	No minerals
+																</div>
+															{% endif %}		
+														</Table>
+														<Table>
+															<TR>
+																<TD class="newmineral">
+																	<BR/>
+																	<input type="button" id="but_showaddmineral" value="Add a mineral"  />		
+																</TD>
+																<TD class="newmineral" style="display:none">
+																	<label class="labelsview">Mineral name: </label>
+																</TD>
+																<TD class="newmineral" colspan=2 style="display:none">
+																	<select class="inp_addnewmineralname">
+																		<option value="all"></option>
+																	</select>
+																</TD>
+																<TD class="newmineral" style="display:none">
+																	<label class="labelsview">Grade: </label>
+																</TD>
+																<TD class="newmineral" style="display:none">
+																	<input type="integer" class="inp_addnewmineralgrade" >
+																</TD>
+																<TD class="newmineral" style="display:none">
+																</TD>
+															</TR>		
+															<TR>
+																<TD class="newmineral" style="display:none">
+																	<label class="labelsview">Mineral name(Florias): </label>
+																</TD>
+																<TD class="newmineral" style="display:none">
+																	<select class="inp_addnewmineralFname">
+																		<option value="all"></option>
+																	</select>
+																</TD>
+																<TD class="newmineral" colspan=3 style="display:none">
+																</TD>
+																<TD class="newmineral" style="display:none">
+																	<input type="button" id="but_addmineral" value="Add"  />	
+																</TD>
+															</TR>																
+														</Table>
+														<input type="hidden" id="newgrades" name="newgrades" class="newgrades" >	
+													</TD>
+													<TD width="50%" class="celltop" >	
+														<Table class="table_format1">
+															<TR>
+																<TH  class="titletable" colspan = "6" >
+																	<label class="labelsview">Heavy minerals </label>
+																</TH>
+															</TR>
+															<TR>
+																<TD>
+																	<label class="labelsview">Weight sample </label>
+																</TD>
+																<TD>
+																	<input type="text" id="inp_HMWeightSample" name="inp_HMWeightSample" class="inp_HMWeightSample vshortlength" value=0>
+																</TD>
+																<TD>
+																	<label class="labelsview">Weight HM </label>
+																</TD>
+																<TD>
+																	<input type="text" id="inp_HMWeightHM" name="inp_HMWeightHM" class="inp_HMWeightHM vshortlength" value=0>
+																</TD>
+																<TD>
+																	<label class="labelsview">Perc. HM: </label>
+																</TD>
+																<TD>
+																	<label class="percHM"></label>
+																</TD>
+															</TR>
+															<TR>
+																<TD>
+																	<label class="labelsview">Observation HM </label>
+																</TD>
+																<TD colspan = "5">
+																	<input type="text" id="inp_HMDescript" name="inp_HMDescript" class="inp_HMDescript fulllength" value="">
+																</TD>
+															</TR>
+															<TR>
+																<TD colspan = "6">
+																	<Table class="HM newLine2 table_results3" style="display:none">
+																		<TR>
+																			<TH width="10%" class="border_bottom">
+																				<label class="labelsview">Mineral </label>
+																			</TH>
+																			<TH width="10%" class="border_bottom">
+																				<label class="labelsview">Grains</label>
+																			</TH>
+																			<TH width="50%" class="border_bottom">
+																				<label class="labelsview">Observation</label>
+																			</TH>
+																			<TH width="15%" class="border_bottom">
+																				<label class="labelsview">% opaque</label>
+																			</TH>
+																			<TH width="15%" class="border_bottom">
+																				<label class="labelsview">% Non opaque</label>
+																			</TH>
+																			<TH width="15%" class="border_bottom">
+																				
+																			</TH>
+																		</TR>
+																		<TR id="HmineralsTotal">
+																				<TH width="10%" class="border_top">
+																					Total:
+																				</TH>
+																				<TH width="10%" class="border_top" >
+																					<label class="calcTotalGrains">	</label>
+																				</TH>
+																				<TH width="50%" class="border_top">	</TH>
+																				<TH width="15%" class="border_top">
+																					<label class="calcTotalopaques" >	</label>
+																				</TH>
+																				<TH width="15%" class="border_top" >
+																					<label class="calcTotalNonopaques" >	</label>
+																				</TH>
+																		</TR>
+																		{% if samheavymin2|length > 1 %}
+																			{% for lsamheavymin2s in samheavymin2 %}
+																				<TR id="Hminerals{{j}}">
+																					<TD>
+																						<select id="inp_HMname{{j}}" name="inp_HMname{{j}}" class="inp_HMname{{j}}"></select>
+																					</TD>
+																					<TD>
+																						<input type="text" id="inp_HMgrains{{j}}" name="inp_HMgrains{{j}}" class="inp_HMgrains{{j}} vshortlength" value="{{lsamheavymin2s.minnum}}">
+																					</TD>
+																					<TD>
+																						<input type="text" id="inp_HMobs{{i}}" name="inp_HMobs{{i}}" class="inp_HMobs{{i}} fulllength" value="{{lsamheavymin2s.observationhm}}">
+																					</TD>
+																					<TD>
+																						<label class="calcOpaques{{j}}" >	</label>
+																					</TD>
+																					<TD>
+																						<label class="calcNonopaques{{j}}" >	</label>
+																					</TD>
+																					<TD>
+																						<img src="{{ asset('pics/delete.jpg') }}" class="but_deleteHmineral_{{lsamheavymin2s.pk}}" onclick="deleteHmineral('{{j}}-{{lsamheavymin2s.pk}}')" alt="home" height="12" width="13" onmouseover="" style="cursor: pointer;">  
+																					</TD>
+																				</TR>		
+																				{% set j=j+1%}
+																			{% endfor %}	
+																		{% else %}
+																			<div class="nohmin">
+																				No heavy minerals
+																			</div>	
+																		{% endif %}		
+																	</Table>
+																</TD>
+															</TR>
+															<TR>
+																<TD>
+																	<BR/>
+																	<input type="button" id="but_addHM" value="Add a heavy mineral"/>		
+																</TD>
+															</TR>
+														</Table>
+														<input type="hidden" id="newhminerals" name="newhminerals" class="newhminerals" >
+													</TD>
+												</TR>														
+											</Table>
+										</div>
+									 </div>
+
+									 <div id=tab2> <a href="#tab2">Granulometry</a>
+										<div>
+											<Table class="table_view">
+												<TR>
+													<TD>
+														<Table class="granuloTitle newLine newLine_granulo" width = "100%" style="display:none">
+															<TR>
+																<TH width="5%">
+																	<label for="inp_granuloWeightTot" class="labelsview">Weight tot.</label>
+																</TH>
+																<TH width="5%">
+																	<label for="inp_granuloWeightSand" class="labelsview">Weight sand</label>
+																</TH>
+																<TH width="5%">
+																	<label for="inp_granulo+2000" class="labelsview"> &gt;2000 </label>
+																</TH>
+																<TH width="5%">
+																	<label for="inp_granulo-2000" class="labelsview"> &lt;2000 </label>
+																</TH>
+																<TH width="5%">
+																	<label for="inp_granulo-1400" class="labelsview">&lt;1400</label>
+																</TH>
+																<TH width="5%">
+																	<label for="inp_granulo-1000" class="labelsview">&lt;1000 </label>
+																</TH>
+																<TH  width="5%">
+																	<label for="inp_granulo-710" class="labelsview">&lt;710 </label>
+																</TH>
+																<TH  width="5%">
+																	<label for="inp_granulo-500" class="labelsview">&lt;500</label>
+																</TH>
+																<TH  width="5%">
+																	<label for="inp_granulo-355" class="labelsview">&lt;355 </label>
+																</TH>
+																<TH  width="5%">
+																	<label for="inp_granulo-250" class="labelsview">&lt;250 </label>
+																</TH>
+																<TH  width="5%">
+																	<label for="inp_granulo-180" class="labelsview">&lt;180 </label>
+																</TH>
+																<TH  width="5%">
+																	<label for="inp_granulo-125" class="labelsview">&lt;125 </label>
+																</TH>
+																<TH  width="5%">
+																	<label for="inp_granulo-90" class="labelsview">&lt;90 </label>
+																</TH>
+																<TH  width="5%">
+																	<label for="inp_granulo-63" class="labelsview">&lt;63 </label>
+																</TH>
+																<TH  width="15%">
+																	<label for="inp_granuloDescr" class="labelsview">Description </label>
+																</TH>
+																<TH  width="5%" colspan=2>
+																	<label for="inp_granuloDate" class="labelsview">Date </label>
+																</TH>
+															</TR>
+	
+															<TR id="granulo">
+																<TD>
+																	<input type="text" id="inp_granuloWeightTot" name="inp_granuloWeightTot" class="inp_granuloWeightTot vshortlength" value=0>
+																</TD>
+																<TD>
+																	<input type="text" id="inp_granuloWeightSand" name="inp_granuloWeightSand" class="inp_granuloWeightSand vshortlength" value=0>
+																</TD>
+																<TD>
+																	<input type="text" id="inp_granulop2000" name="inp_granulop2000" class="inp_granulop2000 vshortlength" value=0>
+																</TD>
+																<TD>
+																	<input type="text" id="inp_granulo-2000" name="inp_granulo-2000" class="inp_granulo-2000 vshortlength" value=0>
+																</TD>
+																<TD>
+																	<input type="text" id="inp_granulo-1400" name="inp_granulo-1400" class="inp_granulo-1400 vshortlength" value=0>
+																</TD>
+																<TD>											
+																	<input type="text" id="inp_granulo-1000" name="inp_granulo-1000" class="inp_granulo-1000 vshortlength" value=0>
+																</TD>
+																<TD>
+																	<input type="text" id="inp_granulo-710" name="inp_granulo-710" class="inp_granulo-710 vshortlength" value=0>
+																</TD>
+																<TD>											
+																	<input type="text" id="inp_granulo-500" name="inp_granulo-500" class="inp_granulo-500 vshortlength" value=0>
+																</TD>
+																<TD>											
+																	<input type="text" id="inp_granulo-355" name="inp_granulo-355" class="inp_granulo-355 vshortlength" value=0>
+																</TD>
+																<TD>											
+																	<input type="text" id="inp_granulo-250" name="inp_granulo-250" class="inp_granulo-250 vshortlength" value=0>
+																</TD>
+																<TD>											
+																	<input type="text" id="inp_granulo-180" name="inp_granulo-180" class="inp_granulo-180 vshortlength" value=0>
+																</TD>
+																<TD>											
+																	<input type="text" id="inp_granulo-125" name="inp_granulo-125" class="inp_granulo-125 vshortlength" value=0>
+																</TD>
+																<TD>											
+																	<input type="text" id="inp_granulo-90" name="inp_granulo-90" class="inp_granulo-90 vshortlength" value=0>
+																</TD>
+																<TD>											
+																	<input type="text" id="inp_granulo-63" name="inp_granulo-63" class="inp_granulo-63 vshortlength" value=0>
+																</TD>
+																<TD>											
+																	<input type="text" id="inp_granuloDescr" name="inp_granuloDescr" class="inp_granuloDescr middlelength" value="">
+																</TD>
+																<TD>											
+																	<input type="date" id="inp_granuloDate" name="inp_granuloDate" class="inp_granuloDate shortlength" value="" >
+																</TD>
+																<TD>
+																	<img src="{{ asset('pics/delete.jpg') }}" class="but_deletegranulo" alt="home" height="12" width="13" onmouseover="" style="cursor: pointer;">  
+																</TD>
+															</TR>
+														</Table>
+													</TD>
+												</TR>														
+											</Table>
+										</div>
+									 </div>
+
+
+									 <div id=tab3> <a href="#tab3">Petrography</a>
+										<div>Petrography fields</div>
+									 </div>
+
+									 <div id=tab4> <a href="#tab4">Magnetic susceptibility</a>
+										<div>
+											<Table class="table_view">
+												<TR>
+													<TD>
+														<Table class="magsuscTitle newLine newLine_magsusc" width = "100%" style="display:none">
+															<TR>
+																<TH width="10%">
+																	<label for="inp_magnsuscWeight" class="labelsview">Weight </label>
+																</TH>
+																<TH width="10%">
+																	<label>&delta; e10 </label>
+																</TH>
+																<TH width="10%">
+																	<label>Average </label>
+																</TH>
+																<TH width="10%">
+																	<label for="inp_magnsuscMes1" class="labelsview">Mesure 1 </label>
+																</TH>
+																<TH width="10%">
+																	<label for="inp_magnsuscMes2" class="labelsview">Mesure 2 </label>
+																</TH>
+																<TH width="10%">
+																	<label for="inp_magnsuscMes3" class="labelsview">Mesure 3 </label>
+																</TH>
+																<TH  width="10%">
+																	<label for="inp_magnsuscMes4" class="labelsview">Mesure 4 </label>
+																</TH>
+																<TH  width="10%">
+																	<label for="inp_magnsuscMes5" class="labelsview">Mesure 5 </label>
+																</TH>
+																<TH  width="10%">
+																	<label for="inp_magnsuscMes6" class="labelsview">Mesure 6 </label>
+																</TH>
+																<TH width="10%" colspan=2>
+																	<label for="inp_magnsuscExp" class="labelsview">Exponent </label>
+																</TH>
+															</TR>
+
+															<TR id="magsusc">
+																<TD width="10%">
+																	<input type="text" id="inp_mmagsuscWeight" name="inp_mmagsuscWeight" class="inp_mmagsuscWeight shortlength" value="">
+																</TD>
+																<TD width="10%">
+																	<label class="delta"> </label>
+																</TD>
+																<TD width="10%">
+																	<label class="average"> </label>
+																</TD>
+																<TD width="10%">
+																	<input type="text" id="inp_mmagsuscMesure1" name="inp_mmagsuscMesure1" class="inp_mmagsuscMesure1 vshortlength" value=0>
+																</TD>
+																<TD width="10%">
+																	<input type="text" id="inp_mmagsuscMesure2" name="inp_mmagsuscMesure2" class="inp_mmagsuscMesure2 vshortlength" value=0>
+																</TD>
+																<TD width="10%">
+																	<input  type="text" id="inp_mmagsuscMesure3" name="inp_mmagsuscMesure3" class="inp_mmagsuscMesure3 vshortlength" value=0>
+																</TD>
+																<TD width="10%">											
+																	<input type="text" id="inp_mmagsuscMesure4" name="inp_mmagsuscMesure4" class="inp_mmagsuscMesure4 vshortlength" value=0>
+																</TD>
+																<TD width="10%">
+																	<input type="text" id="inp_mmagsuscMesure5" name="inp_mmagsuscMesure5" class="inp_mmagsuscMesure5 vshortlength" value=0>
+																</TD>
+																<TD width="10%">											
+																	<input type="text" id="inp_mmagsuscMesure6" name="inp_mmagsuscMesure6" class="inp_mmagsuscMesure6 vshortlength" value=0>
+																</TD>
+																<TD width="10%">
+																	<input type="text" id="inp_mmagsuscExp" name="inp_mmagsuscExp" class="inp_mmagsuscExp vshortlength" value=0>
+																</TD>
+																<TD width="5%">
+																	<img src="{{ asset('pics/delete.jpg') }}" class="but_deletemagsusc" alt="home" height="12" width="13" onmouseover="" style="cursor: pointer;">  
+																</TD>
+															</TR>															
+														</Table>
+													</TD>
+												</TR>														
+											</Table>
+										</div>
+									 </div>
+									 
+									 <div id=tab5> <a href="#tab5">Documentation</a>
+										<div>Documentation fields</div>
+									 </div>
+									</div>
+								</div>
+							</div>
+						{% endif %}
+					</TD>
+				</TR>
+			</Table>
+			{% if  originaction  == 'edit' or originaction == 'add_aftercommit' %}
+				<Table width="100%">
+					<TR>
+						<TD class="newcontribution">
+							<BR/>
+							<input type="button" id="but_showaddcontribution" value="Add a contribution"/>	
+						</TD>
+						
+						<TD class="newcontribution" style="display:none" width="5%">
+							<label class="labelsview">Type? </label>
+						</TD>
+						<TD class="newcontribution" style="display:none" width="10%">
+							<select id="inp_addnewcontributionType" class="inp_addnewcontributionType" style="max-width:150px;">
+								<option value=""></option>
+							</select>
+							<!--<input type="text"  id="inp_addnewcontributionType" name="inp_addnewcontributionType" class="inp_addnewcontributionType middlelength" >-->
+						</TD>
+						<TD class="newcontribution" style="display:none" width="5%" >
+						</TD>
+						<TD class="showyear" style="display:none" width="5%">
+							<label class="labelsview">Year? </label>
+						</TD>
+						<TD class="showyear" style="display:none" width="5%">
+							<select id="inp_addnewcontributionYear" class="inp_addnewcontributionYear" style="max-width:150px;">
+								<option value=""></option>
+							</select>
+							<!--<input type="text"  id="inp_addnewcontributionYear" name="inp_addnewcontributionYear" class="inp_addnewcontributionYear vshortlength" >-->
+						</TD>
+						<TD class="newcontribution" style="display:none" width="40%" >
+						</TD>
+						<TD class="showid" style="display:none" width="5%">
+							<label class="labelsview">ID: </label>
+						</TD>
+						<TD class="showid" style="display:none" width="30%">
+							<label class="addnewcontributionID"></label>
+							<!--<select id="inp_addnewcontributionID" name="inp_addnewcontributionID" class="inp_addnewcontributionID"></select>
+							<input type="text"  id="inp_addnewcontributionID" name="inp_addnewcontributionID" class="inp_addnewcontributionID shortlength" >-->
+						</TD>
+						<TD class="newcontribution" style="display:none" width="5%" >
+						</TD>
+						<!--<TD class="newcontribution" style="display:none" width="5%">
+							<label class="labelsview">Date: </label>
+						</TD>
+						<TD class="newcontribution" style="display:none" width="5%">
+							<input type="text"  id="inp_addnewcontributionDate" name="inp_addnewcontributionDate" class="inp_addnewcontributionDate shortlength" >
+						</TD>
+						<TD class="newcontribution" style="display:none" width="40%" >
+						</TD>
+						-->
+					</TR>
+					<TR>
+						<TD class="newcontribution" colspan="10" style="display:none">
+							<label class="labelsview">or create a new one by leaving ID empty </label>
+						</TD>
+					</TR>	
+					<TR>
+						<TD class="newcontribution" colspan="10" style="display:none">
+							<input type="button" id="but_addcontribution" value="Add"  />	
+						</TD>
+					</TR>							
+				</Table>
+				<input type="hidden" id="newcontributions" name="newcontributions" class="newcontributions" >		
+			{% endif %}
+		</TD>
+	</TR>
+	
+	<TR>
+		<TD>
+		<input type="submit" class="btn btn-default pull-right submitbutton" />
+			<div class="alert_message"></div>
+		</TD>
+	</TR>
+	{{ form_end(form) }}
+	<!--{ { include("@App/contributionform.html.twig") }}-->
+</Table>
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{{ asset('js/core.js') }}"></script>
+
+<script type="text/javascript">
+	var lastminindex = "{{i}}";
+	var lastHMindex = "{{j}}";
+	var coderesults = [];
+	var museumlocresults = [];
+	var boxresults = [];
+	var idcontributionresults = [];
+	$newgradesvals = "";
+	$newhmineralsvals = "";
+	var dataHMNames = [];
+	var formchanged = false;
+	
+	$(document).ready(function() {
+		//show message saying that data is in DB, during 4 sec. Msg comes from controller
+		setTimeout(function() { 
+			{% for msg in app.flashes('success') %}
+			$(".alert_message").html("{{ msg }}");
+			$(".alert_message").fadeOut(2000); 
+			{% endfor %}
+		},1000); 
+
+		//fill combox for HM names
+		$.ajax({
+			url: "{{ path('app_HM_list')  }}",
+			type: "GET",
+			dataType: "JSON",
+			success: function (data) {
+				dataHMNames = [ {name: ""}];
+				$.each(data, function (key, data1) {
+					dataHMNames.push(
+						{name: data1.mineral}
+					);
+				});
+			},
+			error: function (err) {
+				alert("An error ocurred while loading data ...");
+			}
+		});
+	
+		{% if originaction is defined  %}
+		//alert("{{originaction}}");
+			{% if originaction == 'add_beforecommit' %}
+				$(".submitbutton").prop('value', 'Create');
+			{% endif %}
+			{% if originaction != 'add_beforecommit' %}
+				$(".In_SampleColl").attr("disabled","disabled") 
+				$(".inp_SampleID").attr("disabled","disabled") 
+				//to go on first tab mineralogy at form load
+				var url = '{{ path("app_edit_sample", {'pk': 'article_id'}) }}'; 
+				url = url.replace("article_id", "{{dsample.pk}}");
+				window.location = url+"#tab1";
+			{% endif %}
+			{% if (originaction == 'edit') or (originaction == 'add_aftercommit') %}
+				$(".submitbutton").prop('value', 'Save');
+				{% if arraylminerals|length > 1 %}
+					$(".mineralsTitle").css("display", ""); 
+				{% endif %}
+				{% if sammagsusc is defined %}
+					$(".magsuscTitle").css("display", ""); 
+					$(".newLine_magsusc").css("display", ""); 
+				{% endif %}
+				{% if samgranulo is defined %}
+					$(".granuloTitle").css("display", ""); 
+					$(".newLine_granulo").css("display", ""); 
+				{% endif %}
+				{% if samheavymin2|length > 1 %}
+					$(".HM").css("display", ""); 
+				{% endif %}
+			{% endif %}
+			
+			{% if originaction == 'add_aftercommit' %}
+				alert('Data recorded in database!');
+			{% endif %}
+		{% endif %}
+		
+		{% if sammagsusc is defined %}
+			{% for sammagsusc_item in sammagsusc %}
+				{% if  sammagsusc_item.weight > 0%}
+					$(".inp_mmagsuscWeight").val(valtransform({{sammagsusc_item.weight}},2));
+					$(".inp_mmagsuscMesure1").val(valtransform({{sammagsusc_item.mesure1}},2));
+					$(".inp_mmagsuscMesure2").val(valtransform({{sammagsusc_item.mesure2}},2));
+					$(".inp_mmagsuscMesure3").val(valtransform({{sammagsusc_item.mesure3}},2));
+					$(".inp_mmagsuscMesure4").val(valtransform({{sammagsusc_item.mesure4}},2));
+					$(".inp_mmagsuscMesure5").val(valtransform({{sammagsusc_item.mesure5}},2));
+					$(".inp_mmagsuscMesure6").val(valtransform({{sammagsusc_item.mesure6}},2));
+					$(".inp_mmagsuscExp").val({{sammagsusc_item.exponent}});
+					$(".but_deletemagsusc").on("click",function(){deletemagsusc()});
+ 
+					var aver = 0;
+					{% if sammagsusc_item.mesure3 < 1  %}
+						aver = 0;
+					{% elseif  sammagsusc_item.mesure4 < 1  %}
+						aver =({{sammagsusc_item.mesure1}}+{{sammagsusc_item.mesure2}}+{{sammagsusc_item.mesure3}})/3;
+					{% elseif  sammagsusc_item.mesure5 < 1  %}
+						aver =({{sammagsusc_item.mesure1}}+{{sammagsusc_item.mesure2}}+{{sammagsusc_item.mesure3}}+{{sammagsusc_item.mesure4}})/4;
+					{% elseif  sammagsusc_item.mesure6 < 1  %}
+						aver =({{sammagsusc_item.mesure1}}+{{sammagsusc_item.mesure2}}+{{sammagsusc_item.mesure3}}+{{sammagsusc_item.mesure4}}+{{sammagsusc_item.mesure5}})/5;
+					{% else %} 
+						aver = {{sammagsusc_item.mesure1}}+{{sammagsusc_item.mesure2}}+{{sammagsusc_item.mesure3}}+{{sammagsusc_item.mesure4}}+{{sammagsusc_item.mesure5}}+{{sammagsusc_item.mesure6}})/6;
+					{% endif %}
+					$(".average").html(parseFloat(aver).toFixed(2));
+					 
+					var delta = 0;
+					{% if sammagsusc_item.mesure3 < 1  %}
+						delta = 0;
+					{% else %} 
+						delta = ({{sammagsusc_item.mesure1}}+{{sammagsusc_item.mesure2}}+{{sammagsusc_item.mesure3}})/3*100/{{sammagsusc_item.weight}}; ///3*0.00000001
+					{% endif %}
+					$(".delta").html(parseFloat(delta).toFixed(2));
+				{% endif %}
+			{% endfor %}	
+		{% endif %}
+		
+		{% if samgranulo is defined %}
+			{% for samgranulo_item in samgranulo %}
+				{% if  samgranulo_item.weighttot > 0%}
+					$(".inp_granulop2000").val(valtransform({{samgranulo_item.wAbove2000}},2));
+					$(".inp_granulo-2000").val(valtransform({{samgranulo_item.w2000}},2));
+					$(".inp_granulo-1400").val(valtransform({{samgranulo_item.w1400}},2));
+					$(".inp_granulo-1000").val(valtransform({{samgranulo_item.w1000}},2));
+					$(".inp_granulo-710").val(valtransform({{samgranulo_item.w710}},2));
+					$(".inp_granulo-500").val(valtransform({{samgranulo_item.w500}},2));
+					$(".inp_granulo-355").val(valtransform({{samgranulo_item.w355}},2));
+					$(".inp_granulo-250").val(valtransform({{samgranulo_item.w250}},2));
+					$(".inp_granulo-180").val(valtransform({{samgranulo_item.w180}},2));
+					$(".inp_granulo-125").val(valtransform({{samgranulo_item.w125}},2));
+					$(".inp_granulo-90").val(valtransform({{samgranulo_item.w90}},2));
+					$(".inp_granulo-63").val(valtransform({{samgranulo_item.w63}},2));
+					$(".inp_granuloWeightTot").val(valtransform({{samgranulo_item.weighttot}},2));
+					$(".inp_granuloWeightSand").val(valtransform({{samgranulo_item.weightsand}},2));
+					$(".inp_granuloDescr").val('{{samgranulo_item.description}}');
+					$(".inp_granuloDate").val('{{samgranulo_item.date|date('Y-m-d')}}');
+					$(".but_deletegranulo").on("click",function(){deletegranulo()});
+				{% endif %}
+			{% endfor %}	
+		{% endif %}
+		
+		{% if samheavymin is defined %}
+			{% for samheavymin_item in samheavymin %}
+				{% if  samheavymin_item.weighthm > 0%}
+					$(".inp_HMWeightSample").val(valtransform({{samheavymin_item.weightsample}},3));
+					$(".inp_HMWeightHM").val(valtransform({{samheavymin_item.weighthm}},3));
+					$(".inp_HMDescript").val('{{samheavymin_item.observationhm}}');
+				{% endif %}
+			{% endfor %}	
+			
+			{% if samheavymin2|length > 1 %}
+				m=0;
+				setTimeout(function(){fillnames()},500); 
+				function fillnames(){
+					$sumopaque = 0;
+					$sumNonopaque = 0;
+					$sumTotgrains = 0;
+					{% for lsamheavymin2s in samheavymin2 %}
+						for (i=0;i<dataHMNames.length;i++){
+							if ((dataHMNames[i].name != null)  & (dataHMNames[i].name != "")){
+								$(".inp_HMname"+m).append(new Option(dataHMNames[i].name.toLowerCase(),dataHMNames[i].name));
+							}
+						}			
+						$('.inp_HMname'+m+' option[value="{{lsamheavymin2s.mineral}}"]').attr('selected','selected');		
+						if ("{{lsamheavymin2s.mineral}}" == "opaque"){
+							$sumopaque = {{lsamheavymin2s.minnum}};
+						}else{
+							$sumNonopaque = $sumNonopaque + {{lsamheavymin2s.minnum}};
+						}
+						$sumTotgrains = $sumTotgrains + {{lsamheavymin2s.minnum}};
+						m++;
+					{% endfor %}	
+
+					n=0;
+					{% for lsamheavymin2s in samheavymin2 %}
+						if ("{{lsamheavymin2s.mineral}}" == "opaque"){
+							$('.calcOpaques'+n).html("100%");
+						}else{
+							$percnonopaque = ({{lsamheavymin2s.minnum}}/$sumNonopaque)*100;
+							$('.calcNonopaques'+n).html(parseFloat($percnonopaque).toFixed(2)+"%");
+						}
+						n++;
+					{% endfor %}	
+				
+					$('.calcTotalGrains').html($sumTotgrains);
+					$percTotOpaque = ($sumopaque/$sumTotgrains)*100;
+					$percTotNonOpaque = ($sumNonopaque/$sumTotgrains)*100;
+					$('.calcTotalopaques').html(parseFloat($percTotOpaque).toFixed(2)+"%");
+					$('.calcTotalNonopaques').html(parseFloat($percTotNonOpaque).toFixed(2)+"%");
+				}
+			{% endif %}	
+		{% endif %}			
+		
+		function deletegranulo(){
+			$(".inp_granulop2000").val(0);
+			$(".inp_granulo-2000").val(0);
+			$(".inp_granulo-1400").val(0);
+			$(".inp_granulo-1000").val(0);
+			$(".inp_granulo-710").val(0);
+			$(".inp_granulo-500").val(0);
+			$(".inp_granulo-355").val(0);
+			$(".inp_granulo-250").val(0);
+			$(".inp_granulo-180").val(0);
+			$(".inp_granulo-125").val(0);
+			$(".inp_granulo-90").val(0);
+			$(".inp_granulo-63").val(0);
+			$(".inp_granuloWeightTot").val(0);
+			$(".inp_granuloWeightSand").val(0);
+			$(".inp_granuloDescr").val("");
+			$(".inp_granuloDate").val("");
+		}
+		
+		var collval = "";
+		onElementModified('body', '.In_SampleColl', function(element){
+			collval = $('.In_SampleColl option:selected').val();
+		});	
+		var collSelect = $(".In_SampleColl");
+		
+		var lastid = 0;
+	
+		//ajax to fill the lists------
+		collval = $('.In_SampleColl option:selected').val();
+		
+		function fill_lastid(collval){
+			path = "{{path('app_last_Sampleid', {'querygroup': 'art'}) }}";  
+			path = path.replace('art',collval);
+			lastid = 0;
+			$.ajax({
+				url:  path,
+				type: "GET",
+				dataType: "JSON",
+				success: function (ids) {
+					$.each(ids, function (key, id) {
+						lastid = id.idsample;
+					});
+
+					$(".inp_SampleID").attr("data-toggle", "tooltip");
+					$(".inp_SampleID").attr("data-placement", "top");
+					$(".inp_SampleID").attr("title", "Last value is "+lastid);
+				},
+				error: function (err) {
+					alert("An error ocurred while loading data ...");
+				}
+			});
+		};
+		fill_lastid(collval);
+		
+		//code if coll changed------	
+		$('.In_SampleColl').on('change', function() {
+			collval = $('.In_SampleColl option:selected').val();
+			coderesults = [];
+			fill_lastid(collval);
+		});
+		
+		$('.inp_addnewcontributionType').on('change', function() {
+			if ($('.inp_addnewcontributionType').val().length > 0){
+				$(".showyear").toggle();
+			};
+		});
+		
+		$('.inp_addnewcontributionYear').on('change', function() {
+			if ($('.inp_addnewcontributionYear').val().length > 0){
+				$.ajax({
+					url: "{{ path('app_IDContributions_list')  }}",  
+					data : {code:$(".inp_addnewcontributionType option:selected").val()+"--"+$(".inp_addnewcontributionYear option:selected").val()}, 
+					type: "GET",
+					dataType: "JSON",
+					success: function (donnees) {
+						var i = 0;
+						fullstr = '<select id="inp_addnewcontributionID" name="inp_addnewcontributionID" class="inp_addnewcontributionID">';
+						idcontributionresults = [];
+						$.each(donnees, function (key, donnee) {
+						
+							//idcontributionresults[i] = donnee.idfull;
+							fullstr = fullstr + '<option value="' + donnee.idfull + '">' + donnee.idfull + '</option>';
+							//$(".inp_addnewcontributionID").append('<option value="' + donnee.idfull + '">' + donnee.idfull + '</option>');
+						//	i++;
+						});
+						
+						fullstr = fullstr + '</select>';
+						$(".addnewcontributionID").html(fullstr);
+						//alert(i);
+						//alert(fullstr);
+						//response(idcontributionresults);
+					}
+				});
+				$(".showid").toggle();
+				
+			};
+		});
+		
+		/*$(document).on('change',".inp_addnewcontributionID",function(){
+				alert("ajaxStop"+idcontributionresults);
+			});*/
+
+		/*$(".inp_addnewcontributionID").autocomplete({
+			source: function(request, response) {
+
+			},
+			minLength: 1
+		});*/
+		
+	
+		$.ajax({
+			url: "{{ path('app_contribdata_combobox')  }}",  
+			data : {code:1}, 
+			type: "GET",
+			dataType: "JSON",
+			success: function (donnees) {
+				$.each(donnees, function (key, donnee) {
+					$(".inp_addnewcontributionType").append('<option value="' + donnee.valdata + '">' + donnee.valdata + '</option>');
+				});
+			},
+			error: function (err) {
+				alert("An error ocurred while loading data ...");
+			}
+		});
+	});
+
+		
+	
+	
+	//test if for changed-----------
+	$(window).blur(function() {
+		if (formchanged == true){
+			resp = confirm("Don't forget to save your work !");
+		}
+	});
+	
+	$('form :input').change(function() {
+		formchanged = true;
+	});
+	
+	function valtransform(val,dec){
+		if (val > -1){
+			return parseFloat(val).toFixed(dec);
+		}else{
+			return 0;
+		}
+	}
+		
+	function deletemagsusc(){
+		$(".inp_mmagsuscWeight").val("");
+		$(".average").html("");
+		$(".delta").html("");
+		$(".inp_mmagsuscMesure1").val(0);
+		$(".inp_mmagsuscMesure2").val(0);
+		$(".inp_mmagsuscMesure3").val(0);
+		$(".inp_mmagsuscMesure4").val(0);
+		$(".inp_mmagsuscMesure5").val(0);
+		$(".inp_mmagsuscMesure6").val(0);
+		$(".inp_mmagsuscExp").val(0);
+	}
+		
+	function change(){
+		for (i=0;i<lastminindex;i++){
+			$(".inp_mineralgrade"+i).on('change',(function() {
+				$idmineral = $(this).closest('tr').children('td').children('label').html();
+				$newgradesvals = $newgradesvals + "," + $idmineral +"-"+$(this).val()+"-U";
+				$(".newgrades").val($newgradesvals.substring(1,$newgradesvals.length));
+			}));
+		};
+	};
+	change();
+	
+	function changeHM(){
+		for (i=0;i<lastHMindex;i++){
+			$(document).on('change',".inp_HMname"+i,function(){
+				k=$(this).attr('id').substring($(this).attr('id').length-1,$(this).attr('id').length) ;
+				for (j=0;j<lastHMindex;j++){
+					if (k!=j){
+						if ($(this).val() == $(".inp_HMname"+j+" option:selected").val()){
+							alert("Duplicate found in Heavy mineral name!");
+							break;
+						}
+					}
+				};				
+				
+				$newhmineralsvals = $newhmineralsvals + "," + k +"-" + $('.inp_HMname'+k).val() +"-U"; 
+				$(".newhminerals").val($newhmineralsvals.substring(1,$newhmineralsvals.length));
+			});
+			$(document).on('change',".inp_HMgrains"+i,function(){
+				k=$(this).attr('id').substring($(this).attr('id').length-1,$(this).attr('id').length) ;
+				if ($(this).val() == 0){
+					alert("Number of grains is 0!");
+				}
+				for (j=0;j<lastHMindex;j++){
+					if (k!=j){
+						if ( $(".inp_HMname"+k+" option:selected").val() == $(".inp_HMname"+j+" option:selected").val()){
+							alert("Duplicate found in Heavy mineral name!");
+							break;
+						}
+					}
+				};	
+				if ($newhmineralsvals.indexOf($('.inp_HMname'+k).val() +"-U") < 0){
+					$newhmineralsvals = $newhmineralsvals + "," + k +"-" + $('.inp_HMname'+k).val() +"-U"; 
+					$(".newhminerals").val($newhmineralsvals.substring(1,$newhmineralsvals.length));
+				}
+			});
+			$(document).on('change',".inp_HMobs"+i,function(){
+				k=$(this).attr('id').substring($(this).attr('id').length-1,$(this).attr('id').length) ;
+				if ($newhmineralsvals.indexOf($('.inp_HMname'+k).val() +"-U") < 0){
+					$newhmineralsvals = $newhmineralsvals + "," + k +"-" + $('.inp_HMname'+k).val() +"-U"; 
+					$(".newhminerals").val($newhmineralsvals.substring(1,$newhmineralsvals.length));
+				}
+			});
+		};
+	};
+	changeHM();
+	
+	function deletesammineral(idmin) {
+		var r = confirm("Are you sure to delete that mineral?");
+		if (r == true) {
+			var idx = idmin.indexOf("-"); 
+			var i = idmin.substring(0,idx);
+			var id = idmin.substring(idx+1);
+			$fieldname = "#minerals"+i;
+			$($fieldname).html("<TD></TD colspan=7>"); 
+			$newgradesvals = $newgradesvals + "," + id +"-"+$("inp_mineralgrade"+i).val()+"-D";
+			$(".newgrades").val($newgradesvals.substring(1,$newgradesvals.length));
+		} 
+	}
+	
+	function deleteHmineral(idmin) {
+		var r = confirm("Are you sure to delete that mineral?");
+		if (r == true) {
+			var idx = idmin.indexOf("-"); 
+			var i = idmin.substring(0,idx);
+			var id = idmin.substring(idx+1);
+
+			$newhmineralsvals = $newhmineralsvals + "," + i +"-" + $('.inp_HMname'+i).val() +"-D"; 
+			$(".newhminerals").val($newhmineralsvals.substring(1,$newhmineralsvals.length));
+			$fieldname = "#Hminerals"+i;
+			$($fieldname).html("<TD></TD colspan=6>"); 
+		} 
+	}
+			
+	$(".inp_SampleCode").autocomplete({
+		source: function(request, response) {
+			$.ajax({
+				url: "{{ path('app_code_autocomplete')  }}",  
+				data : {coll:"all",code:$(".inp_SampleCode").val()}, 
+				type: "GET",
+				dataType: "JSON",
+				success: function (donnees) {
+					var i = 0;
+					coderesults = [];
+					$.each(donnees, function (key, donnee) {
+						coderesults[i] = donnee.fieldnum;
+						i++;
+					});
+					response(coderesults);
+				}
+			})
+		},
+		minLength: 2
+	});
+	
+	$(".inp_SampleMuseumloc").autocomplete({
+		source: function(request, response) {
+			$.ajax({
+				url: "{{ path('app_museumloc_autocomplete')  }}",  
+				data : {code:$(".inp_SampleMuseumloc").val()}, 
+				type: "GET",
+				dataType: "JSON",
+				success: function (donnees) {
+					var i = 0;
+					museumlocresults = [];
+					$.each(donnees, function (key, donnee) {
+						museumlocresults[i] = donnee.museumlocation;
+						i++;
+					});
+					response(museumlocresults);
+				}
+			})
+		},
+		minLength: 1
+	});
+	
+	$(".inp_SampleBoxnr").autocomplete({
+		source: function(request, response) {
+			$.ajax({
+				url: "{{ path('app_box_autocomplete')  }}",  
+				data : {code:$(".inp_SampleBoxnr").val()}, 
+				type: "GET",
+				dataType: "JSON",
+				success: function (donnees) {
+					var i = 0;
+					boxresults = [];
+					$.each(donnees, function (key, donnee) {
+						boxresults[i] = donnee.boxnumber;
+						i++;
+					});
+					response(boxresults);
+				}
+			})
+		},
+		minLength: 1
+	});
+	
+
+			
+
+
+	$('#but_showaddmineral').click(function(e){
+		$(".newmineral").toggle();		
+		$(".inp_addnewmineralgrade").val("");
+		$('.inp_addnewmineralname option[value="all"]').prop('selected',true);
+		$('.inp_addnewmineralFname option[value="all"]').prop('selected',true);
+	});
+	
+	//fill combox for mineral name
+	var dataminerals;
+	var datafminerals;
+	$.ajax({
+		url: "{{ path('app_minerals_list', {'querygroup': 'mineral' })  }}",
+		type: "GET",
+		dataType: "JSON",
+		success: function (data) {
+			dataminerals = [  {id: "", name: "", fname: "", rank: "", formula: "", parent: "", fparent: ""}	];
+			datafminerals = dataminerals;
+			$.each(data, function (key, data1) {
+				var namemin = "";
+				if(data1.mname == null){
+					namemin =  "";
+				}else{
+					namemin =  data1.mname;
+				}
+				var fnamemin = "";
+				if(data1.fmname == null){
+					fnamemin =  "";
+				}else{
+					fnamemin =  data1.fmname;
+				}
+				var parentmin = "";
+				if(data1.mparent == null){
+					parentmin =  "";
+				}else{
+					parentmin =  data1.mparent;
+				}
+				var fparentmin = "";
+				if(data1.fmparent == null | data1.fmparent == "-"){
+					fparentmin =  "";
+				}else{
+					fparentmin =  data1.fmparent;
+				}
+				if ((namemin != "") | (fnamemin != "")){
+					dataminerals.push(
+						{id: data1.idmineral, name: namemin.toLowerCase(), fname: fnamemin.toLowerCase(), rank: data1.rank, formula: data1.mformula, parent: parentmin, fparent: fparentmin}
+					);
+				}
+			});
+			
+			for (i=0;i<dataminerals.length;i++){
+				if ((dataminerals[i].name != null) & (dataminerals[i].name != "")){
+					$(".inp_addnewmineralname").append('<option value="' + dataminerals[i].name + '">' + dataminerals[i].name.toLowerCase() + '</option>');
+				}
+				datafminerals[i] = dataminerals[i];
+			}
+			
+			datafminerals.sort(function(a, b){
+				var a1= a.fname.toLowerCase(), b1= b.fname.toLowerCase();
+				if (a1== b1) { return 0; }
+				if (a1> b1){return 1;	}
+				else{return -1;	}
+			});
+			
+			for (i=0;i<datafminerals.length;i++){
+				if ((datafminerals[i].fname != null)  & (datafminerals[i].fname != "")){
+					$(".inp_addnewmineralFname").append('<option value="' + datafminerals[i].fname + '">' + datafminerals[i].fname.toLowerCase() + '</option>');
+				}
+			}
+		},
+		error: function (err) {
+			alert("An error ocurred while loading data ...");
+		}
+	});
+	
+	{% if arraylminerals is defined %}
+		{% set i=0%}
+		var formulas_array = [];
+		{% for lminerals in arraylminerals %}
+			{% for lmineral in lminerals %}
+				formulas_array[{{i}}]=displayFormula("{{lmineral.mformula}}");
+				$(".input_formula{{i}}").html(formulas_array[{{i}}]);
+				{% set i=i+1%}
+			{% endfor %}
+		{% endfor %}	
+	{% endif %}
+	
+	function displayFormula(formula){	
+		var newformula = "";		
+		if(formula.indexOf("&lt;") != -1){
+			formula = formula.replace(/&gt;/g,">").replace(/&lt;/g,"<");		
+		}
+		newformula = formula.replace(/>/g,"§");
+		newformula = newformula.replace(/</g,"<sub>");
+		newformula = newformula.replace(/§/g,"</sub>");
+		newformulaarray = newformula.split("&#039;");
+		
+		if (newformulaarray.length >1){
+			newformula = "";
+			for (i=0;i<newformulaarray.length; i++){
+				if (i%2 == 0){
+					newformula = newformula + newformulaarray[i];
+				}else{
+					newformula = newformula + "<sup>" + newformulaarray[i] + "</sup>";
+				}
+			}
+		}
+		return newformula;
+	}
+	
+	$('#but_addmineral').click(function(e){
+		var minval = $('.inp_addnewmineralname option:selected').text();
+		var fminval = $('.inp_addnewmineralFname option:selected').text();
+		if (minval == "" & fminval == ""){
+			alert("Please select a mineral.");
+		}else{
+			if ( !($('.inp_addnewmineralgrade').val() > 0)){
+				alert("Please enter a grade.");
+			}else{
+				if (minval != "" & fminval != ""){
+					alert("Please enter only one mineral name.");
+				}else{
+					var datamin;
+					var formulatxt = "";
+					var dataminerals_index = 0;
+					var datafminerals_index = 0;
+					for (i=0;i<dataminerals.length;i++){
+						if (dataminerals[i].name == minval){
+							dataminerals_index = i;
+						}
+					}
+					
+					for (i=0;i<datafminerals.length;i++){
+						if (datafminerals[i].fname == fminval){
+							datafminerals_index = i;
+							break;
+						}
+					}
+					if (minval != ""){
+						datamin = dataminerals[dataminerals_index];
+					}
+					
+					if (fminval != ""){
+						datamin = datafminerals[datafminerals_index];
+					}
+					$(".newmineral").toggle();
+					$(".mineralsTitle").css("display", "");  
+					$(".nomin").hide();
+							
+					$content = "<TR>";
+					$content = $content + "<TD width='5%'>";
+					$content = $content + '<label class="lbl_idmineral'+lastminindex+'">'+datamin.id+'</label>';
+					$content = $content + "</TD>";
+					$content = $content + "<TD width='10%'>";
+					if (minval != ""){
+						$content = $content + datamin.name;
+					}
+					
+					if ((datamin.fname != "") & (datamin.fname != datamin.name)){
+						$content = $content + ", " + datamin.fname + " (Fl.)";
+					}
+					$content = $content + "</TD>";
+					$content = $content + "<TD width='10%'>";
+					$content = $content + '<input type="integer" class="inp_mineralgrade'+lastminindex+'" value="'+$(".inp_addnewmineralgrade").val()+'">';
+					$content = $content + "</TD>";
+					$content = $content + "<TD width='10%'>";
+					$content = $content + datamin.rank;
+					$content = $content + "</TD>";
+					$content = $content + "<TD width='50%'>";
+					if (datamin.formula != null){
+						formulatxt = datamin.formula.replace(/\'/g, ""); 
+					}
+					$content = $content + displayFormula(formulatxt);
+					$content = $content + "</TD>";
+					$content = $content + "<TD width='15%'>";
+					if (minval != ""){
+						$content = $content + datamin.parent;
+					}
+					
+					if (datamin.fparent != ""){
+						$content = $content + ", " + datamin.fparent + " (Fl.)";
+					}
+					
+					$content = $content + "</TD>";
+					$content = $content + "</TR>";
+					
+					$(".mineralsTitle").append($content);
+					
+					$newgradesvals = $newgradesvals + "," +datamin.id +"-"+$(".inp_addnewmineralgrade").val()+"-I";
+					$(".newgrades").val($newgradesvals.substring(1,$newgradesvals.length));
+					lastminindex++;
+					change();
+				}
+			}
+		}
+	});
+	
+	if ($(".inp_HMWeightSample") != 0) {
+		$perc = ($(".inp_HMWeightHM").val()/$(".inp_HMWeightSample").val()) *100;
+		$('.percHM').html(valtransform($perc,3)+" %");
+	}
+	
+	$('#but_addHM').click(function(e){
+		$(".HM").css("display", "");  
+		$(".nohmin").hide();
+		
+		$content2 = "<TR>";
+		$content2 = $content2 + "<TD>";
+		$content2 = $content2 + '<select  id="inp_HMname'+lastHMindex+'" name="inp_HMname'+lastHMindex+'" class="inp_HMname'+lastHMindex+'">';
+		for (i=0;i<dataHMNames.length;i++){
+			if ((dataHMNames[i].name != null)  & (dataHMNames[i].name != "")){
+				$content2 = $content2 + '<option value="' + dataHMNames[i].name + '">' + dataHMNames[i].name.toLowerCase() + '</option>';
+			}
+		}
+		$content2 = $content2 + '</select>';
+		$content2 = $content2 + "</TD>";
+		$content2 = $content2 + "<TD>";
+		$content2 = $content2 + '<input type="text" id="inp_HMgrains'+lastHMindex+'" name="inp_HMgrains'+lastHMindex+'" class="inp_HMgrains'+lastHMindex+' vshortlength" value=0>';
+		$content2 = $content2 + "</TD>";
+		$content2 = $content2 + "<TD>";
+		$content2 = $content2 + '<input type="text" id="inp_HMobs'+lastHMindex+'" name="inp_HMobs'+lastHMindex+'" class="inp_HMobs'+lastHMindex+' fulllength" value="">';
+		$content2 = $content2 + "</TD>";
+		$content2 = $content2 + "<TD>";
+		$content2 = $content2 + '<label class="calcOpaques'+lastHMindex+'" >	</label>';
+		$content2 = $content2 + "</TD>";
+		$content2 = $content2 + "<TD>";
+		$content2 = $content2 + '<label class="calcNonopaques'+lastHMindex+'" >	</label>';
+		$content2 = $content2 + "</TD>";
+		$content2 = $content2 + "</TR>";
+		
+		$(".HM").append($content2);
+		lastHMindex++;
+		
+		changeHM();
+	});
+
+	$('#but_showaddcontribution').click(function(e){
+		$(".newcontribution").toggle();
+	});
+	
+	$('#but_addcontribution').click(function(e){
+		if ($(".inp_ContributionID").val() != ""){
+			$(".contributorTitle").css("display", "");  
+			$(".nocontrib").hide();
+			
+			$content = '<TR id="Contributor'+lastindex+'">';
+			$content = $content + '<TD>';
+			$content = $content + '<input type="text"  id="inp_addnewcontributorID'+lastindex+'" name="inp_addnewcontributorID'+lastindex+'" class="inp_addnewcontributorID'+lastindex+' vshortlength"><label class="labelsview idcontrib'+lastindex+'"></label>';
+			$content = $content + '</TD>';
+			$content = $content + '<TD>';
+			$content = $content + '<input type="text"  id="inp_addnewcontributorName'+lastindex+'" name="inp_addnewcontributorName'+lastindex+'" value="'+$(".inp_addnewcontributorName").val()+'"  class="inp_addnewcontributorName'+lastindex+' fulllength">';
+			$content = $content + '</TD>';
+			$content = $content + '<TD>';
+			$content = $content + '<input type="text"  id="inp_addnewcontributorRole'+lastindex+'" name="inp_addnewcontributorRole'+lastindex+'" value="'+$(".inp_addnewcontributorRole").val()+'"  class="inp_addnewcontributorRole'+lastindex+' shortlength">';
+			$content = $content + '</TD>';
+			$content = $content + '<TD>';
+			$content = $content + '<input type="text"  id="inp_addnewcontributorOrder'+lastindex+'" name="inp_addnewcontributorOrder'+lastindex+'" value="'+$(".inp_addnewcontributorOrder").val()+'"  class="inp_addnewcontributorOrder'+lastindex+' vshortlength">';
+			$content = $content + '</TD>';
+			$content = $content + '<TD>';
+			$content = $content + '<input type="text"  id="inp_addnewcontributorFunction'+lastindex+'" name="inp_addnewcontributorFunction'+lastindex+'" class="inp_addnewcontributorFunction'+lastindex+' fulllength">';
+			$content = $content + '</TD>';
+			$content = $content + '<TD>';
+			$content = $content + '<input type="text"  id="inp_addnewcontributorTitle'+lastindex+'" name="inp_addnewcontributorTitle'+lastindex+'" class="inp_addnewcontributorTitle'+lastindex+' vshortlength" >';
+			$content = $content + '</TD>';
+			$content = $content + '<TD>';
+			$content = $content + '<input type="text"  id="inp_addnewcontributorStatus'+lastindex+'" name="inp_addnewcontributorStatus'+lastindex+'" class="inp_addnewcontributorStatus'+lastindex+' shortlength">';
+			$content = $content + '</TD>';
+			$content = $content + '<TD>';
+			$content = $content + '<input type="text"  id="inp_addnewcontributorInstitut'+lastindex+'" name="inp_addnewcontributorInstitut'+lastindex+'" class="inp_addnewcontributorInstitut'+lastindex+' mediumlength">';
+			$content = $content + '</TD>';
+			$content = $content + '</TR>';
+										
+			$(".contributorTitle").append($content);
+			$(".inp_addnewcontributorName").val("");
+			$(".inp_addnewcontributorRole").val("");
+			$(".inp_addnewcontributorOrder").val("");
+			completeOtherPeopleData(lastindex);
+			changecontrib();
+			if ($newcontributorsvals.indexOf($('.inp_addnewcontributorID'+lastindex).val() +"-U") < 0){
+				$newcontributorsvals = $newcontributorsvals + "," + lastindex +"-" + $('.inp_addnewcontributorID'+lastindex).val() +"-U"; 
+				$(".newcontributors").val($newcontributorsvals.substring(1,$newcontributorsvals.length));
+			}
+			lastindex++;
+		
+			
+			fill_lastContributorid();
+		}else{
+			alert("Please enter a contribution ID before adding contributors !");
+		}
+	});
+	
+	function deleteContribution(idcontr) {
+		var r = confirm("Are you sure to delete that contributor?");
+		if (r == true) {
+			var idx = idcontr.indexOf("-"); 
+			var i = idcontr.substring(0,idx);
+			var id = idcontr.substring(idx+1);
+
+			$newcontributorsvals = $newcontributorsvals + "," + i +"-" + $('.inp_addnewcontributorID'+i).val() +"-D"; 
+			$(".newcontributors").val($newcontributorsvals.substring(1,$newcontributorsvals.length));
+			$fieldname = "#Contributor"+i;
+			$($fieldname).html("<TD></TD colspan=9>"); 
+		} 
+	}
+</script>

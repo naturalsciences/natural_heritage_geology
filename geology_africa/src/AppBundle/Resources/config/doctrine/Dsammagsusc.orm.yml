@@ -1,0 +1,73 @@
+AppBundle\Entity\Dsammagsusc:
+    type: entity
+    table: dsammagsusc
+    uniqueConstraints:
+        dsammagsusc_unique:
+            columns:
+                - idcollection
+                - idsample
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        weight:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        exponent:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                default: '-6'
+        mesure1:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        mesure2:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        mesure3:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        mesure4:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        mesure5:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        mesure6:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+    manyToOne:
+        idcollection:
+            targetEntity: Dsample
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                idsample:
+                    referencedColumnName: idsample
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

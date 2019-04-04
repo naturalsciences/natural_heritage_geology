@@ -1,0 +1,57 @@
+AppBundle\Entity\Dsamminerals:
+    type: entity
+    table: dsamminerals
+    indexes:
+        IDX_1AC34B3131E4780895B6DB6F:
+            columns:
+                - idcollection
+                - idsample
+        IDX_1AC34B31C29FFB11:
+            columns:
+                - idmineral
+    uniqueConstraints:
+        dsamminerals_unique:
+            columns:
+                - idcollection
+                - idsample
+                - idmineral
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        grade:
+            type: smallint
+            nullable: true
+            options:
+                unsigned: false
+                default: '0'
+    manyToOne:
+        idcollection:
+            targetEntity: Dsample
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                idsample:
+                    referencedColumnName: idsample
+            orphanRemoval: false
+        idmineral:
+            targetEntity: Lminerals
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idmineral:
+                    referencedColumnName: idmineral
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,136 @@
+AppBundle\Entity\Ddocsatellite:
+    type: entity
+    table: ddocsatellite
+    uniqueConstraints:
+        DDocSatellite_IDDoc_key:
+            columns:
+                - iddoc
+        ddocsatellite_unique:
+            columns:
+                - idcollection
+                - iddoc
+        ddocsatellite_iddoc_unique:
+            columns:
+                - iddoc
+    id:
+        pk:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        sattype:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        satnum:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                default: '0'
+        orbit:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        pathtrack:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        rowframe:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        date:
+            type: datetime
+            nullable: true
+        time:
+            type: datetime
+            nullable: true
+        sensor:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        moderadar:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        split:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        ascdesc:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        originale:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        original:
+            type: boolean
+            nullable: true
+        backupnum:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        backupno:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        backupform:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        modified:
+            type: boolean
+            nullable: true
+        orthorectified:
+            type: boolean
+            nullable: true
+        format:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+    manyToOne:
+        idcollection:
+            targetEntity: Ddocument
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                idcollection:
+                    referencedColumnName: idcollection
+                iddoc:
+                    referencedColumnName: iddoc
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
