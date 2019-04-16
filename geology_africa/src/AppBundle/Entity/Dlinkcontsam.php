@@ -25,10 +25,9 @@ class Dlinkcontsam
     /**
      * @var \AppBundle\Entity\Dsample
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Dsample")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Dsample",  fetch="EAGER")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idcollection", referencedColumnName="idcollection"),
-     *   @ORM\JoinColumn(name="id", referencedColumnName="idsample")
      * })
      */
     private $idcollection;
@@ -36,14 +35,22 @@ class Dlinkcontsam
     /**
      * @var \AppBundle\Entity\Dcontribution
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Dcontribution")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Dcontribution",  fetch="EAGER")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idcontribution", referencedColumnName="idcontribution")
      * })
      */
     private $idcontribution;
 
-
+	/**
+     * @var \AppBundle\Entity\Dsample
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Dsample",  fetch="EAGER")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id", referencedColumnName="idsample")
+     * })
+     */
+    private $id;
 
     /**
      * Get pk
@@ -101,5 +108,29 @@ class Dlinkcontsam
     public function getIdcontribution()
     {
         return $this->idcontribution;
+    }
+	
+	    /**
+     * Set id
+     *
+     * @param \AppBundle\Entity\Dsample $id
+     *
+     * @return DLinkContSam
+     */
+    public function setId(\AppBundle\Entity\Dsample $id = null)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return \AppBundle\Entity\Dsample
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

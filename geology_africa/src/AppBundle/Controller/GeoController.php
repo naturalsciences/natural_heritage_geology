@@ -20,6 +20,7 @@ use AppBundle\Entity\Dsamheavymin2;
 use AppBundle\Entity\Dcontribution;
 use AppBundle\Entity\Dcontributor;
 use AppBundle\Entity\Dlinkcontribute;
+use AppBundle\Entity\Dlinkcontsam;
 use AppBundle\Form\DsampleType;
 use AppBundle\Form\DsampleEditType;
 use AppBundle\Form\LmineralsType;
@@ -298,6 +299,8 @@ class GeoController extends Controller
 			$ids_originals[]=null;
 			$newgrades = "";
 			$arraylminerals[]=null;
+			$actionscontributions[] = null;
+			$arraydcontributors[]=null;
 			$heavymin[]=null;
 			$samheavymin2 =null;
 			$origin_error = "";
@@ -376,6 +379,47 @@ class GeoController extends Controller
 				$actionheavymin = "I";
 			}
 			
+			//Contributions
+			$samcontribution = $this->getDoctrine()
+			->getRepository(DLinkContSam::class)
+			 ->findBy(array('idcollection' => $idcol, 
+							'id' => $idsamp
+						   ));
+			
+			foreach($samcontribution as $samcontribution_obj){
+				$idcontrib = $samcontribution_obj->getIdContribution()->getIdContribution();
+				
+				$idscontr_originals[]=$samcontribution_obj->getIdContribution()->getIdContribution();
+				$RAW_QUERYdcontributions = "SELECT c.pk as pkcontribution,
+							c.idcontribution as idcontribution,
+							datetype,
+							year, 
+							date,			
+							o.pk as pkcontributor,
+							o.idcontributor as idcontributor,
+							people,
+							peoplefonction,
+							peopletitre,
+							peoplestatut,
+							institut,
+							contributorrole,
+							contributororder
+						FROM dcontribution c
+						LEFT JOIN dlinkcontribute l ON l.idcontribution = c.idcontribution
+						LEFT JOIN dcontributor o ON l.idcontributor = o.idcontributor
+						WHERE c.idcontribution = ".$idcontrib."
+						ORDER by idcontribution;";
+				$statement = $em->getConnection()->prepare($RAW_QUERYdcontributions);
+				$statement->execute();
+				$arraydcontributors1 = $statement->fetchAll();
+				
+				if ($arraydcontributors != null){
+					array_push($arraydcontributors,$arraydcontributors1);
+				}else{
+					$arraydcontributors = $arraydcontributors1;
+				}
+			}
+						
 			$dcontribution = new Dcontribution();
 			$form = $this->createForm(DsampleEditType::class, $dsample, array('entity_manager' => $em,));
 			$form2 = $this->createForm(DcontributionType::class, $dcontribution, array('entity_manager' => $em,));
@@ -387,12 +431,12 @@ class GeoController extends Controller
 					//return new Response('<html><body>'.print_r ("poids=".$request->get('inp_mmagsuscWeight')).'</body></html>' );
 
 					try {
-						
 						$em->flush();
-						
+						//return new Response('<html><body>'.$request->get('newhminerals').'</body></html>' );
 						$id_grades = $request->get('newgrades');
 						$arrayid_grades =  explode(",", $id_grades); 
 						$elem =array();
+						
 						$i=0;
 						foreach($arrayid_grades as $e) {
 							if ($e != ""){
@@ -403,8 +447,8 @@ class GeoController extends Controller
 								$i++;
 							}
 						} 
-						$m=0;
-						$n=0;
+						//$m=0;
+						//$n=0;
 
 						for ($y = 0; $y < sizeof($ids); $y++) {
 							if ($actions[$y] == "U"){
@@ -479,6 +523,7 @@ class GeoController extends Controller
 						}
 			
 						if ($request->get('inp_HMWeightSample') > 0){
+							//return new Response('<html><body>'.print_r($request->get('inp_HMWeightSample')).'</body></html>' );
 							$origin_error = "In heavy minerals(weights), ";
 							$WeightSample = $request->get('inp_HMWeightSample');
 							$WeightHM = $request->get('inp_HMWeightHM');
@@ -497,9 +542,8 @@ class GeoController extends Controller
 							}
 						}
 						
-						//	return new Response('<html><body>'.print_r($request->get('inp_HMname0')).'</body></html>' );
-						
-						if ($request->get('inp_HMname0') != ""){	
+						//if ($request->get('inp_HMname0') != ""){	
+						if ($request->get('newhminerals') != ""){	
 							$origin_error = "In heavy minerals, ";
 							$actionshmstr = $request->get('newhminerals');
 							
@@ -512,13 +556,15 @@ class GeoController extends Controller
 										$elem = explode("-", $e);
 										$idsHM[$i] = $elem[0];
 										$mins[$i] = $elem[1];
-										$actionsHM[$i] = $elem[2];
+										$grainsarr[$i] = $elem[2];
+										$HMdescrarr[$i] = $elem[3];
+										$actionsHM[$i] = $elem[4];
 										$i++;
 									}
 								} 
 								//$actionheavymin2 = "D";
 							}
-							//return new Response('<html><body>'.$actionshmstr.'</body></html>' );
+							
 							for ($y = 0; $y < sizeof($actionsHM); $y++) {
 								//if ($request->get('inp_HMname'.$ids[$y]) != ""){
 								if ($mins[$y]!= ""){
@@ -535,15 +581,17 @@ class GeoController extends Controller
 											}
 										}
 									}*/
-									
+									//return new Response('<html><body>'.$request->get('inp_HMgrains'.$idsHM[$y]).'</body></html>' );
 									if ($actionsHM[$y] != "D"){
 										$actionsHM[$y] = "I";
-										$grains = $request->get('inp_HMgrains'.$idsHM[$y]);
-										$observ = $request->get('inp_HMobs'.$idsHM[$y]);
+										//$grains = $request->get('inp_HMgrains'.$idsHM[$y]);
+										$grains = $grainsarr[$y];
+										//$observ = $request->get('inp_HMobs'.$idsHM[$y]);
+										$observ = $HMdescrarr[$y];
 										for ($z = 0; $z < count($HMnames); $z++) {
 											if($HMnames[$z] == $mins[$y]){
-													$actionsHM[$y] = "U";
-													break;
+												$actionsHM[$y] = "U";
+												break;
 											}
 										}
 									}
@@ -567,11 +615,44 @@ class GeoController extends Controller
 							}
 						}  
 						
-						//return new Response('<html><body>'.print_r($RAW_QUERY).'</body></html>' );
+						if ($request->get('newcontributions') != ""){	
+							$id_contributions = $request->get('newcontributions');
+							$arrayid_contributions =  explode(",", $id_contributions); 
+							$elem =array();
+							$i=0;
+							foreach($arrayid_contributions as $e) {
+								if ($e != ""){
+									$elem = explode("-", $e);
+									$ids[$i] = $elem[1];
+									$actionscontributions[$i] = $elem[2];
+									$i++; 
+								}
+							} 
+							$sumy = "";
+							for ($y = 0; $y < sizeof($ids); $y++) {
+								$sumy = $sumy." ".$ids[$y];
+							}
+							//return new Response('<html><body>'.print_r($sumy).'</body></html>' );
+							for ($y = 0; $y < sizeof($ids); $y++) {
+								if ($actionscontributions[$y] == "I"){
+									$RAW_QUERY = "INSERT INTO dlinkcontsam (idcollection,id,idcontribution) VALUES ('".$idcol."',".$idsamp.",".$ids[$y].');';
+								}
+								if ($actionscontributions[$y] == "D"){
+									$RAW_QUERY = "DELETE FROM dlinkcontsam WHERE idcollection = '".$idcol."' and id = ".$idsamp." and idcontribution = ".$ids[$y]." ;";
+								}
+								if ($actionscontributions[$y] == "I" |$actionscontributions[$y] == "D"){
+									$statement = $em->getConnection()->prepare($RAW_QUERY);
+									$statement->execute();
+								}
+							}
+						}
+						
+					//	return new Response('<html><body>'.print_r($RAW_QUERY).'</body></html>' );
 						$this->addFlash('success', 'DATA RECORDED IN DATABASE!');
 						return $this->redirectToRoute('app_edit_sample', array('pk' => $dsample->getPk()));
 					} catch(\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
 						$message = $origin_error."record already exists with these values of collection and ID !";
+						//return new Response('<html><body>'.print_r($RAW_QUERY).'</body></html>' );
 						echo "<script type='text/javascript'>alert('$message');</script>";
 						//throw new \Symfony\Component\HttpKernel\Exception\HttpException(409, "Transaction already exist" );
 					} catch(\Doctrine\DBAL\Exception\ConstraintViolationException $e ) {
@@ -591,7 +672,37 @@ class GeoController extends Controller
 				}
 			}
 
-			if ($grades_originals != null){
+			if ($grades_originals != null AND isset($arraydcontributors[1])){
+				//return new Response('<html><body>ok ok</body></html>' );
+				return $this->render('@App/editsample.html.twig', array(
+					'dsample' => $dsample,
+					'form' => $form->createView(),
+					'form2' => $form2->createView(),
+					'grades' => $grades_originals,
+					'arraylminerals' => $arraylminerals,
+					'sammagsusc' => $sammagsusc,
+					'samgranulo' => $samgranulo,
+					'samheavymin' => $samheavymin,
+					'samheavymin2' => $samheavymin2,
+					'arrayLinkcontributions' => $arraydcontributors,
+					'originaction'=>'edit'
+				));
+			}elseif ($grades_originals == null AND isset($arraydcontributors[1])){
+			//	return new Response('<html><body>nok ok</body></html>' );
+				return $this->render('@App/editsample.html.twig', array(
+					'dsample' => $dsample,
+					'form' => $form->createView(),
+					'form2' => $form2->createView(),
+					'arraylminerals' => $arraylminerals,
+					'sammagsusc' => $sammagsusc,
+					'samgranulo' => $samgranulo,
+					'samheavymin' => $samheavymin,
+					'samheavymin2' => $samheavymin2,
+					'arrayLinkcontributions' => $arraydcontributors,
+					'originaction'=>'edit'
+				));
+			}elseif ($grades_originals != null AND !isset($arraydcontributors[1])){
+			//	return new Response('<html><body>ok nok</body></html>' );
 				return $this->render('@App/editsample.html.twig', array(
 					'dsample' => $dsample,
 					'form' => $form->createView(),
@@ -604,7 +715,8 @@ class GeoController extends Controller
 					'samheavymin2' => $samheavymin2,
 					'originaction'=>'edit'
 				));
-			}else{
+			}elseif ($grades_originals == null AND !isset($arraydcontributors[1])){
+			//	return new Response('<html><body>nok nok</body></html>' );
 				return $this->render('@App/editsample.html.twig', array(
 					'dsample' => $dsample,
 					'form' => $form->createView(),
@@ -646,8 +758,6 @@ class GeoController extends Controller
 						$actionlinkcontrib = "I";
 					}else{
 						$actionlinkcontrib = "U";
-
-						
 					}
 				}
 				$RAW_QUERYIdcontrib = "SELECT * FROM dcontributor c left join dlinkcontribute l on l.idcontributor = c.idcontributor where l.idcontribution = '".$idcontrib."';";
@@ -816,6 +926,7 @@ class GeoController extends Controller
 		$arraydsammagsusc[]=null;
 		$arraydsamgranulo[]=null;
 		$arraysamheavymin[]=null;
+		$arraydcontributors[]=null;
 		$idcol = $dsample->getIdcollection();
 		$idsamp = $dsample->getIdsample();
 		$em = $this->getDoctrine()->getManager();
@@ -862,6 +973,47 @@ class GeoController extends Controller
 		$statement->execute();
 		$arraysamheavymin2 = $statement->fetchAll();
 		//return new Response('<html><body>'.print_r($arraysamheavymin2).'</body></html>' );
+		
+		//Contributions------
+		$samcontribution = $this->getDoctrine()
+		->getRepository(DLinkContSam::class)
+		 ->findBy(array('idcollection' => $idcol, 
+						'id' => $idsamp
+					   ));
+		
+		foreach($samcontribution as $samcontribution_obj){
+			$idcontrib = $samcontribution_obj->getIdContribution()->getIdContribution();
+			
+			$idscontr_originals[]=$samcontribution_obj->getIdContribution()->getIdContribution();
+			$RAW_QUERYdcontributions = "SELECT c.pk as pkcontribution,
+						c.idcontribution as idcontribution,
+						datetype,
+						year, 
+						date,			
+						o.pk as pkcontributor,
+						o.idcontributor as idcontributor,
+						people,
+						peoplefonction,
+						peopletitre,
+						peoplestatut,
+						institut,
+						contributorrole,
+						contributororder
+					FROM dcontribution c
+					LEFT JOIN dlinkcontribute l ON l.idcontribution = c.idcontribution
+					LEFT JOIN dcontributor o ON l.idcontributor = o.idcontributor
+					WHERE c.idcontribution = ".$idcontrib."
+					ORDER by idcontribution;";
+			$statement = $em->getConnection()->prepare($RAW_QUERYdcontributions);
+			$statement->execute();
+			$arraydcontributors1 = $statement->fetchAll();
+			
+			if ($arraydcontributors != null){
+				array_push($arraydcontributors,$arraydcontributors1);
+			}else{
+				$arraydcontributors = $arraydcontributors1;
+			}
+		}
 						   
 		return $this->render('@App/viewsample.html.twig', array(
             'dsample' => $dsample,
@@ -871,6 +1023,7 @@ class GeoController extends Controller
 			'arraydsamgranulo' => $arraydsamgranulo,
 			'arraysamheavymin' => $arraysamheavymin,
 			'arraysamheavymin2' => $arraysamheavymin2,
+			'arrayLinkcontributions' => $arraydcontributors,
         ));
     }
 	
@@ -1019,17 +1172,61 @@ class GeoController extends Controller
 	
 	public function IDContributions_autocompleteAction(Request $request){
 		$em = $this->getDoctrine()->getManager();
-		$type = $_GET['code'];
-// return new Response('<html><body>not null'.print_r($id).'</body></html>');
-        //$RAW_QUERY = "SELECT idcontribution, '--', datetype, '--', date, '--', year) as idfull FROM dcontribution  ORDER BY idcontribution LIMIT 10;"; //where idcontribution LIKE '".$id."%'
-        //$RAW_QUERY = "SELECT * FROM dcontribution ORDER BY idcontribution LIMIT 10;";
-		$RAW_QUERY = "SELECT coalesce(idcontribution || '--' || datetype || '--' || to_char(date, 'DD/MM/YYYY') || '--' || year, idcontribution || '--' || datetype || '--' || '--' || year) as idfull FROM dcontribution  WHERE datetype LIKE '".$type."' ORDER BY idcontribution";
+		
+		$arrayqueryvals =  explode("--", $_GET['code']); 		
+		$type = $arrayqueryvals[0];
+		$year = $arrayqueryvals[1];
+		if ($type <> "" AND $year == ""){
+			$WHERE_QUERY = "WHERE datetype LIKE '".$type."'";
+		};
+		if ($type == "" AND $year <> ""){
+			$WHERE_QUERY = "WHERE year = ".$year;
+		};
+		if ($type <> "" AND $year <> ""){
+			$WHERE_QUERY = "WHERE datetype LIKE '".$type."' AND year = ".$year;
+		};
+		
+		$RAW_QUERY = "	SELECT coalesce(	idcontribution || '--' || datetype || '--' || to_char(date, 'DD/MM/YYYY') || '--' || year, 
+										idcontribution || '--' || datetype || '--' || year,
+										idcontribution || '--' || datetype
+									) as idfull 
+						FROM dcontribution  ".$WHERE_QUERY." ORDER BY idcontribution";
+		
         $statement = $em->getConnection()->prepare($RAW_QUERY);
         $statement->execute();
-
         $idcontr = $statement->fetchAll();
-        
+		//return new Response('<html><body>'.print_r($idcontr).'</body></html>');
         return new JsonResponse($idcontr);
+    }
+	
+	public function DataContributionsAction(Request $request){
+		$em = $this->getDoctrine()->getManager();		
+		$idcontrib = $_GET['code'];
+		$RAW_QUERY = "SELECT c.pk as pkcontribution,
+							c.idcontribution as idcontribution,
+							datetype,
+							year, 
+							date,			
+							o.pk as pkcontributor,
+							o.idcontributor as idcontributor,
+							people,
+							peoplefonction,
+							peopletitre,
+							peoplestatut,
+							institut,
+							contributorrole,
+							contributororder
+						FROM dcontribution c
+						LEFT JOIN dlinkcontribute l ON l.idcontribution = c.idcontribution
+						LEFT JOIN dcontributor o ON l.idcontributor = o.idcontributor
+						WHERE c.idcontribution = ".$idcontrib."
+						ORDER by people;";
+//return new Response('<html><body>'.print_r($RAW_QUERY).'</body></html>');
+        $statement = $em->getConnection()->prepare($RAW_QUERY);
+        $statement->execute();
+        $alldata = $statement->fetchAll();
+		
+        return new JsonResponse($alldata);
     }
 	
 	public function Code_autocompleteAction(Request $request){
@@ -1087,7 +1284,7 @@ class GeoController extends Controller
 				$RAW_QUERY = "SELECT DISTINCT institut as valdata FROM dcontributor ORDER BY institut;"; 
 				break;
 			case ($code==8):
-				$RAW_QUERY = "SELECT DISTINCT institut as valdata FROM dcontributor ORDER BY institut;";------------------------------------------ 
+				$RAW_QUERY = "SELECT DISTINCT year as valdata FROM dcontribution ORDER BY year;";
 				break;
 		};
 		

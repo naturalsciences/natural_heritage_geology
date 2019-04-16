@@ -49,7 +49,7 @@ input[type="integer"] {
 
 /* Tabs */
 div.tabs {
-  min-height: 21em;					/* No height: can grow if :target doesn't work */
+  min-height: 20em;					/* No height: can grow if :target doesn't work */
   position: relative;				/* Establish a containing block */
   line-height: 1;					/* Easier to calculate with */
   z-index: 0}						/* So that we can put other things behind */

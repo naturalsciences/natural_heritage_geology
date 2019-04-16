@@ -144,6 +144,12 @@ app_IDContributions_list:
      _controller: AppBundle:Geo:IDContributions_autocomplete
     methods:  GET
     
+app_AlldataContributions_list:
+    path:     /get_AlldataContributions
+    defaults: 
+     _controller: AppBundle:Geo:DataContributions
+    methods:  GET
+    
 app_contribtype_autocomplete:
     path:     /get_contribtype
     defaults: 

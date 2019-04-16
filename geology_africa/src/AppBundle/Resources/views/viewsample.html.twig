@@ -521,13 +521,143 @@
 							</div>
 						 </div>
 						 
-						 
 						 <div id=tab5> <a href="#tab5">Documentation</a>
 						  <div>Documentation fields</div>
 						 </div>
 						</div>
 					</div>
 				</div>
+			</TD>
+		</TR>
+		<TR>
+			<TD colspan=12>
+				<Table width="80%">
+					<TR>
+						<TD class="sections" width="100%">
+							{% set k=0 %}
+							{% set kk=0 %}
+							{% set idcontribm1 = 0 %}
+							
+							</br>
+							<div class=example>
+								<div class=tabs>
+									<div id=tab6> <a href="#tab6">Contributions</a>
+										<div>
+											<Table class="table_view">
+												<TR>
+													<TD width="50%"  class="celltop">	
+														{% if arrayLinkcontributions is defined %}		
+															{% if arrayLinkcontributions|length > 0 %}
+																<Table class="contributionsTitle newLine table_results2">
+																	<TR>
+																		<TH width="5%" class="border_bottom">
+																			<label class="labelsview">ID </label>
+																		</TH>
+																		<TH width="10%" class="border_bottom">
+																			<label class="labelsview">Type </label>
+																		</TH>
+																		<TH width="5%" class="border_bottom">
+																			<label class="labelsview">Date </label>
+																		</TH>
+																		<TH width="5%" class="border_bottom">
+																			<label class="labelsview">Year </label>
+																		</TH>
+																		<TH width="5%" class="border_bottom">
+																			<label class="labelsview">ID </label>
+																		</TH>
+																		<TH width="20%" class="border_bottom">
+																			<label class="labelsview">Contributor </label>
+																		</TH>
+																		<TH width="10%" class="border_bottom">
+																			<label class="labelsview">Role(order) </label>
+																		</TH>
+																		<TH width="10%" class="border_bottom">
+																			<label class="labelsview">Function </label>
+																		</TH>
+																		<TH width="5%" class="border_bottom">
+																			<label class="labelsview">Title </label>
+																		</TH>
+																		<TH width="5%" class="border_bottom">
+																			<label class="labelsview">Status </label>
+																		</TH>
+																		<TH width="20%" class="border_bottom">
+																			<label class="labelsview">Institute </label>
+																		</TH>
+																	</TR>
+																	{% for Linkcontributions in arrayLinkcontributions %}
+																		{% for Linkcontribution in Linkcontributions %}	
+																			{% if idcontribm1 != Linkcontribution.idcontribution %}
+																				{% set kk=kk+1%}
+																			{% endif %}																			
+																			<TR id="contributions{{kk}}_{{k}}">
+																				{% if idcontribm1 != Linkcontribution.idcontribution %}
+																					<TH>
+																						{{Linkcontribution.idcontribution}}
+																					</TH>
+																					<TH>
+																						{{Linkcontribution.datetype}}
+																					</TH>
+																					<TH>
+																						{{Linkcontribution.date|date('d-m-Y')}}
+																					</TH>
+																					<TH>
+																						{{ Linkcontribution.year}}
+																					</TH>
+																				{% else %}
+																					<TD colspan="4"></TD>
+																				{% endif %}	
+																				<TD>
+																					{{Linkcontribution.idcontributor}}
+																				</TD>
+																				<TD>						
+																					{{Linkcontribution.people}}
+																				</TD>
+																				<TD>						
+																					{{Linkcontribution.contributorrole}}	{% if (Linkcontribution.contributororder|length > 0) %} ( {{ Linkcontribution.contributororder}} ) {% endif %}					
+																				</TD>
+																				<TD>						
+																					{{Linkcontribution.peoplefonction}}
+																				</TD>
+																				<TD>						
+																					{{Linkcontribution.peopletitre}}
+																				</TD>
+																				<TD>						
+																					{{Linkcontribution.peoplestatut}}
+																				</TD>
+																				<TD>						
+																					{{Linkcontribution.institut}}
+																				</TD>
+																			</TR>
+																			{% set k=k+1%}
+																			{% set idcontribm1 = Linkcontribution.idcontribution %}
+																		{% endfor %}	
+																	{% endfor %}																	
+																</Table>
+															{% else %}
+																<TR>
+																	<div class="nocontrib">
+																		No contribution
+																	</div>
+																</TR>
+															{% endif %}
+														{% endif %}	
+
+														<Table width="100%">
+															<TR>
+																<TD class="newcontribution showid" style="display:none">
+																</TD>
+															</TR>	
+														</Table>
+													</TD>
+												</TR>														
+											</Table>
+										</div>														
+									</div>
+								</div>														
+							</div>
+						</TD>
+					</TR>
+				</Table>
 			</TD>
 		</TR>
 		<TR>
